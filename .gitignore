@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+
+# Regenerable run output. Figures are tracked because the README embeds them.
+sweep.csv
+sweep.png
