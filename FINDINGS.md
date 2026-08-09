@@ -241,10 +241,89 @@ So the blowup profile has finite regularity, roughly `C^2`. Three consequences:
   exponential, and for these profiles there is no exponential to fit. The
   freezing evidence in finding 2 stands because it compares normalised spectra
   directly and assumes nothing; the `delta` values quoted alongside it do not.
-- `beta` near 3 is close enough to exactly 3 to be worth testing, and finite
-  regularity is the expected structure here. Chen, Hou and Huang proved
-  De Gregorio blowup on the line for `C^alpha` data precisely because low
-  regularity is where these singularities live.
+- `beta` near 3 looked close enough to exactly 3 to be worth testing. It is
+  not 3. See finding 7, which replaces the 3.045 quoted above: that value was
+  biased, and the true exponent at `a = 0.8` is 3.00, but for a reason that
+  makes 3 uninteresting.
+
+## 7. `beta` is not a constant. It is `1 + (c-1)/(ac)`, set by one local number
+
+Rearranging the profile equation,
+
+```
+f' / f = (H f - 1) / (a U)
+```
+
+so `f` can only be singular where `U` vanishes, at a stagnation point of the
+profile's own velocity. Setting `U(y*) = 0` in the equation forces `f(y*) = 0`
+too, confirmed to 5e-15. Expanding `U(y) = U'(y*)(y - y*)` and using `U' = H f`,
+with `c = H f(y*)`:
+
+```
+f'/f = mu / (y - y*),     mu = (c - 1) / (a c),     f ~ C (y - y*)^mu
+```
+
+and a `|y|^mu` singularity has Fourier coefficients decaying like `k^-(mu+1)`,
+so `beta = 1 + (c - 1) / (a c)`. **One local number predicts the entire
+spectral decay rate**, with no fitting window and no bins.
+
+At `a = 0.8` there are two stagnation points, and they are exactly `pi` apart:
+
+| `y*` | `c = H f(y*)` | `f(y*)` | `mu` | `beta` |
+| --- | --- | --- | --- | --- |
+| 0.974078 | 5.001701 | 4.9e-15 | 1.000085 | 2.000085 |
+| 4.115670 | -1.662968 | -7.1e-16 | 2.001668 | 3.001668 |
+
+The equation is first order, so there is one exponent and the general solution
+is `C (y - y*)^mu` with `C` free to differ on the two sides. With `mu = 2` and
+`C+ != C-`, `f` is `C^1,1` but not `C^2` and `f''` jumps. Measured: `f''` is
+exactly odd about `y*` to 1e-9, bounded at 2.27045 on one side and -2.27045 on
+the other, so the jump is 4.54089 and `C+ = -C- = 1.13522`. A jump in the
+second derivative gives `k^-3` exactly. Not a logarithm: fitting
+`f'' = 2D log|y-y*| + const` returns a slope of 0.043 with `R^2 = 0.46`,
+consistent with zero.
+
+The two singular points being exactly `pi` apart also explains the beating that
+biased the original fit. Two singularities separated by `pi` make `|f_k|`
+alternate with period 2 in `k`, which is the band visible at high `k` in
+`fig_profile`. Binning geometrically and taking the RMS averages over it, and
+the local slopes then scatter around 3 with no drift: 2.91, 2.87, 3.07, 2.96,
+2.98, 2.97, 3.01, 3.00, 2.98, 2.98, 2.96, 2.92 across `k` from 16 to 724.
+
+### Then the test that settles it
+
+`mu = 2` requires `c = 1/(1 - 2a)` exactly, and nothing in the equation puts
+`c` there. So predict `beta` at other values of `a` and measure it
+independently. The predictions span 4.2 to 2.5, far too spread to agree by
+luck:
+
+| `a` | `beta` predicted | `beta` measured | rel diff | `R^2` |
+| --- | --- | --- | --- | --- |
+| 0.72 | 6.795 | 8.292 | 0.220 | 0.953 |
+| 0.75 | 4.213 | 4.167 | 0.011 | 0.99988 |
+| 0.78 | 3.329 | 3.305 | 0.007 | 0.99999 |
+| 0.80 | 3.002 | 2.976 | 0.009 | 0.99999 |
+| 0.82 | 2.770 | 2.741 | 0.011 | 0.99998 |
+| 0.85 | 2.520 | 2.483 | 0.015 | 0.99997 |
+
+The prediction tracks the measurement to about 1 percent across the range. The
+`a = 0.72` row fails exactly where the caveat says it should: once `beta` is
+large the spectrum reaches the roundoff floor within a couple of octaves and
+there is no range left to fit, which `R^2 = 0.95` flags.
+
+**So `beta` is not 3.** The regularity of the blowup profile varies
+continuously with `a`, and `beta = 3` is simply where that curve crosses while
+passing through. The apparent 3 at `a = 0.8` came from having measured at one
+value of `a` only. The measured column sits about 1 percent below the predicted
+one throughout, a systematic bias rather than scatter, most likely residual
+beating inside the fit window.
+
+Whether `mu(0.8)` is exactly 2, which would make `a = 4/5` special, is not
+resolved: `mu - 2` reads -6.5e-4, 3.9e-3, 1.7e-3 at `N` = 1024, 2048, 4096,
+hovering around 1e-3 without converging. Given `dmu/da` is about -17 near
+`a = 0.8`, `mu = 2` lands at `a = 0.8001`, which is not distinguishable from
+0.8 at this accuracy. There is no evident reason for 4/5 to be special, so the
+default reading is coincidence.
 
 ## Caveats
 

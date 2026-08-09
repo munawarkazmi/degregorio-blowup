@@ -210,8 +210,71 @@ def fig_spectrum():
     print("wrote fig_spectrum.png")
 
 
+def fig_beta():
+    """
+    beta against a: predicted from one local number, measured from the spectrum.
+
+    Values produced by beta_predict.py, which needs a Newton solve and a
+    simulation per point. Reproduced here rather than recomputed so that
+    regenerating the figures stays cheap.
+    """
+    av = np.array([0.72, 0.75, 0.78, 0.80, 0.82, 0.85])
+    pred = np.array([6.795385, 4.212834, 3.328739, 3.001668, 2.770433,
+                     2.519510])
+    meas = np.array([8.292435, 4.166818, 3.305475, 2.975974, 2.741212,
+                     2.482926])
+    r2 = np.array([0.95261, 0.99988, 0.99999, 0.99999, 0.99998, 0.99997])
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.8, 3.8))
+
+    good = r2 > 0.999
+    ax1.plot(av, pred, "-", color=BLUE, lw=1.6,
+             label=r"predicted, $1 + (c-1)/(ac)$")
+    ax1.scatter(av[good], meas[good], color=RED, s=34, zorder=5,
+                label="measured from the spectrum")
+    ax1.scatter(av[~good], meas[~good], facecolors="none", edgecolors=RED,
+                s=34, zorder=5, label=r"measurement degraded ($R^2 < 0.999$)")
+    ax1.axhline(3.0, ls=":", color=GREY, lw=1)
+    ax1.annotate(r"$\beta = 3$ is just where the curve"
+                 "\ncrosses, not a structural value",
+                 (0.803, 3.0), xytext=(6, 26), textcoords="offset points",
+                 fontsize=8, color=GREY)
+    ax1.set_xlabel("a")
+    ax1.set_ylabel(r"spectral decay exponent $\beta$")
+    ax1.set_title(r"$\beta$ is a function of $a$, not a constant"
+                  "\nprediction uses one number, "
+                  r"$c = Hf(y^*)$", fontsize=9)
+    ax1.legend(fontsize=7.5, frameon=False)
+
+    g, f, _, _ = solved_profile(a=0.8, n=2048)
+    U, Hf, _ = dg.fields(g, f)
+    y = g.x - np.pi
+    fr, Ur = np.roll(f, g.N // 2), np.roll(U, g.N // 2)
+    ax2.plot(y, fr, color=BLUE, lw=1.5, label="f")
+    ax2.plot(y, Ur, color=RED, lw=1.4, label="U")
+    ax2.axhline(0, color="k", lw=0.6)
+    # Locate the zeros on the plotted arrays. Hardcoding them from another run
+    # does not work: max f and min f are exactly equal in magnitude, so the
+    # argmax used to centre the profile picks the peak or the trough
+    # arbitrarily and the translation differs from run to run.
+    for i in np.flatnonzero(np.sign(Ur) != np.sign(np.roll(Ur, -1)))[:2]:
+        ax2.axvline(y[i], ls="--", color=GREY, lw=1)
+    ax2.set_xlabel("y")
+    ax2.set_xlim(-np.pi, np.pi)
+    ax2.set_title("Where U vanishes, f is singular\n"
+                  "the two stagnation points are exactly "
+                  r"$\pi$ apart", fontsize=9)
+    ax2.legend(fontsize=8, frameon=False)
+
+    fig.tight_layout()
+    fig.savefig("fig_beta.png")
+    plt.close(fig)
+    print("wrote fig_beta.png")
+
+
 if __name__ == "__main__":
     fig_blowup()
     fig_frozen()
     fig_profile()
     fig_spectrum()
+    fig_beta()

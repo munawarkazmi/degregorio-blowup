@@ -126,10 +126,41 @@ would do. Fitting both laws over the same window:
 | 2048 | 0.805 | **0.983** | 3.048 |
 | 4096 | 0.788 | **0.984** | 3.045 |
 
-`beta` holds at 3.045 across a 4x range in `N`, while the fitted exponential
-rate halves every time `N` doubles, which is what fitting an exponential to a
-power law always looks like. So the profile is roughly `C^2` and no better, and
-nothing read off it converges spectrally.
+The algebraic law wins at every resolution, so the profile has finite
+regularity and nothing read off it converges spectrally.
+
+### And `beta` is not a constant. It is predicted by one local number
+
+Rearranging the profile equation gives `f'/f = (Hf - 1)/(a U)`, so `f` can only
+be singular where the velocity `U` vanishes. Setting `U(y*) = 0` forces
+`f(y*) = 0` too, confirmed to 5e-15. Expanding around such a point with
+`c = Hf(y*)`:
+
+```
+f ~ C (y - y*)^mu,   mu = (c - 1) / (a c),   so   beta = 1 + (c - 1) / (a c)
+```
+
+![beta against a](fig_beta.png)
+
+At `a = 0.8` this gives `mu = 2.0017`, so `f` is `C^1,1` but not `C^2` and
+`f''` jumps. Measured: `f''` is exactly odd about `y*` to 1e-9, bounded at
+`+2.27045` and `-2.27045`, a jump of 4.54089. A jump in the second derivative
+gives `k^-3` exactly.
+
+Predicting `beta` from that one number and measuring it independently from the
+spectrum, across a range where the predictions span 4.2 to 2.5:
+
+| `a` | 0.75 | 0.78 | 0.80 | 0.82 | 0.85 |
+| --- | --- | --- | --- | --- | --- |
+| predicted | 4.213 | 3.329 | 3.002 | 2.770 | 2.520 |
+| measured | 4.167 | 3.305 | 2.976 | 2.741 | 2.483 |
+| rel diff | 0.011 | 0.007 | 0.009 | 0.011 | 0.015 |
+
+So the regularity of the blowup profile varies continuously with `a`, and
+`beta = 3` is just where that curve happens to cross. The earlier reading of a
+constant 3.045 came from measuring at one value of `a`, with a wide fit window
+biased by beating: the two stagnation points sit exactly `pi` apart, which makes
+`|f_k|` alternate with period 2 in `k`.
 
 Full detail, including what is not settled, is in [FINDINGS.md](FINDINGS.md).
 
@@ -161,6 +192,10 @@ flowchart TD
 | `profile_unique.py` | one solution per grid, or several |
 | `spectrum.py` | Jacobian eigenvalues, linear stability |
 | `regularity.py` | is the profile analytic, and how smooth is it |
+| `beta.py` | local spectral slope by octave, binned over the beating |
+| `beta_theory.py` | derives `beta` from the stagnation points |
+| `beta_jump.py` | the jump in `f''`, and whether `mu = 2` is structural |
+| `beta_predict.py` | predicted against measured `beta` across `a` |
 | `pi_check.py` | whether `T(1/2) = pi` survives refinement |
 | `diagnose.py` | grid refinement study, for when a result looks too good |
 | `figures.py` | regenerates the figures above |
