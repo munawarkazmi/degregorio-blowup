@@ -364,10 +364,54 @@ where `f` is smooth with a nonvanishing derivative.
 **What is still not closed.** This pins the stagnation point that carries no
 singularity. The one that actually sets `beta` is the other one, and `c2`
 remains genuinely global: it is not determined by any local balance, and no
-closed form for `mu2(a)` came out of the data. `1/mu2` is smooth and monotone
-in `a` but not linear, its slope falling from 5.37 to 3.26 across the range, so
-the obvious extrapolations for where the profile turns analytic are not
-trustworthy.
+closed form for `mu2(a)` came out of the data.
+
+| `a` | 0.70 | 0.72 | 0.74 | 0.76 | 0.78 | 0.80 | 0.82 | 0.84 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `mu2` | 15.362 | 5.795 | 3.737 | 2.836 | 2.329 | 2.002 | 1.770 | 1.594 |
+| `1/mu2` | 0.0651 | 0.1726 | 0.2676 | 0.3526 | 0.4294 | 0.4996 | 0.5648 | 0.6272 |
+
+`1/mu2` is smooth and monotone but convex, its slope falling steadily from 5.37
+to 3.12. A straight line through it returns `R^2 = 0.991`, which looks
+respectable and is worthless: the residuals arch cleanly through
+-0.029, -0.001, +0.014, +0.020, +0.017, +0.008, -0.006, -0.023, which is
+curvature and not scatter. Extrapolating from two different windows disagrees:
+
+| window | `1/mu2 = 0`, profile turns analytic | `1/mu2 = 1`, profile leaves `C^1` |
+| --- | --- | --- |
+| `a >= 0.74` | 0.6623 | 0.9418 |
+| `a >= 0.78` | 0.6490 | 0.9526 |
+
+So neither endpoint is located. This is the same trap that produced the biased
+`beta` in finding 6, a high `R^2` on a model of the wrong shape, and it is
+worth stating twice.
+
+### A hypothesis that failed
+
+The measured `beta` sat about 1 percent below prediction at every value of `a`,
+systematically rather than randomly, which suggested a cause. The proposal was
+that the even `k` modes are far smaller than the odd ones, so that binning by
+RMS averages real signal together with near-zeros and drags the exponent down.
+That would also have explained the beating.
+
+It is wrong. Over `100 < k < k_cut` the RMS amplitudes are 3.386e-4 on even `k`
+against 3.865e-4 on odd, a ratio of 0.876. The even modes are not small, just
+12 percent below the odd ones, which is enough to show as a visible band in a
+log plot but nowhere near vanishing. And fitting the parities separately moves
+the answer the wrong way:
+
+| fit | `beta` | `R^2` |
+| --- | --- | --- |
+| predicted from `mu2 + 1` | 3.001668 | |
+| all modes | 2.975974 | 0.999986 |
+| odd `k` only | 2.935612 | 0.999838 |
+| even `k` only | 3.059236 | 0.999617 |
+
+Restricting to odd `k` moves *away* from the prediction, not toward it. So the
+1 percent shortfall is not parity contamination and remains unexplained. The
+most likely remaining candidates are the fit window still catching modes below
+the asymptotic regime, since the spectrum only settles onto its power law
+somewhere past `k = 10`, and the profile's own accuracy at `N = 4096`.
 
 ## Caveats
 

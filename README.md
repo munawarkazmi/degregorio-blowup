@@ -189,8 +189,15 @@ which is `mu = 1`. Measured deviations of `mu` from 1 at that point:
 Machine precision. The same balance at the other stagnation point reproduces
 the general formula, so `mu = 1` is just the case where `f` is smooth there.
 That point therefore carries no singularity, and `beta` is set entirely by the
-other one, whose `c` stays genuinely global. No closed form for it came out of
-the data.
+other one, whose `c` stays genuinely global.
+
+No closed form for that one came out of the data. `1/mu2` runs 0.0651, 0.1726,
+0.2676, 0.3526, 0.4294, 0.4996, 0.5648, 0.6272 across `a` from 0.70 to 0.84,
+smooth and monotone but convex, with its slope falling from 5.37 to 3.12. A
+straight line fits at `R^2 = 0.991` and extrapolates uselessly: two different
+windows put the point where the profile turns analytic at `a = 0.662` and
+`a = 0.649`. Same trap as the biased `beta` above, a high `R^2` on a model of
+the wrong shape.
 
 Full detail, including what is not settled, is in [FINDINGS.md](FINDINGS.md).
 
