@@ -325,6 +325,50 @@ hovering around 1e-3 without converging. Given `dmu/da` is about -17 near
 0.8 at this accuracy. There is no evident reason for 4/5 to be special, so the
 default reading is coincidence.
 
+## 8. Half of `c` is exact: `c = 1/(1-a)` at the smooth stagnation point
+
+`beta = 1 + (c-1)/(ac)` moves the question to what sets `c = H f(y*)`, which is
+a global quantity. For one of the two stagnation points the answer is closed
+form, and it needs three lines rather than a computation.
+
+Where `f` has a *simple* zero at a stagnation point, write `U ~ c1 (y - y1)`,
+`f ~ A (y - y1)` with `A = f'(y1)` nonzero, and `H f ~ c1`. The profile
+equation `a U f' = f (H f - 1)` becomes, at leading order in `(y - y1)`,
+
+```
+a c1 (y - y1) A  =  A (y - y1) (c1 - 1)
+```
+
+and dividing by `A (y - y1)`:
+
+```
+a c1 = c1 - 1        hence        c1 = 1 / (1 - a)
+```
+
+Equivalently `1/c1 = 1 - a`, and since `1/c = 1 - a mu` in general, this is
+exactly `mu1 = 1`. Measured deviations of `mu1` from 1:
+
+| `a` | 0.70 | 0.72 | 0.74 | 0.76 | 0.78 | 0.80 | 0.82 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `mu1 - 1` | -1.7e-15 | -4.6e-14 | -2.0e-10 | 3.5e-8 | 5.6e-6 | 8.5e-5 | 5.3e-4 |
+
+Machine precision at the low end. The growth toward `a = 0.82` is the profile's
+own accuracy degrading, since `mu2` is falling toward 1 there and the profile
+is getting rougher, not the identity failing.
+
+The same balance at the other stagnation point, with `f ~ C (y - y2)^mu`,
+reproduces `a c2 mu = c2 - 1` and hence the general formula. So the whole
+structure follows from one leading-order match, and `mu = 1` is simply the case
+where `f` is smooth with a nonvanishing derivative.
+
+**What is still not closed.** This pins the stagnation point that carries no
+singularity. The one that actually sets `beta` is the other one, and `c2`
+remains genuinely global: it is not determined by any local balance, and no
+closed form for `mu2(a)` came out of the data. `1/mu2` is smooth and monotone
+in `a` but not linear, its slope falling from 5.37 to 3.26 across the range, so
+the obvious extrapolations for where the profile turns analytic are not
+trustworthy.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this

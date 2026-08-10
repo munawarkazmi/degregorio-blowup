@@ -1,5 +1,12 @@
 # De Gregorio blowup
 
+> Current record holder for most crash outs per line of code. In fairness, the
+> whole point is to make something blow up in finite time, so the code and I
+> were at least aligned on the objective. Fair warning that several of the
+> findings below started life as my own diagnostics quietly lying to me. Those
+> are written up too, on the theory that a wrong answer you can reproduce is
+> worth more than a right one you cannot.
+
 A pseudospectral solver and profile analysis for the Okamoto, Sakajo and Wunsch
 family of 1D models for the 3D Euler vorticity equation, on the circle:
 
@@ -161,6 +168,29 @@ So the regularity of the blowup profile varies continuously with `a`, and
 constant 3.045 came from measuring at one value of `a`, with a wide fit window
 biased by beating: the two stagnation points sit exactly `pi` apart, which makes
 `|f_k|` alternate with period 2 in `k`.
+
+### Half of `c` is exact, and needs three lines rather than a computation
+
+There are two stagnation points. Where `f` has a **simple** zero at one, put
+`U ~ c(y-y_1)`, `f ~ A(y-y_1)` with `A` nonzero, and `Hf ~ c`. Then
+`a U f' = f(Hf - 1)` reads `a c A (y-y_1) = A (y-y_1)(c-1)` at leading order,
+so dividing by `A(y-y_1)`:
+
+```
+a c = c - 1        hence        c = 1 / (1 - a)
+```
+
+which is `mu = 1`. Measured deviations of `mu` from 1 at that point:
+
+| `a` | 0.70 | 0.72 | 0.74 | 0.76 | 0.78 | 0.80 |
+| --- | --- | --- | --- | --- | --- | --- |
+| `mu - 1` | -1.7e-15 | -4.6e-14 | -2.0e-10 | 3.5e-8 | 5.6e-6 | 8.5e-5 |
+
+Machine precision. The same balance at the other stagnation point reproduces
+the general formula, so `mu = 1` is just the case where `f` is smooth there.
+That point therefore carries no singularity, and `beta` is set entirely by the
+other one, whose `c` stays genuinely global. No closed form for it came out of
+the data.
 
 Full detail, including what is not settled, is in [FINDINGS.md](FINDINGS.md).
 
