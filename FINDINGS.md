@@ -408,10 +408,51 @@ the answer the wrong way:
 | even `k` only | 3.059236 | 0.999617 |
 
 Restricting to odd `k` moves *away* from the prediction, not toward it. So the
-1 percent shortfall is not parity contamination and remains unexplained. The
-most likely remaining candidates are the fit window still catching modes below
-the asymptotic regime, since the spectrum only settles onto its power law
-somewhere past `k = 10`, and the profile's own accuracy at `N = 4096`.
+1 percent shortfall is not parity contamination. It is resolved in finding 9.
+
+## 9. The shortfall was the fit window. In a clean band the agreement is 5e-4
+
+Fitting octave by octave rather than over one wide window shows the local slope
+does not converge to the predicted 3.001668. It falls straight through it:
+
+| band | 8 to 32 | 16 to 64 | 32 to 128 | 64 to 256 | **128 to 512** | 256 to 1024 |
+| --- | --- | --- | --- | --- | --- | --- |
+| `beta` | 3.164 | 3.125 | 3.046 | 3.030 | **3.00315** | 2.973 |
+| error | +0.162 | +0.123 | +0.045 | +0.028 | **+0.0015** | -0.029 |
+
+The two ends are biased in *opposite* directions, so a fit spanning both lands
+somewhere in between, and 2.976 was that compromise. Raising the lower edge of
+the window walks `beta` down through the prediction (3.021, 3.011, 3.002,
+2.994, 2.984 for `k_lo` = 8, 16, 32, 64, 128); dropping the top octave walks it
+up (3.011, 3.020, 3.028 for `k_hi` = `k_cut`, `k_cut/2`, `k_cut/4`). Neither
+end is trustworthy and both were in the original window.
+
+**In the clean band `128 < k < 512`, measured `beta` is 3.00315 against a
+predicted 3.001668, an error of 5e-4.** That is a factor of 18 better than the
+0.9 percent the wide window reported, and it means the stagnation point formula
+is correct to well under a tenth of a percent.
+
+The low `k` bias was predicted in advance and has the right sign. Writing
+`f ~ C|y-y*|^mu` times an analytic factor, the analytic factor contributes
+`k^-(mu+2)` and faster alongside the leading `k^-(mu+1)`, and those steeper
+terms pull a fitted slope upward at small `k`.
+
+The high `k` droop is not what it looked like. The natural suspect was a `k^-2`
+component from a jump in `f'` at the `mu = 1` stagnation point, since a
+shallower term drags a fit down exactly as observed. That is dead: `f'` is
+continuous at **both** stagnation points to 4e-12 and 1.6e-11 against `|f'|` of
+7.04 and 0.062 respectively. Neither point contributes `k^-2`. What remains is
+the discretisation, since the profile solves the dealiased equation and its
+highest retained modes carry error from the mask.
+
+### Practical consequence
+
+Every spectral exponent quoted anywhere in this repository should be read as a
+band measurement, not a global fit, and the band has to sit clear of both ends.
+The wide window fits in findings 6 and 7 are all biased for this reason, which
+is why the measured column there sits about 1 percent low at every value of
+`a`, systematically rather than randomly. The prediction was right and the
+measurement was wrong, which is the opposite of how it looked.
 
 ## Caveats
 

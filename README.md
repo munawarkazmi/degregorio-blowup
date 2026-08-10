@@ -163,6 +163,23 @@ spectrum, across a range where the predictions span 4.2 to 2.5:
 | measured | 4.167 | 3.305 | 2.976 | 2.741 | 2.483 |
 | rel diff | 0.011 | 0.007 | 0.009 | 0.011 | 0.015 |
 
+Those measurements are about 1 percent low at every `a`, systematically rather
+than randomly, and the cause is the fit window rather than the formula. Fitting
+octave by octave, the local slope falls straight through the prediction instead
+of converging to it:
+
+| band | 8 to 32 | 32 to 128 | 64 to 256 | **128 to 512** | 256 to 1024 |
+| --- | --- | --- | --- | --- | --- |
+| `beta` | 3.164 | 3.046 | 3.030 | **3.00315** | 2.973 |
+
+The two ends are biased in opposite directions, so any window spanning both
+lands in between. Low `k` is pulled up by the analytic factor multiplying
+`|y-y*|^mu`, which contributes `k^-(mu+2)` and faster. High `k` is pulled down
+by the dealiasing mask. **In the clean band, measured `beta` is 3.00315 against
+a predicted 3.001668, an error of 5e-4**, eighteen times better than the wide
+window suggested. The obvious `k^-2` explanation is dead: `f'` is continuous at
+both stagnation points to 4e-12.
+
 So the regularity of the blowup profile varies continuously with `a`, and
 `beta = 3` is just where that curve happens to cross. The earlier reading of a
 constant 3.045 came from measuring at one value of `a`, with a wide fit window
