@@ -178,12 +178,25 @@ of converging to it:
 | `beta` | 3.164 | 3.046 | 3.030 | **3.00315** | 2.973 |
 
 The two ends are biased in opposite directions, so any window spanning both
-lands in between. Low `k` is pulled up by the analytic factor multiplying
-`|y-y*|^mu`, which contributes `k^-(mu+2)` and faster. High `k` is pulled down
-by the dealiasing mask. **In the clean band, measured `beta` is 3.00315 against
-a predicted 3.001668, an error of 5e-4**, eighteen times better than the wide
-window suggested. The obvious `k^-2` explanation is dead: `f'` is continuous at
-both stagnation points to 4e-12.
+lands in between. Refining `N` separates them, because discretisation sits at a
+fixed fraction of `k_cut` and slides right as `N` grows while real structure
+sits at a fixed absolute `k`. Aligned by `k / k_cut` the high end matches
+across resolutions, 2.789 against 2.794 at 0.75 and 2.972 against 2.976 at
+0.375, so the droop is the dealiasing mask. Aligned by absolute `k` the low end
+matches instead, 3.046 against 3.053 over 32 to 128, so that bias is the
+analytic factor multiplying `|y-y*|^mu`, which contributes `k^-(mu+2)` and
+faster. Both effects identified, neither is the `k^-2` term that looked
+obvious: `f'` is continuous at both stagnation points to 4e-12.
+
+The clean window is where both are small, near `k / k_cut = 0.19`:
+
+| | `beta` | error vs 3.001668 |
+| --- | --- | --- |
+| `N = 4096`, 128 to 512 | 3.00303 | +1.4e-3 |
+| `N = 8192`, 256 to 1024 | 3.00291 | +1.2e-3 |
+
+**Two independent resolutions agree with the prediction to 0.04 percent, and
+with each other to 1e-4.**
 
 So the regularity of the blowup profile varies continuously with `a`, and
 `beta = 3` is just where that curve happens to cross. The earlier reading of a

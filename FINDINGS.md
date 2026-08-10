@@ -441,9 +441,47 @@ The high `k` droop is not what it looked like. The natural suspect was a `k^-2`
 component from a jump in `f'` at the `mu = 1` stagnation point, since a
 shallower term drags a fit down exactly as observed. That is dead: `f'` is
 continuous at **both** stagnation points to 4e-12 and 1.6e-11 against `|f'|` of
-7.04 and 0.062 respectively. Neither point contributes `k^-2`. What remains is
-the discretisation, since the profile solves the dealiased equation and its
-highest retained modes carry error from the mask.
+7.04 and 0.062 respectively. Neither point contributes `k^-2`.
+
+### Separating the two ends by refinement
+
+The two biases have opposite fingerprints under a change of `N`. Discretisation
+lives at a fixed fraction of `k_cut` and slides right as `N` grows; real
+structure in the profile lives at a fixed absolute `k` and does not move.
+Measuring the same bands at `N = 4096` and `N = 8192` settles both at once.
+
+Aligned by **fraction of `k_cut`**, the high end matches almost exactly:
+
+| `k / k_cut` | 0.094 | 0.188 | 0.375 | 0.750 |
+| --- | --- | --- | --- | --- |
+| `N = 4096` | 3.02942 | **3.00303** | 2.97238 | 2.78870 |
+| `N = 8192` | 3.01507 | **3.00291** | 2.97596 | 2.79399 |
+
+Aligned by **absolute `k`**, the same band cleans up as the mask moves away:
+
+| band | 128 to 512 | 256 to 1024 | 512 to 2048 |
+| --- | --- | --- | --- |
+| `N = 4096` | 3.00303 | 2.97238 | 2.78870 |
+| `N = 8192` | 3.01507 | 3.00291 | 2.97596 |
+
+So the droop is the dealiasing mask, confirmed. The low end goes the other way:
+band 32 to 128 gives 3.04635 at `N = 4096` and 3.05277 at `N = 8192`, pinned to
+absolute `k`, which is the analytic correction terms and is real.
+
+The clean window is therefore where both are small: far enough above the
+corrections in absolute `k`, and far enough below `k_cut` in relative terms.
+That is `k / k_cut` near 0.19 at both resolutions, and both give the same
+answer:
+
+| | `beta` | error vs 3.001668 |
+| --- | --- | --- |
+| `N = 4096`, 128 to 512 | 3.00303 | +1.4e-3 |
+| `N = 8192`, 256 to 1024 | 3.00291 | +1.2e-3 |
+
+Two independent resolutions agreeing with the prediction to 0.04 percent, and
+with each other to 1e-4. The residual `+1.3e-3` is consistent across both, so
+it is systematic rather than noise, most likely the tail of the low `k`
+correction still leaking into the window.
 
 ### Practical consequence
 
