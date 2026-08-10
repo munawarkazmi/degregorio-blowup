@@ -55,12 +55,16 @@ def fit_band(k, amp, k_lo, k_hi, ratio=2.0 ** 0.5):
 
 print()
 print("  Simulated profiles are used here rather than Newton solved ones, so")
-print("  that N = 8192 and 16384 are affordable. They agree with the solved")
-print("  profile to about 1e-5, far below the effect being measured.")
+print("  that N = 8192 is affordable. They agree with the solved profile to")
+print("  about 1e-5, far below the effect being measured.")
 print()
 
 results = {}
-for n in (4096, 8192, 16384):
+# N = 16384 was dropped: at that resolution the advective step limit puts the
+# run at roughly 93,000 steps, and 4096 against 8192 already separates the two
+# explanations. The band 256 to 1024 sits at 0.19 to 0.75 of k_cut at N = 4096,
+# inside the drooping region, and at 0.09 to 0.38 at N = 8192, clear of it.
+for n in (4096, 8192):
     g, out = simulate(A, n=n, w_max=1e6)
     f0, _ = guess_from_simulation(g, out)
     amp = np.abs(g.fwd(f0))

@@ -1,11 +1,16 @@
 # De Gregorio blowup
 
-> Current record holder for most crash outs per line of code. In fairness, the
-> whole point is to make something blow up in finite time, so the code and I
-> were at least aligned on the objective. Fair warning that several of the
-> findings below started life as my own diagnostics quietly lying to me. Those
-> are written up too, on the theory that a wrong answer you can reproduce is
-> worth more than a right one you cannot.
+> Current record holder for most crash outs per line of code. A fitting problem
+> to have, since most of them came from fitting. Twice now this repo has handed
+> me `R^2 = 0.99` on a model of entirely the wrong shape, and twice I believed
+> it on the spot. The exponent it took four scripts to pin down was sitting
+> inside the answer the whole time; I had drawn the window around it wrong.
+>
+> In fairness, the goal here is to make something blow up in finite time, so
+> the code and I were at least aligned on the objective. Several findings below
+> started life as my own diagnostics lying to me, and those are written up too,
+> on the theory that a wrong answer you can reproduce beats a right one you
+> cannot.
 
 A pseudospectral solver and profile analysis for the Okamoto, Sakajo and Wunsch
 family of 1D models for the 3D Euler vorticity equation, on the circle:
