@@ -670,6 +670,98 @@ of the open question in finding 8: `c1` is exact, `c2` is now merely very well
 measured, and the gap between those two statuses is where the remaining
 mathematics sits.
 
+## 13. No closed form for `c2`, but the equation integrates once and a global identity falls out
+
+**The closed form was not found, and the simplest candidates are now excluded
+rather than merely unconfirmed.** What the search produced instead is worth
+more than another fitted constant.
+
+### The equation integrates exactly once
+
+From `f'/f = (U' - 1)/(a U)`,
+
+```
+ln|f| = (1/a) [ ln|U| - integral dy/U ]
+```
+
+so on each interval between zeros of `U`,
+
+```
+f = C |U|^(1/a) exp( -(1/a) integral dy/U )
+```
+
+Near a simple zero with `U ~ c (y - y*)` this gives
+`|y - y*|^(1/a) |y - y*|^(-1/(ac)) = |y - y*|^mu` with `mu = (c-1)/(ac)`,
+reproducing finding 7 from a different direction.
+
+### Hence an exact global constraint
+
+Going once around the circle, both `f` and `U` return to themselves, so the
+loop integral must vanish:
+
+```
+PV integral of dy/U over the circle = 0
+```
+
+This needs `ln|f|` not to jump at either zero, which holds: at `y1` the profile
+is smooth with `mu = 1`, and at `y2` the one sided constants satisfy
+`C+ = -C-`, so `|C+| = |C-|`.
+
+Verified by subtracting both simple poles with `cot`, which carries the same
+residue and whose own principal value on the circle is zero:
+
+| `a` | 0.75 | 0.78 | 0.80 | 0.82 |
+| --- | --- | --- | --- | --- |
+| PV / scale | 2.2e-12 | 6.7e-13 | 9.8e-13 | 1.4e-12 |
+
+Stable across three independent grid shifts. The first attempt read 1e-2 to 1
+and looked like a refutation; it was catastrophic cancellation, because the
+stagnation points land on grid points to within 1e-11 of a cell and the
+subtraction was differencing two numbers of size 1e8. Evaluating on a half
+shifted grid, which is exact for a band limited field, fixes it.
+
+### What is excluded
+
+`c2` is now mapped across eleven values of `a` by the control variate, with
+scatter from 1.4e-14 at `a = 0.72` to 9.5e-5 at `a = 0.83`:
+
+| `a` | 0.72 | 0.74 | 0.76 | 0.78 | 0.80 | 0.82 |
+| --- | --- | --- | --- | --- | --- | --- |
+| `c2` | -0.31519119 | -0.56651088 | -0.86560395 | -1.22477889 | -1.66130509 | -2.20024724 |
+| `beta` | 6.7953854 | 4.7367448 | 3.8358720 | 3.3288127 | 3.0024205 | 2.7737736 |
+
+Against that, fitting candidate shapes by least squares:
+
+| form | rms residual | verdict |
+| --- | --- | --- |
+| `mu2 = (p + qa)/(1 + ra)` | 1.9e-4 | rejected |
+| `c2 = (p + qa)/(1 + ra)` | 3.0e-4 | rejected |
+| `mu2 = (p + qb)/(1 + rb)`, `b = 1/(1-a)` | 6.0e-4 | rejected |
+| `mu2` or `c2` = quadratic / quadratic | 2.6e-7 to 1.7e-6 | unconstrained |
+
+Every Mobius form is out, in both natural variables, by one to two orders of
+magnitude above the data's own precision. The quadratic over quadratic fits are
+not evidence of anything: five parameters against eleven points, with residuals
+below the data scatter at the rough end of the range, which means they are
+absorbing the smooth error rather than the signal.
+
+### Why this is probably the wrong thing to look for
+
+`c1` is exact because it comes from a **local** balance at a point where `f` is
+smooth. `c2` has no such balance available: the exponent there is not fixed by
+the leading order match, so its value is set by the global solution. A closed
+form for it would amount to solving the nonlocal problem, and the obstruction
+to that is explicit. With `psi` the positive frequency part,
+
+```
+a (psi + psi~)(psi'' - psi~'') = (psi' - psi~')(psi' + psi~' - 1)
+```
+
+and the mixed products `psi psi~''` and `psi~ psi''` straddle both halves of the
+spectrum. That is exactly the non separation which makes `a = 0` a Riccati
+equation and `a != 0` an open problem. If `c2` had an elementary closed form,
+De Gregorio would not be hard.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this

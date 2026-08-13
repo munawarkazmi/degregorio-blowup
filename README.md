@@ -267,6 +267,32 @@ beta =  3.00242268
 scatter of the corrected points. The spectral measurement of `beta` is good
 only to 2e-2 and no longer matters to the answer.
 
+### The equation integrates once, and `c2` has no closed form
+
+From `f'/f = (U' - 1)/(aU)`, on each interval between zeros of `U`,
+
+```
+f = C |U|^(1/a) exp( -(1/a) integral dy/U )
+```
+
+Requiring `f` to close up around the circle then forces an exact constraint,
+`PV integral of dy/U = 0`, verified to 1e-12 at four values of `a` and three
+independent grid shifts.
+
+No closed form for `c2` emerged. With `c2` mapped across eleven values of `a`
+it is now precise enough to **exclude** shapes rather than fail to confirm
+them: every Mobius form, in `a` and in `1/(1-a)`, for both `c2` and `mu2`, is
+out by one to two orders of magnitude above the data's precision.
+
+That is probably the right answer rather than a gap. `c1` is exact because it
+comes from a local balance where `f` is smooth; `c2` has no such balance, so
+its value is set by the global solution. Pinning it in closed form would mean
+solving the nonlocal problem, whose obstruction is explicit: with `psi` the
+positive frequency part the equation reads
+`a(psi + psi~)(psi'' - psi~'') = (psi' - psi~')(psi' + psi~' - 1)`, and the
+mixed products straddle both halves of the spectrum. If `c2` were elementary,
+De Gregorio would not be hard.
+
 Full detail, including what is not settled, is in [FINDINGS.md](FINDINGS.md).
 
 ## How the pieces fit together
