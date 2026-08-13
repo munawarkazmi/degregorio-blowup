@@ -550,6 +550,33 @@ is why the measured column there sits about 1 percent low at every value of
 `a`, systematically rather than randomly. The prediction was right and the
 measurement was wrong, which is the opposite of how it looked.
 
+## 11. The `pi` separation is exact structure, not a coincidence
+
+The two stagnation points came out exactly `pi` apart at every `a` tested, to
+ten digits, which was noted in finding 7 and left unexplained. It is forced,
+and the reason is a parity statement.
+
+If `U(y1) = 0` and `U(y1 + pi) = 0`, expand both in Fourier modes. The second
+condition is `sum_k U_k e^(i k y1) (-1)^k = 0`. Adding it to the first kills the
+odd modes and leaves `sum_{k even} U_k e^(i k y1) = 0`; subtracting kills the
+even ones. So the even mode part and the odd mode part of `U` must each vanish
+at `y1` **separately**. That is two conditions where a generic zero of `U`
+satisfies one, so it cannot happen by accident.
+
+Checked directly at `N = 4096`, `a = 0.8`, against a scale of `|U| = 3.48`:
+
+| point | `U_even` | `U_odd` |
+| --- | --- | --- |
+| `y1 = 0.974077800` | -1.0e-15 | +1.1e-15 |
+| `y2 = 4.115670454` | -2.9e-15 | +2.5e-15 |
+
+Both halves vanish at both points, at machine precision. The separation is
+`pi` to within 9e-16.
+
+This is not the same as `f` having only odd modes, which it does not: `|f_2|` is
+3315 against `|f_1|` of 6520, so the mode 2 content is comparable to mode 1. The
+symmetry lives in where `U` vanishes, not in the spectrum.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this
