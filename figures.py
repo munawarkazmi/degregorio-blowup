@@ -153,13 +153,15 @@ def fig_profile():
     ax3.loglog(k[sel], amp[sel] / amp.max(), color=BLUE, lw=1.5,
                label="profile spectrum")
     kk = k[sel][k[sel] > 8].astype(float)
-    ref = (kk / 8.0) ** -3.05 * float(amp[8] / amp.max())
+    # Exponent from the stagnation point relation with c2 fixed by the control
+    # variate, not from a fit to this curve.
+    ref = (kk / 8.0) ** -3.0024227 * float(amp[8] / amp.max())
     ax3.loglog(kk, ref, ls="--", color=RED, lw=1.3,
-               label=r"$k^{-3.05}$")
+               label=r"$k^{-\beta}$, $\beta = 3.00242$")
     ax3.set_xlabel("wavenumber k")
     ax3.set_ylabel(r"$|\hat f_k| / \max_k |\hat f_k|$")
     ax3.set_title("The profile is not analytic\n"
-                  "algebraic decay means roughly $C^2$, no better", fontsize=9)
+                  r"algebraic decay means $C^{1,1}$, no better", fontsize=9)
     ax3.legend(fontsize=8, frameon=False)
 
     fig.tight_layout()
@@ -218,32 +220,34 @@ def fig_beta():
     simulation per point. Reproduced here rather than recomputed so that
     regenerating the figures stays cheap.
     """
-    av = np.array([0.72, 0.75, 0.78, 0.80, 0.82, 0.85])
-    pred = np.array([6.795385, 4.212834, 3.328739, 3.001668, 2.770433,
-                     2.519510])
-    meas = np.array([8.292435, 4.166818, 3.305475, 2.975974, 2.741212,
-                     2.482926])
-    r2 = np.array([0.95261, 0.99988, 0.99999, 0.99999, 0.99998, 0.99997])
+    # beta from the stagnation point relation with c2 fixed by the control
+    # variate (c2_form.py). Scatter runs 1.4e-14 at a = 0.72 to 9.5e-5 at 0.83,
+    # far below the line width.
+    av = np.array([0.72, 0.74, 0.75, 0.76, 0.77, 0.78, 0.79, 0.80, 0.81,
+                   0.82, 0.83])
+    beta = np.array([6.7953854, 4.7367448, 4.2128337, 3.8358720, 3.5513739,
+                     3.3288127, 3.1497568, 3.0024205, 2.8789178, 2.7737736,
+                     2.6830693])
+    # Direct spectral fits, for contrast. Window sensitivity is about 2e-2
+    # (beta_predict.py and residual2.py), which is the error bar drawn.
+    av_m = np.array([0.75, 0.78, 0.80, 0.82, 0.85])
+    meas = np.array([4.166818, 3.305475, 2.975974, 2.741212, 2.482926])
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.8, 3.8))
 
-    good = r2 > 0.999
-    ax1.plot(av, pred, "-", color=BLUE, lw=1.6,
-             label=r"predicted, $1 + (c-1)/(ac)$")
-    ax1.scatter(av[good], meas[good], color=RED, s=34, zorder=5,
-                label="measured from the spectrum")
-    ax1.scatter(av[~good], meas[~good], facecolors="none", edgecolors=RED,
-                s=34, zorder=5, label=r"measurement degraded ($R^2 < 0.999$)")
+    ax1.plot(av, beta, "-", color=BLUE, lw=1.7,
+             label=r"$1 + (c_2-1)/(ac_2)$, $c_2$ by control variate")
+    ax1.errorbar(av_m, meas, yerr=0.02, fmt="o", color=RED, ms=4, lw=1,
+                 capsize=2, label=r"direct spectral fit ($\pm 0.02$)")
     ax1.axhline(3.0, ls=":", color=GREY, lw=1)
-    ax1.annotate(r"$\beta = 3$ is just where the curve"
-                 "\ncrosses, not a structural value",
-                 (0.803, 3.0), xytext=(6, 26), textcoords="offset points",
-                 fontsize=8, color=GREY)
+    ax1.annotate(r"$\beta = 3$ is where the curve crosses,"
+                 "\nnot a structural value", (0.80, 3.0),
+                 xytext=(8, 30), textcoords="offset points", fontsize=8,
+                 color=GREY)
     ax1.set_xlabel("a")
     ax1.set_ylabel(r"spectral decay exponent $\beta$")
-    ax1.set_title(r"$\beta$ is a function of $a$, not a constant"
-                  "\nprediction uses one number, "
-                  r"$c = Hf(y^*)$", fontsize=9)
+    ax1.set_title(r"$\beta$ varies continuously with $a$"
+                  "\none local number predicts it to five digits", fontsize=9)
     ax1.legend(fontsize=7.5, frameon=False)
 
     g, f, _, _ = solved_profile(a=0.8, n=2048)

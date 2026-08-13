@@ -4,6 +4,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs}
 \usepackage{graphicx}
+\graphicspath{{../}{./}}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 
 \newtheorem{proposition}{Proposition}
@@ -205,6 +206,19 @@ global existence appears below $a=1$; instead $T$ diverges as $a\to 1$.}
 \label{tab:times}
 \end{table}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_blowup.png}
+\caption{Left: reciprocal amplitude
+$\norm{\omega_0}_\infty/\norm{\omega(t)}_\infty$ for several values of $a$. A
+straight line reaching zero is blowup with rate exponent one. Right: the
+blowup time $T(a)$ from $\omega_0 = \sin x$, on a logarithmic scale. Both
+endpoints are known exactly, $T(0)=2$ and $T(1)=\infty$, and the curve runs
+between them without any transition to global existence at intermediate $a$.
+The agreement of $T(1/2)$ with $\pi$ is marked but unexplained.}
+\label{fig:blowup}
+\end{figure}
+
 \begin{remark}
 The value at $a=1/2$ agrees with $\pi$ to $1.2\times10^{-11}$ and continues to
 do so under refinement across an eightfold range in $N$. We have no explanation
@@ -223,8 +237,23 @@ carries an amplitude of $10^6$ without strain. At $a=0.4$ the same comparison
 moves by $0.72$ over a single decade and resolution is exhausted by
 $\norm{\omega}_\infty = 5.8\times 10^3$.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_frozen.png}
+\caption{Normalised spectra
+$\abs{\hat\omega_k}/\max_k\abs{\hat\omega_k}$ at successive decades of
+amplitude growth. Taking the modulus removes the translation, so no alignment
+of the peaks is required and the comparison assumes nothing about the profile
+shape. Left, $a=0.4$: the curves spread steadily as the peak narrows, and
+resolution is exhausted by $\norm{\omega}_\infty = 5.8\times10^3$. Right,
+$a=0.8$: five curves spanning four decades of growth lie on top of one
+another, so the shape is fixed and only the height diverges.}
+\label{fig:frozen}
+\end{figure}
+
 We refer to the first behaviour as a \emph{frozen} profile and the second as
-\emph{narrowing}. Only the frozen case is analysed below.
+\emph{narrowing}, illustrated in Figure \ref{fig:frozen}. Only the frozen case
+is analysed below.
 
 \section{The profile equation}
 \label{sec:profile}
@@ -294,6 +323,21 @@ $4096$ & $4.154779433$ & $4.154737187$ & $1.0\times10^{-5}$\\
 \label{tab:amp}
 \end{table}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_profile.png}
+\caption{The blowup profile at $a=0.8$. Left: $f(y)$, broad and gentle, with
+$\norm{f}_\infty = 4.16$ against $\max\abs{f'} = 7.04$, and exactly odd about
+each stagnation point. Centre: the Newton residual for \eqref{eq:profile},
+starting from the profile taken directly out of the simulation, which already
+satisfies the equation to $1.3\times10^{-5}$; convergence is quadratic.
+Right: the profile spectrum on logarithmic axes against
+$k^{-\beta}$ with $\beta = 3.00242$ from \eqref{eq:beta}, the exponent
+predicted in Section \ref{sec:control} rather than fitted to this curve. The
+decay is algebraic, not exponential, so the profile is not analytic.}
+\label{fig:profile}
+\end{figure}
+
 The shared value drifts by $1.5\times10^{-3}$ between the two resolutions,
 which is not Newton finding different branches: re-solving at $N=4096$ from the
 interpolated $N=2048$ solution returns the same answer, and mapping it back
@@ -352,6 +396,20 @@ to the two symmetry directions, which is the precise sense in which the
 dynamics selects it, and is consistent with a simulation from $\sin x$ reaching
 it without tuning. The same test applied to profiles taken from simulations at
 $a=0.65,0.70,0.75,0.80$ returns stability in every case.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.72\textwidth]{fig_spectrum.png}
+\caption{Spectrum of the linearisation \eqref{eq:renorm} about the $a=0.8$
+profile, so that the abscissa is a growth rate in renormalised time $s$. The
+two marked eigenvalues are forced by symmetry, at $1$ with eigenvector $f$
+(freedom to shift the blowup time) and at $0$ with eigenvector $f'$
+(translation), both verified against Proposition \ref{prop:forced} to
+$10^{-11}$ or better. Nothing else lies in the closed right half plane. The
+modes omitted from the view are the high wavenumber ones, strung along
+$\mathrm{Re}\,\lambda \approx -1$ and stable.}
+\label{fig:spectrum}
+\end{figure}
 
 We note two limitations. The leading stable eigenvalue does not converge in $N$,
 taking values $-0.54$, $-0.146$, $-0.41$ at $N=512,1024,2048$, so the rate of
@@ -423,8 +481,8 @@ growth of this deviation at larger $a$ tracks the profile's own accuracy, which
 degrades as the second exponent falls toward one.
 
 \paragraph{Two stagnation points, exactly $\pi$ apart.} Numerically $U$ has
-exactly two zeros and their separation is $\pi$ to within $9\times10^{-16}$ for
-every $a$ tested. This is forced. If $U(y_1)=0$ and $U(y_1+\pi)=0$, then
+exactly two zeros, shown with the profile in Figure \ref{fig:beta}, and their
+separation is $\pi$ to within $9\times10^{-16}$ for every $a$ tested. This is forced. If $U(y_1)=0$ and $U(y_1+\pi)=0$, then
 expanding both conditions in Fourier modes and adding annihilates the odd
 modes while subtracting annihilates the even ones, so the even mode part and
 the odd mode part of $U$ must each vanish at $y_1$ separately. That is two
@@ -496,6 +554,21 @@ spread of the corrected values across resolutions and measures self
 consistency, not residual systematic error.}
 \label{tab:c2}
 \end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_beta.png}
+\caption{Left: the spectral decay exponent $\beta$ against $a$, from
+\eqref{eq:beta} with $c_2$ fixed by the control variate. The curve is smooth
+and $\beta=3$ is simply where it crosses. Direct fits of
+$\abs{\hat f_k}\sim k^{-\beta}$ to the spectrum are shown for contrast with
+error bars of $\pm 0.02$, which is their window sensitivity; the relation is
+four orders of magnitude more accurate than measuring the exponent directly.
+Right: the profile $f$ and its velocity $U$ at $a=0.8$. The dashed lines mark
+the two zeros of $U$, which are exactly $\pi$ apart, and $f$ vanishes at both
+as Proposition \ref{prop:exponent} requires.}
+\label{fig:beta}
+\end{figure}
 
 \begin{remark}[$\beta \ne 3$]
 The value $\mu_2 = 2$, and hence $\beta=3$, would require
