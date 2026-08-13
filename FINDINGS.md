@@ -577,6 +577,70 @@ This is not the same as `f` having only odd modes, which it does not: `|f_2|` is
 3315 against `|f_1|` of 6520, so the mode 2 content is comparable to mode 1. The
 symmetry lives in where `U` vanishes, not in the spectrum.
 
+## 12. `c2` to five digits, using `c1` as a control variate
+
+No closed form for `c2` is likely. Writing `f = i(psi' - psi~')` and
+`U = psi + psi~` with `psi` the positive frequency part, the equation reads
+
+```
+a (psi + psi~)(psi'' - psi~'') = (psi' - psi~')(psi' + psi~' - 1)
+```
+
+and the mixed products `psi psi~''` and `psi~ psi''` straddle both halves of
+the spectrum. That refusal to separate is the whole difficulty of the model,
+and it is why `a = 0` collapses to a Riccati equation and `a != 0` does not.
+
+Extrapolating in `N` fails too. Seven resolutions give `c2` bouncing between
+-1.6486 and -1.6681 with no monotone trend, so a three parameter fit returns
+exponent 3.3, amplitude 1.1e7 and residual 4.2e-3, which is a fit to noise.
+
+The lever is finding 8. `c1 = 1/(1-a)` **exactly**, so its measured wander is a
+direct gauge of the discretisation error in reading anything off the profile.
+`c2` comes off the same profile and carries the same error, entering linearly,
+so `c2` is a linear function of `c1` across resolutions and evaluating that
+line at the exact `c1` cancels the error without needing its size or its rate.
+
+At `a = 0.8`, regressing over `N` = 512 to 4096:
+
+```
+c2 = -0.980361 c1 + 3.240505,     R^2 = 0.99999744
+```
+
+| `N` | `c1 - 5` | `c2` raw | `c2` corrected |
+| --- | --- | --- | --- |
+| 512 | -1.30e-2 | -1.64861379 | -1.66131558 |
+| 1024 | +6.93e-3 | -1.66810312 | -1.66131304 |
+| 2048 | -3.34e-3 | -1.65801989 | -1.66129143 |
+| 4096 | +1.70e-3 | -1.66296777 | -1.66130056 |
+
+The raw spread of 1.95e-2 collapses to 2.43e-5, a factor of **801**. Even
+`N = 512` lands within 1.5e-5 of the value from `N = 4096` once corrected.
+
+```
+c2   = -1.66130027 +/- 1.0e-05
+mu2  =  2.00242268 +/- 4.6e-06
+beta =  3.00242268
+```
+
+### `beta = 3` is now excluded
+
+`mu2 = 2` exactly would require `c2 = 1/(1-2a) = -1.66666667`. The corrected
+value misses that by 5.37e-3, which is 500 times the scatter of the corrected
+points. `mu2 - 2 = +2.42e-3` against a scatter of 4.6e-6.
+
+Treat that factor as a margin rather than a p value: the scatter measures how
+consistently the correction reproduces itself across resolutions, not how much
+residual systematic it leaves behind. But the raw error was 1e-2 and the
+correction removed 800 times it, so even allowing a residual systematic ten
+times the observed scatter, `mu2 = 2` stays excluded by two orders of
+magnitude.
+
+This closes the question finding 7 opened and finding 10 could not settle. The
+prediction is now 3.0024227 rather than 3.002 +/- 0.005, a thousandfold
+improvement, and it comes from seven cheap solves rather than one expensive
+one. The spectral measurement of `beta` remains good only to 2e-2 and is now
+irrelevant to the answer.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this

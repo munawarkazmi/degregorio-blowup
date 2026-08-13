@@ -246,6 +246,27 @@ windows put the point where the profile turns analytic at `a = 0.662` and
 `a = 0.649`. Same trap as the biased `beta` above, a high `R^2` on a model of
 the wrong shape.
 
+### Getting `c2` to five digits anyway
+
+`c1 = 1/(1-a)` exactly, so its measured wander across resolutions is a direct
+gauge of the discretisation error in reading anything off the profile. `c2`
+comes off the same profile and carries the same error linearly, so regressing
+`c2` against `c1` and evaluating at the exact `c1` cancels it. At `a = 0.8`
+over `N` = 512 to 4096 the regression is `c2 = -0.980361 c1 + 3.240505` at
+`R^2 = 0.99999744`, and the raw spread of 1.95e-2 collapses to 2.43e-5, a
+factor of **801**. Even `N = 512` then lands within 1.5e-5 of `N = 4096`.
+
+```
+c2   = -1.66130027 +/- 1.0e-05
+mu2  =  2.00242268 +/- 4.6e-06
+beta =  3.00242268
+```
+
+**So `beta = 3` is excluded.** `mu2 = 2` would need `c2 = 1/(1-2a) =
+-1.66666667`, and the corrected value misses it by 5.37e-3, some 500 times the
+scatter of the corrected points. The spectral measurement of `beta` is good
+only to 2e-2 and no longer matters to the answer.
+
 Full detail, including what is not settled, is in [FINDINGS.md](FINDINGS.md).
 
 ## How the pieces fit together
