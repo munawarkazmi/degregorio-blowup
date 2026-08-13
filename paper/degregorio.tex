@@ -371,6 +371,18 @@ figure the regression reports.}
 \label{tab:cl}
 \end{table}
 
+\begin{remark}[One signed data]
+\label{rem:onesigned}
+Lei, Liu and Ren \cite{llr2020} proved global regularity on the circle for data
+of one sign at $a=1$. The mechanism appears to reach well below that. From
+$\omega_0 = 1-\cos x$, integrating to $t=200$, the amplitude remains bounded at
+$2.72$, $2.40$ and $2.17$ for $a=0.7$, $0.8$ and $0.9$, while for $a=0.6$ the
+solution reaches $10^6$ by $t=133$ and for $a=0.5$ it exhausts resolution at
+$9.6\times10^3$. The threshold lies between $0.6$ and $0.7$. We record this as
+an observation; it says nothing about the frozen profile, which is reached from
+sign changing data.
+\end{remark}
+
 \section{The profile equation}
 \label{sec:profile}
 
@@ -460,6 +472,61 @@ interpolated $N=2048$ solution returns the same answer, and mapping it back
 down reproduces the $N=2048$ value to $2\times10^{-12}$. Each grid has one
 solution and the simulation finds that grid's solution. The slow convergence is
 explained in Section \ref{sec:stagnation}: the profile is only $C^{1,1}$.
+
+\begin{proposition}[Dilation]
+\label{prop:dilation}
+If $f$ solves \eqref{eq:profile} then so does $f(n\,\cdot\,)$ for every positive
+integer $n$, with the same $\norm{f}_\infty$.
+\end{proposition}
+
+\begin{proof}
+The Hilbert transform commutes with integer dilation on the circle, so
+$\Hil[f(n\,\cdot\,)](x) = (\Hil f)(nx)$. Since the velocity is recovered by
+integrating $U' = \Hil f$, the velocity of $f(n\,\cdot\,)$ is $U(nx)/n$, while
+$\frac{\mathrm{d}}{\mathrm{d}x}f(nx) = nf'(nx)$. The two factors of $n$ cancel
+in the advection term, so
+\[
+  \mathcal{R}\bigl(f(n\,\cdot\,)\bigr)(x)
+  = f(nx)(\Hil f)(nx) - a\,\tfrac{U(nx)}{n}\,n f'(nx)
+  = \bigl[f\,\Hil f - a\,Uf'\bigr](nx) = f(nx). \qedhere
+\]
+\end{proof}
+
+So profiles come in families. The $n$th member carries $2n$ stagnation points
+spaced $\pi/n$, with exponents alternating between the two values of the base
+member, and $\norm{f}_\infty$, $c_1$, $c_2$ and $\beta$ are all unchanged.
+Numerically, $f(n\,\cdot\,)$ solves \eqref{eq:profile} to $10^{-11}$ for
+$n \le 4$, against $2\times 10^{-12}$ for the base profile itself.
+
+\paragraph{Genericity.} Every result here starts from $\omega_0 = \sin x$,
+which is the ground state of the $a=1$ model and therefore not a generic datum.
+Proposition \ref{prop:forced} and the stability computation of Section
+\ref{sec:spectrum} predict that any datum in the basin converges to the same
+profile, and this is testable independently of them. At $a=0.8$ and $N=2048$:
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+datum & $\norm{f}_\infty$ & $c_1$ & $c_2$ & $\beta$\\
+\midrule
+$\sin x$                              & $4.1484819$ & $4.996663$
+                                      & $-1.6580199$ & $3.003911$\\
+$\sin x + 0.3\sin 2x$                 & $4.1484819$ & $4.996663$
+                                      & $-1.6580199$ & $3.003911$\\
+$\sin x + 0.5\cos 2x - 0.2\sin 3x$    & $4.1484819$ & $4.996663$
+                                      & $-1.6580199$ & $3.003911$\\
+$\sin 3x + 0.4\sin 4x$                & $4.1612203$ & $5.006926$
+                                      & $-1.668103$ & $2.999354$\\
+\bottomrule
+\end{tabular}
+\caption{The same profile is reached from every datum tested. The first three
+agree to seven digits. The fourth lands on the $n=2$ member of Proposition
+\ref{prop:dilation}, which on a grid of $2048$ points is represented as
+accurately as the base member on $1024$ points, and indeed reproduces the
+$N=1024$ values of Table \ref{tab:c2} exactly.}
+\label{tab:generic}
+\end{table}
 
 \paragraph{Selection.} Solutions of \eqref{eq:profile} exist over a wider range
 of $a$ than the dynamics selects. Starting Newton from each simulation's own
@@ -803,9 +870,13 @@ integrable and $a\ne 0$ not.
 \label{sec:caveats}
 
 The datum $\sin x$ is not generic: it is precisely the ground state of the
-$a=1$ model, so the results describe how that ground state destabilises as
-transport is weakened, a narrower question than when the family blows up. We
-have not surveyed other data.
+$a=1$ model. Table \ref{tab:generic} shows the same profile reached from three
+sign changing data and, up to Proposition \ref{prop:dilation}, from a fourth
+built entirely from higher modes, which removes the worst form of this
+objection. It does not remove all of it. Four data are not a survey, all four
+are trigonometric polynomials of low degree, and Remark \ref{rem:onesigned}
+shows that data of one sign behave completely differently. What the basin of
+the frozen profile actually looks like is unexamined.
 
 All statements about $a=0.9$ and above are unresolved. The residual of the
 profile equation there does not fall monotonically with the amplitude cap,
