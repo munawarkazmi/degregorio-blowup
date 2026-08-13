@@ -16,6 +16,8 @@
 \newcommand{\Hil}{\mathcal{H}}
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 \newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\Ub}{\bar{U}}
+\newcommand{\Ob}{\bar{\Omega}}
 
 \title{Blowup profiles for the Okamoto, Sakajo and Wunsch family:\\
 exact stagnation point relations and the regularity exponent}
@@ -124,14 +126,36 @@ at $c_l = 0$, $c_\omega = -1$. We claim no novelty for that formulation.
 
 Neither reference performs the local analysis at stagnation points which gives
 Propositions \ref{prop:exponent} and \ref{prop:c1}, nor the linear stability
-computation of Section \ref{sec:spectrum}. Two points of contact deserve
-attention rather than dismissal. First, \cite{htw2026} reports a structural
-transition at $a^{c,2}\approx 0.751$, which is close to where the frozen regime
-begins here, and the two may be the same phenomenon seen on different domains.
-Second, \cite{htw2026} obtains an exponent $1/(1-a)$ for its singular profiles
-at $a<0$, algebraically identical to the closed form of Proposition
-\ref{prop:c1} although attached to a different quantity. Whether either is a
-coincidence is open.
+computation of Section \ref{sec:spectrum}. Two numerical coincidences with
+\cite{htw2026} invited closer comparison, and Remark \ref{rem:general} is what
+makes that comparison possible, since it puts both settings in one formula.
+
+\paragraph{The transition near $a\approx 0.75$.} \cite{htw2026} identifies
+$a^{c,2}\approx 0.751$ as the value at which its self similar profile
+\emph{loses} stability as $a$ increases. The frozen profile studied here
+\emph{gains} selection as $a$ increases through roughly the same value. These
+are not in conflict, and are not the same object: their profiles carry
+$c_l \ne 0$ and therefore narrow, which in the language of Section
+\ref{sec:regimes} places them in the narrowing regime, whereas a frozen profile
+requires $c_l = 0$ exactly. The natural reading is that the two are
+complementary halves of one exchange of stability, in which the narrowing
+attractor gives way to the frozen one. We record this as a hypothesis rather
+than a result: the domains differ, circle against line, and we have not
+computed their profile.
+
+\paragraph{The constant $1/(1-a)$.} Theorem 2.6 of \cite{htw2026} gives, for
+$a<0$, an exact solution $\Ob_a(X) = -\sin(\pi\mu)\,\mathbf{1}_{X>1}
+\abs{1-X}^{-\mu}$ with $\mu = 1/(1-a)$ and scaling factors
+$c_{l,a} = 1-a$, $c_{\omega,a}=-1$. The resemblance to Proposition
+\ref{prop:c1} is superficial. Their $\mu$ is an exponent and equals $1/c_{l,a}$
+in their normalisation; ours is a value of $\Hil f$ at a point where it is
+finite. Equation \eqref{eq:nugeneral} does not even apply at their singular
+point, since $\Hil\Ob = 2/(1-X^2)$ diverges there and the advection velocity
+does not have a simple zero. What the two share is the algebraic origin of the
+factor: $(1-a)$ is what appears whenever the stretching coefficient $1$ is
+balanced against the advection coefficient $a$, entering our case through
+$h(1-a) = 1+c_l$ and theirs through the scaling normalisation. Neither
+statement implies the other.
 
 Our contributions are as follows.
 
@@ -487,6 +511,23 @@ $f'/f = \mu/(y-y_\ast) + O(1)$ with $\mu$ as stated, and integrating gives the
 claim.
 \end{proof}
 
+\begin{remark}[General self similar form]
+\label{rem:general}
+The same computation applies to the full self similar ansatz
+$\omega = (T-t)^{c_\omega}\Omega(x/(T-t)^{c_l})$, whose profile equation is
+$(c_l X + a\,\Ub)\Ob_X = (c_\omega + \Ub_X)\Ob$. A stagnation point is now a
+zero of the total advection velocity $c_l X + a\Ub$ rather than of $\Ub$ alone,
+and writing $h = \Hil\Ob(X_\ast)$ the exponent is
+\begin{equation}
+  \nu = \frac{c_\omega + h}{c_l + a\,h}.
+  \label{eq:nugeneral}
+\end{equation}
+Proposition \ref{prop:exponent} is the case $c_l = 0$, $c_\omega = -1$, which is
+what a frozen profile requires: no spatial rescaling. Likewise a simple zero
+forces $h = (1+c_l)/(1-a)$, of which Proposition \ref{prop:c1} is again the
+$c_l=0$ case.
+\end{remark}
+
 Since $\abs{y}^\mu$ has Fourier coefficients decaying like $k^{-(\mu+1)}$, the
 spectral decay exponent of the profile is
 \begin{equation}
@@ -732,9 +773,10 @@ and \cite{htw2026}, have been read for overlap and none contains Propositions
 regularity statement. This is a narrower check than a full literature survey:
 it covers the papers nearest to this one rather than the field, and for the two
 preprints it rests on a reading of the full text rather than a line by line
-verification of every lemma. The two points of contact noted in Section 1,
-the transition near $a\approx 0.75$ and the recurrence of the constant
-$1/(1-a)$, should be settled before any priority claim is made.
+verification of every lemma. Both numerical coincidences with \cite{htw2026}
+have been examined and neither is an overlap, but the first of them, the
+exchange of stability near $a\approx 0.75$, is stated there as a hypothesis and
+would be worth settling on its own merits.
 
 Finally, nothing here is a proof. A computer assisted proof in this setting, in
 the style of Chen and Hou \cite{chenhou2022}, requires interval arithmetic
