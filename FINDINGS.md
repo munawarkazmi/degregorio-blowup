@@ -641,6 +641,35 @@ improvement, and it comes from seven cheap solves rather than one expensive
 one. The spectral measurement of `beta` remains good only to 2e-2 and is now
 irrelevant to the answer.
 
+### It transfers, and it matters most where the profile is roughest
+
+`mu1 = 1` is exact for every `a`, so the correction is not special to 0.8:
+
+| `a` | `c2` corrected | scatter | `mu2` | `beta` | `beta` before |
+| --- | --- | --- | --- | --- | --- |
+| 0.75 | -0.70940840 | 1.4e-10 | 3.2128337 | 4.2128337 | 4.212834 |
+| 0.78 | -1.22477829 | 1.1e-07 | 2.3288132 | 3.3288132 | 3.328739 |
+| 0.80 | -1.66130027 | 9.5e-06 | 2.0024227 | 3.0024227 | 3.001668 |
+| 0.82 | -2.20020937 | 7.2e-06 | 1.7737832 | 2.7737832 | 2.770433 |
+
+The scatter degrades with `a` for a reason that checks out: at `a = 0.75` the
+profile has `beta = 4.2`, so its own spectrum decays fast enough that the
+discrete solve nearly converges spectrally, while by `a = 0.82` everything is
+algebraic. The size of the correction follows the same pattern, moving the
+seventh digit at `a = 0.75` and the third at `a = 0.82`.
+
+Read the scatter as a consistency check rather than a full error bar. It
+measures how well the correction reproduces itself across resolutions, and a
+residual nonlinear dependence of the error on `c1` would not show up in it. The
+1.4e-10 at `a = 0.75` should not be taken at face value as ten digit accuracy.
+
+**`beta(a)` is now known to between five and ten digits at four values of `a`,
+which is precise enough to test a closed form decisively rather than
+suggestively.** None of the obvious candidates fits. That is the sharpest form
+of the open question in finding 8: `c1` is exact, `c2` is now merely very well
+measured, and the gap between those two statuses is where the remaining
+mathematics sits.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this
