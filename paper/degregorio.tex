@@ -96,27 +96,42 @@ the solution structure is simple enough that the blowup profile can be computed
 directly rather than inferred from a diverging simulation.
 
 \paragraph{Relation to existing work.} Self similar blowup for this family is
-under active study and the present results must be read against it. Huang, Tong
-and Wei \cite{htw2022} construct infinitely many compactly supported self
-similar blowup solutions of the De Gregorio model on the real line, organised
-as eigenfunctions of a compact operator and as solutions of nonlinear
-eigenvalue problems. Huang, Tong and Wang \cite{htw2026} study self similar
-blowup of the generalised model from data with derivative degeneracy, and
-report one scale blowup with regular profiles for $a>0$ against a two scale
-scenario with a singular outer profile for $a\le 0$, constructing an explicit
-family of singular profiles in the latter regime.
+under active study and the present results must be read against it.
 
-Our setting differs in domain, in datum and in parameter range: we work on the
-circle rather than the line, from $\omega_0 = \sin x$ rather than degenerate
-data, and in the window $0.7 \lesssim a \lesssim 0.85$. The fixed point
-formulation \eqref{eq:profile} is the standard self similar profile equation
-and we claim no novelty for it. What we have not been able to establish is
-whether the local relation of Proposition \ref{prop:exponent}, and in
-particular the closed form of Proposition \ref{prop:c1}, appear in that
-literature. They are elementary enough that they may well be known, and this
-draft should not be circulated until that has been checked directly against
-\cite{osw2008}, \cite{htw2022} and \cite{htw2026} rather than against their
-abstracts.
+Okamoto, Sakajo and Wunsch \cite{osw2008} study global existence against
+blowup using a criterion in the spirit of Beale, Kato and Majda together with
+energy estimates, and do not consider self similar profiles. They do fit the
+spectrum in the combined form $\abs{\hat\omega_n} \sim Cn^{-p}e^{-\delta n}$
+and track both parameters in time, observing that $\delta(t)$ decays
+exponentially, which they read as evidence of smoothness for all time, while
+$p(t)$ decreases monotonically and, in their words, they are unable to see its
+asymptotic value from the numerical data. The exponent $\beta$ of
+\eqref{eq:beta} is the analogue of that $p$ for a frozen blowup profile, and
+\eqref{eq:beta} determines it in closed form given one local quantity.
+
+Huang, Tong and Wei \cite{htw2022} construct infinitely many compactly
+supported self similar blowup solutions of the De Gregorio model on the real
+line, organised as eigenfunctions of a compact operator and as solutions of
+nonlinear eigenvalue problems, with profiles in $H^1_0\cap H^2$ and smooth in
+the interior of the support. Huang, Tong and Wang \cite{htw2026} study self
+similar blowup of the generalised model from data with derivative degeneracy,
+reporting one scale blowup with regular profiles for $a>0$ against a two scale
+scenario with singular outer profile for $a\le 0$, and constructing an explicit
+family of singular profiles in the latter regime. Both use the standard self
+similar ansatz, whose profile equation
+$(c_l x + a u)\omega_x = (c_\omega + u_x)\omega$ reduces to \eqref{eq:profile}
+at $c_l = 0$, $c_\omega = -1$. We claim no novelty for that formulation.
+
+Neither reference performs the local analysis at stagnation points which gives
+Propositions \ref{prop:exponent} and \ref{prop:c1}, nor the linear stability
+computation of Section \ref{sec:spectrum}. Two points of contact deserve
+attention rather than dismissal. First, \cite{htw2026} reports a structural
+transition at $a^{c,2}\approx 0.751$, which is close to where the frozen regime
+begins here, and the two may be the same phenomenon seen on different domains.
+Second, \cite{htw2026} obtains an exponent $1/(1-a)$ for its singular profiles
+at $a<0$, algebraically identical to the closed form of Proposition
+\ref{prop:c1} although attached to a different quantity. Whether either is a
+coincidence is open.
 
 Our contributions are as follows.
 
@@ -710,12 +725,16 @@ of the discretisation error on $c_1$ would cancel from it and go undetected, so
 the figure of $1.4\times10^{-14}$ at $a=0.72$ should not be read as fourteen
 digit accuracy.
 
-Priority is unestablished. The bibliographic details of every reference above
-have been verified, but the results themselves have not been checked against
-the contents of those papers, only against their abstracts. Given
-\cite{htw2022} and \cite{htw2026}, the possibility that some or all of Sections
-\ref{sec:regimes} to \ref{sec:stagnation} is known must be treated as likely
-rather than remote until checked.
+On priority. The bibliographic details of every reference above have been
+verified. The three most closely related works, \cite{osw2008}, \cite{htw2022}
+and \cite{htw2026}, have been read for overlap and none contains Propositions
+\ref{prop:exponent} or \ref{prop:c1}, the stability computation, or the
+regularity statement. This is a narrower check than a full literature survey:
+it covers the papers nearest to this one rather than the field, and for the two
+preprints it rests on a reading of the full text rather than a line by line
+verification of every lemma. The two points of contact noted in Section 1,
+the transition near $a\approx 0.75$ and the recurrence of the constant
+$1/(1-a)$, should be settled before any priority claim is made.
 
 Finally, nothing here is a proof. A computer assisted proof in this setting, in
 the style of Chen and Hou \cite{chenhou2022}, requires interval arithmetic
