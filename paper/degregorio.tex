@@ -584,12 +584,33 @@ the solution decays like $1/t$.}
 \label{tab:decay}
 \end{table}
 
-Decay like $1/t$ is the blowup rate with its sign reversed, which is what the
-same profile family produces when the singularity lies in the past. The window
-is open rather than a separatrix, since both $c=0.50$ and $c=0.52$ fail to blow
-up while $0.48$ and $0.56$ do, so the model admits global decaying solutions
-from an open set of sign changing data. The window is narrow, roughly
-$0.49<c<0.55$, and we do not resolve its interior.
+The window is open rather than a separatrix, since both $c=0.50$ and $c=0.52$
+fail to blow up while $0.48$ and $0.56$ do, so the model admits global decaying
+solutions from an open set of sign changing data. The window is narrow, roughly
+$0.49<c<0.55$.
+
+Decay like $1/t$ invites the guess that the interior is self similar. If
+$\omega \sim g/t$ then $R(g) = -g$, and since $\mathcal{R}$ is quadratic
+$\mathcal{R}(-g) = \mathcal{R}(g)$, so $h=-g$ would solve \eqref{eq:profile}:
+the attractor would be a profile entered with the opposite sign, of amplitude
+$2.95$, matching neither member. Writing $s=\log t$ and $W = t\omega$ gives
+$W_s = \mathcal{R}(W)+W$, whose linearisation is $-J$, so such a profile would
+have to be strongly unstable as a blowup profile.
+
+It is not so. Two tests refute it. Newton started from $-t\omega$ at $t=400$
+returns member 1, with $\norm{f}_\infty = 4.1484819$ and its constants and
+spectrum; the guess carried an eight percent residual and was never near a
+solution. And integrating to $t=2000$ separates the amplitude from the shape:
+the decay exponent converges to $1$ and $\norm{\omega}_\infty t$ to $2.950$,
+while the normalised spectrum drifts by $4.7\times10^{-3}$, $1.9\times10^{-2}$,
+$4.6\times10^{-2}$ at $t = 400, 1400, 2000$ and the residual of $-t\omega$ grows
+from $6\times10^{-2}$ to $4.9$ with its sup norm unchanged. Fine structure is
+accumulating at high wavenumber rather than a profile settling.
+
+The decay is therefore asymptotically $1/t$ in amplitude and not self similar
+in shape. What organises the interior of the window is not a fixed profile and
+we do not identify it. The same mechanism accounts for $c=0.52$ exhausting
+resolution at $t=42$ while still decaying.
 
 \section{Linear stability in renormalised time}
 \label{sec:spectrum}

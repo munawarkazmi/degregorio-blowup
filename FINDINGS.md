@@ -820,9 +820,45 @@ than the future.
 The window is open, not a separatrix: `c = 0.5` and `0.52` both fail to blow up
 while `0.48` and `0.56` both do. So sign changing data need not blow up, which
 nothing else here predicts, and the model admits global decaying solutions from
-an open set. The window is narrow, roughly `0.49 < c < 0.55`, and `c = 0.52`
-goes under resolved at `t = 42` while decaying, so the structure inside it is
-not clean.
+an open set. The window is narrow, roughly `0.49 < c < 0.55`.
+
+### The interior is not self-similar
+
+Decay like `1/t` invites an obvious guess. If `w ~ g/t` then `w_t = -g/t^2`
+while `R(w) = R(g)/t^2`, so `R(g) = -g`, and since `R` is quadratic
+`R(-g) = R(g) = -g`, meaning `h = -g` solves `R(h) = h`. The decay attractor
+would be a profile entered with the opposite sign, and `||w||_inf t = 2.95`
+would be its amplitude, matching neither member 1 at 4.148482 nor member 2 at
+4.161220. The stability inverts too: with `s = log t` and `W = tw` the flow is
+`W_s = R(W) + W`, whose linearisation is `-J` for the blowup `J`, so such a
+profile would have to be strongly unstable as a blowup profile.
+
+**That is wrong, on two independent tests.**
+
+Newton started from `h = -tw` at `t=400` walks to member 1, returning
+`||h||_inf = 4.1484819` with member 1's constants and spectrum. The guess
+carried an 8 percent residual in `R(h) = h`, so it was never near a solution
+and Newton simply found the nearest one.
+
+Running to `t = 2000` shows why. The amplitude law is clean and converging:
+
+| `t` | 100 | 400 | 1400 | 2000 |
+| --- | --- | --- | --- | --- |
+| `\|\|w\|\| t` | 3.02517 | 2.97152 | 2.95307 | 2.95045 |
+| decay exponent | - | 1.0102 | 1.0036 | 1.0025 |
+| residual of `-tw` | 6.4e-2 | 2.4e-1 | 2.2 | 4.9 |
+| spectrum drift | - | 4.7e-3 | 1.9e-2 | 4.6e-2 |
+
+The exponent converges to 1 and `||w||_inf t` converges to about 2.950, so the
+amplitude really does follow `1/t`. But the shape does not freeze. The
+normalised spectrum drifts steadily and the residual of `-tw` grows by two
+orders while its sup norm stays fixed, which means fine structure accumulating
+at high wavenumber rather than a profile settling.
+
+So the decay is asymptotically `1/t` in amplitude and not self-similar in
+shape. Whatever organises the interior of the window is not a fixed profile,
+and we do not identify it. The same mechanism explains why `c = 0.52` went
+under resolved at `t = 42`: it is developing the same fine structure faster.
 
 An earlier pass at `N = 1024` put the window at `0.48` to `0.56`, wrongly:
 every run there stopped near `t = 17.5` rather than at the time limit, for a
