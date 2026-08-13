@@ -537,6 +537,60 @@ $5.5\times10^{-5}$ at $a = 0.65, 0.70, 0.75, 0.80, 0.85$. The frozen regime is
 therefore roughly $0.75 \le a \le 0.85$ at the amplitudes reached, degrading
 smoothly rather than switching off.
 
+\section{The basin, and a third outcome}
+\label{sec:basin}
+
+Since $\mathcal{R}$ is quadratic, replacing $\omega_0$ by $\lambda\omega_0$
+rescales time and changes nothing else, so the basin is scale invariant and
+only shape matters. Combined with Proposition \ref{prop:dilation}, the question
+is which member a datum reaches.
+
+\paragraph{Member one is the generic attractor.} Sixteen random data, modes 1
+to 8 with amplitudes falling like $1/k$ and random phases, carrying between 4
+and 10 sign changes, all reach member one with
+$\norm{f}_\infty = 4.148482$ in every case. The number of sign changes does not
+select the member. Higher members are reached only from data with the matching
+exact symmetry: $\sin(kx)$ gives member $k$ for $k\le 4$, and since $\sin(kx)$
+is $2\pi/k$ periodic it remains in that symmetric subspace, while any generic
+perturbation returns the solution to member one.
+
+\paragraph{A topological boundary.} For $\omega_0 = \sin x + m$, which changes
+sign for $m<1$ and is one signed at $m=1$, blowup occurs for every $m<1$ with
+$\norm{f}_\infty = 4.148482$ throughout and $T$ growing as $6.07$, $10.07$,
+$15.52$, $20.28$, $25.88$, $43.81$ at $m=0,0.5,0.8,0.9,0.95,0.99$, and ceases
+at $m=1$ exactly, where the sign change degenerates into a touching zero. We
+fitted the divergence of $T$ and report no law: neither $-\log(1-m)$ nor
+$(1-m)^{-p}$ has stable constants over this range.
+
+\paragraph{A third outcome.} Sign change is not sufficient. For
+$\omega_0 = \sin x + c\sin 2x$ the two members compete, and between them lies a
+window in which the solution does neither:
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lccccccc}
+\toprule
+$c$ & $0.46$ & $0.475$ & $0.48$ & $0.50$ & $0.52$ & $0.56$ & $0.58$\\
+\midrule
+outcome & member 1 & member 1 & member 1 & decay & decay & member 2
+        & member 2\\
+$T$ & $61.4$ & $90.4$ & $108.2$ & - & - & $54.9$ & $44.0$\\
+\bottomrule
+\end{tabular}
+\caption{$T$ diverges on approach from both sides. Inside the window the
+amplitude falls monotonically: at $c=0.5$ it reaches $7.4\times10^{-3}$ by
+$t=400$ with $\norm{\omega}_\infty t$ settling on $3.09, 3.03, 2.99, 2.97$, so
+the solution decays like $1/t$.}
+\label{tab:decay}
+\end{table}
+
+Decay like $1/t$ is the blowup rate with its sign reversed, which is what the
+same profile family produces when the singularity lies in the past. The window
+is open rather than a separatrix, since both $c=0.50$ and $c=0.52$ fail to blow
+up while $0.48$ and $0.56$ do, so the model admits global decaying solutions
+from an open set of sign changing data. The window is narrow, roughly
+$0.49<c<0.55$, and we do not resolve its interior.
+
 \section{Linear stability in renormalised time}
 \label{sec:spectrum}
 
@@ -870,13 +924,17 @@ integrable and $a\ne 0$ not.
 \label{sec:caveats}
 
 The datum $\sin x$ is not generic: it is precisely the ground state of the
-$a=1$ model. Table \ref{tab:generic} shows the same profile reached from three
-sign changing data and, up to Proposition \ref{prop:dilation}, from a fourth
-built entirely from higher modes, which removes the worst form of this
-objection. It does not remove all of it. Four data are not a survey, all four
-are trigonometric polynomials of low degree, and Remark \ref{rem:onesigned}
-shows that data of one sign behave completely differently. What the basin of
-the frozen profile actually looks like is unexamined.
+$a=1$ model. Table \ref{tab:generic} and Section \ref{sec:basin} between them
+answer the worst form of this objection, reaching the same profile from
+sixteen random data, from a continuous family of offsets and from three
+designed data, always with the same constants to seven digits.
+
+What remains open is the shape of the basin boundary rather than its
+existence. Two one parameter families were probed in a space of functions, and
+the decay window of Section \ref{sec:basin} already shows the boundary is not
+simply whether the datum changes sign. Nothing here maps it in more than one
+dimension, and the interior of the decay window is not resolved: $c=0.52$ goes
+under resolved at $t=42$ while still decaying.
 
 All statements about $a=0.9$ and above are unresolved. The residual of the
 profile equation there does not fall monotonically with the amplitude cap,

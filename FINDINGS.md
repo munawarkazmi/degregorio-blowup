@@ -762,6 +762,85 @@ spectrum. That is exactly the non separation which makes `a = 0` a Riccati
 equation and `a != 0` an open problem. If `c2` had an elementary closed form,
 De Gregorio would not be hard.
 
+## 14. The basin at `a = 0.8`, and a third outcome
+
+Three facts shrink the search before it starts. The nonlinearity is quadratic,
+so `w_0 -> lambda w_0` rescales time and nothing else: the basin is scale
+invariant and only shape matters. Profiles come in a family `f(nx)`, so "which
+profile" means "which member", read off as half the number of stagnation
+points. And one signed data does not blow up at all, so a boundary exists.
+
+### Member 1 is the generic attractor
+
+Sixteen random smooth data, modes 1 to 8 with amplitudes falling like `1/k` and
+random phases, between 4 and 10 sign changes: **all sixteen reach member 1**,
+with `||f||_inf = 4.148482` in every case, identical to seven digits. The
+number of sign changes of the datum does not select the member.
+
+Higher members are reached only from data with the matching exact symmetry:
+`sin(kx)` gives member `k` for `k = 1,2,3,4`, with `2k` stagnation points whose
+exponents alternate 1 and 2. Since `sin(kx)` is exactly `2 pi / k` periodic, it
+stays in that symmetric subspace forever. Break the symmetry and it falls back
+to member 1, which is what all the random data do.
+
+### The offset boundary is exactly at a sign change
+
+For `w_0 = sin x + m`, which is sign changing for `m < 1` and one signed at
+`m = 1` where the zero at `-pi/2` becomes a touching point:
+
+| `m` | 0 | 0.5 | 0.8 | 0.9 | 0.95 | 0.99 | 1.0 | 1.2 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| outcome | member 1 | member 1 | member 1 | member 1 | member 1 | member 1 | none | none |
+| `T` | 6.07 | 10.07 | 15.52 | 20.28 | 25.88 | 43.81 | - | - |
+
+The profile is completely insensitive to `m`: `||f||_inf = 4.148482` for every
+value that blows up. The blowup time diverges as `m -> 1` and blowup stops
+exactly where the sign change does, so this boundary is topological. We fitted
+the divergence and report no law: neither `-log(1-m)` nor `(1-m)^-p` is clean,
+their implied constants drifting monotonically, and this repository has a poor
+record with extrapolations of that kind.
+
+### A third outcome, on an open set
+
+For `w_0 = sin x + c\,sin 2x` the two members compete, and between them is
+something neither:
+
+| `c` | 0.46 | 0.475 | 0.48 | 0.50 | 0.52 | 0.56 | 0.58 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| outcome | member 1 | member 1 | member 1 | decay | decay | member 2 | member 2 |
+| `T` | 61.4 | 90.4 | 108.2 | - | - | 54.9 | 44.0 |
+
+`T` diverges on approach from both sides. In the window the solution does not
+blow up: at `c = 0.5` the amplitude falls monotonically to `7.4e-3` by
+`t = 400`, with `||w||_inf \cdot t` settling on 3.09, 3.03, 2.99, 2.97, so it
+**decays like `1/t`**. That is the blowup rate with the sign reversed, which is
+what the same profile family gives when the singularity sits in the past rather
+than the future.
+
+The window is open, not a separatrix: `c = 0.5` and `0.52` both fail to blow up
+while `0.48` and `0.56` both do. So sign changing data need not blow up, which
+nothing else here predicts, and the model admits global decaying solutions from
+an open set. The window is narrow, roughly `0.49 < c < 0.55`, and `c = 0.52`
+goes under resolved at `t = 42` while decaying, so the structure inside it is
+not clean.
+
+An earlier pass at `N = 1024` put the window at `0.48` to `0.56`, wrongly:
+every run there stopped near `t = 17.5` rather than at the time limit, for a
+reason the script never printed, and the classification rested on the amplitude
+at that moment rather than on an outcome.
+
+### What this settles and what it does not
+
+The genericity objection is largely answered. The profile is reached from
+sixteen random data, from a continuous family of offsets, and from three
+designed data, always with the same constants to seven digits. It is not an
+artefact of `sin x`.
+
+What is not answered is the shape of the basin boundary. Two families were
+probed, one at a time, in a space of functions. The decay window shows the
+boundary is not simply "does the datum change sign", and nothing here maps it
+in more than one dimension.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this
