@@ -877,6 +877,106 @@ probed, one at a time, in a space of functions. The decay window shows the
 boundary is not simply "does the datum change sign", and nothing here maps it
 in more than one dimension.
 
+## 15. The critical limit `a -> 1`: an exact reduction, and why it is not enough
+
+At `a = 1` every multiple `A sin x` is steady, since
+`R_1(A sin) = A^2 sin(-cos) - A^2(-sin)(cos) = 0`. The critical case has a
+**line** of equilibria, destroyed for `a < 1`. Measuring `T` by
+`T = t + ||f||/||w||`, exact for a frozen profile and needing no fit:
+
+| `a` | 0.80 | 0.90 | 0.93 | 0.95 | 0.96 | 0.97 | 0.98 | 0.99 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `T` | 6.0719 | 10.7569 | 14.0844 | 17.7129 | 20.4591 | 24.5830 | 32.1786 | 56.9742 |
+| local `p` | - | 0.828 | 0.755 | 0.681 | 0.646 | 0.638 | 0.664 | **0.824** |
+
+**The exponent does not converge.** It falls from 0.83 to 0.64 and then climbs
+back to 0.82 at the smallest `eps`. An intermediate reading of "about 0.65"
+taken from the middle of that range was premature; the last point overturns it.
+All that survives is `T eps` decreasing monotonically throughout, 1.214 down to
+0.570, so `T` grows strictly slower than `1/eps`, which already excludes the
+naive drift argument.
+
+No functional form fits. Over the last points, `C eps^-p` gives rms 0.99,
+`C/eps + D` gives 0.71, `C log(1/eps) + D` gives 4.22, and
+`A/eps + B log(1/eps) + C` gives 0.38, all large against `T` values of 6 to 57.
+The asymptotic regime has not been reached by `eps = 0.01`, and reaching
+`eps = 0.001` would need roughly 30 times the 866,000 steps that point already
+took.
+
+### The parity hypothesis, refuted
+
+The guess was that mode 2 feeds back into mode 1 only at quadratic order, the
+linear term vanishing by parity, which would give `p = 2/3`. Doing the
+calculation kills it. With `omega = A sin x + B sin 2x`,
+
+```
+omega H omega = -(A^2/2) sin2x - AB sin3x - (B^2/2) sin4x
+u omega_x     = -(A^2/2) sin2x - (5AB/4) sin3x + (3AB/4) sin x - (B^2/2) sin4x
+```
+
+The `sin x` terms cancel in the first but not the second, so
+`R_a = omega H omega - a u omega_x` has coefficients
+
+| mode | 1 | 2 | 3 | 4 |
+| --- | --- | --- | --- | --- |
+| coefficient | `-(3a/4)AB` | `-(eps/2)A^2` | `(5a/4-1)AB` | `-(eps/2)B^2` |
+
+verified against the code to `1e-17`. **The linear feedback is present**, with
+coefficient `-3a/4`. There is no parity cancellation and no route to 2/3.
+
+### What the reduction does give
+
+The two mode system `A' = -(3a/4)AB`, `B' = -(eps/2)A^2` integrates exactly.
+With `L = log A` at `a = 1`, `L' = -(3/4)B` and `L'' = (3 eps/8) e^{2L}`, a
+Liouville equation. Multiplying by `L'` with `L(0)=L'(0)=0` gives
+`L'^2 = (3 eps/8)(e^{2L}-1)`, and since
+`integral dL / sqrt(e^{2L}-1) = arccos(e^{-L}) -> pi/2`,
+
+```
+T = (pi/2) sqrt(8 / (3 eps)) = 2.56510 eps^(-1/2)
+```
+
+Checked against a two mode Galerkin run, the ratio `T / (2.5651 eps^(-1/2))`
+reads 1.11803, 1.05409, 1.02598, 1.01015, 1.00504 at
+`eps = 0.2, 0.1, 0.05, 0.02, 0.01`. The reduction is exact and gives
+`p = 1/2`.
+
+### The exponent is a cascade effect
+
+Neither 1 nor 1/2 nor 2/3 is the answer, and the reason is visible in how the
+truncated exponent depends on how many modes are retained:
+
+| modes | 2 | 4 | 6 | 8 | 12 | 24 | full |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `p` | 0.474 | 0.506 | 0.518 | 0.525 | 0.536 | 0.554 | ~0.65 |
+
+The exponent climbs steadily with mode count and is still climbing at 24 modes.
+So `p` is set by the cascade past mode 2, no finite reduction produces it, and
+the two mode Liouville result is a lower bound on the mechanism rather than the
+mechanism.
+
+The three mode truncation is degenerate and should not be read as part of that
+trend: it gives `T = 405` at `eps = 0.1` and no blowup at all at 0.05 or 0.02,
+so adding exactly mode 3 suppresses the instability that modes 2 and 4 sustain.
+
+**Status of `p`.** Not determined. The local exponent oscillates between 0.64
+and 0.83 across `0.01 <= eps <= 0.15` with no trend, so no value should be
+quoted for the full equation.
+
+What is settled is narrower and worth separating from what is not:
+
+- `p = 1`, from the naive drift argument, is excluded. `T eps` falls
+  monotonically by a factor of two across the range.
+- `p = 2/3` is excluded by the calculation itself, not by numerics: the linear
+  feedback coefficient is `-(3a/4)AB` and does not vanish.
+- `p = 1/2` is **exact** for the two mode system, with the constant
+  `(pi/2)sqrt(8/3) = 2.56510`, confirmed to 0.5 percent.
+- The full exponent exceeds 1/2 and is set by the cascade, since the truncated
+  value climbs monotonically with mode count and is still climbing at 24 modes.
+
+The gap between the last two is the open question. A reduction that captures
+the cascade, rather than a truncation that discards it, is what would close it.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this
