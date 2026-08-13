@@ -134,14 +134,30 @@ makes that comparison possible, since it puts both settings in one formula.
 $a^{c,2}\approx 0.751$ as the value at which its self similar profile
 \emph{loses} stability as $a$ increases. The frozen profile studied here
 \emph{gains} selection as $a$ increases through roughly the same value. These
-are not in conflict, and are not the same object: their profiles carry
-$c_l \ne 0$ and therefore narrow, which in the language of Section
-\ref{sec:regimes} places them in the narrowing regime, whereas a frozen profile
-requires $c_l = 0$ exactly. The natural reading is that the two are
-complementary halves of one exchange of stability, in which the narrowing
-attractor gives way to the frozen one. We record this as a hypothesis rather
-than a result: the domains differ, circle against line, and we have not
-computed their profile.
+are not the same object: their profiles carry $c_l \ne 0$ and therefore narrow,
+which in the language of Section \ref{sec:regimes} places them in the narrowing
+regime, whereas a frozen profile requires $c_l=0$ exactly. It is tempting to
+read the two as complementary halves of one exchange of stability, in which the
+narrowing attractor gives way to the frozen one.
+
+Table \ref{tab:cl} tests that reading and does not support it. The mechanism
+survives: $c_l$ falls smoothly to zero rather than jumping, so the narrowing
+branch merges with the frozen one rather than being replaced by it, which is
+consistent with an exchange. The \emph{location} does not. Where $c_l$ reaches
+zero cannot be pinned from these data: fitting $c_l \sim A(a_c-a)^p$ over the
+last resolved points is degenerate, admitting $(a_c,p)$ near $(0.79, 2.1)$,
+$(0.80, 2.6)$ and $(0.82, 3.3)$ with comparable quality, and by $a=0.78$ the
+measurement is already at its noise floor. A linear extrapolation returns
+$0.775$, agreeably close to $0.751$, but $c_l(a)$ is convex and a straight line
+through convex data underestimates its root, which is the same trap that
+produced a spurious spectral exponent in Section \ref{sec:control}.
+
+We therefore withdraw the numerical coincidence. What can be said is that a
+branch merger occurs somewhere in $0.78 \lesssim a_c \lesssim 0.82$, that this
+is the right kind of event to pair with the instability reported in
+\cite{htw2026}, and that the present measurement cannot distinguish that
+interval from $0.751$ sharply enough to claim they are the same. Settling it
+needs their profile computed on the circle, which we have not done.
 
 \paragraph{The constant $1/(1-a)$.} Theorem 2.6 of \cite{htw2026} gives, for
 $a<0$, an exact solution $\Ob_a(X) = -\sin(\pi\mu)\,\mathbf{1}_{X>1}
@@ -316,6 +332,32 @@ another, so the shape is fixed and only the height diverges.}
 We refer to the first behaviour as a \emph{frozen} profile and the second as
 \emph{narrowing}, illustrated in Figure \ref{fig:frozen}. Only the frozen case
 is analysed below.
+
+The distinction is quantitative. In the general self similar ansatz of Remark
+\ref{rem:general}, the peak width scales like $(T-t)^{c_l}$ while the amplitude
+grows like $(T-t)^{-1}$, so $\text{width}\sim\text{amplitude}^{-c_l}$ and $c_l$
+is minus the slope of one against the other on logarithmic axes. A frozen
+profile is exactly $c_l=0$. Measuring the width as the half width at half
+maximum around the peak, which is robust whether the spectrum is exponential or
+algebraic, gives Table \ref{tab:cl}. The method is calibrated at $a=0$, where
+the exact solution \eqref{eq:clmexact} has width proportional to $(2-t)$ and
+amplitude $4/(4-t^2)$, so $c_l=1$; the measurement returns $1.048$.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lcccccccc}
+\toprule
+$a$ & $0$ & $0.2$ & $0.4$ & $0.5$ & $0.6$ & $0.7$ & $0.75$ & $0.8$\\
+\midrule
+$c_l$ & $1.066$ & $0.748$ & $0.512$ & $0.325$ & $0.179$ & $0.040$
+      & $0.0068$ & $0.0012$\\
+\bottomrule
+\end{tabular}
+\caption{The spatial scaling exponent measured from the dynamics. The exact
+value at $a=0$ is $1$. Beyond $a\approx 0.78$ the measurement is at its noise
+floor of about $10^{-3}$ and $c_l$ is indistinguishable from zero.}
+\label{tab:cl}
+\end{table}
 
 \section{The profile equation}
 \label{sec:profile}
