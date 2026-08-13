@@ -188,15 +188,34 @@ analytic factor multiplying `|y-y*|^mu`, which contributes `k^-(mu+2)` and
 faster. Both effects identified, neither is the `k^-2` term that looked
 obvious: `f'` is continuous at both stagnation points to 4e-12.
 
-The clean window is where both are small, near `k / k_cut = 0.19`:
+The clean window is where both are small, near `k / k_cut = 0.19`, and there
+`N = 4096` and `N = 8192` give 3.00303 and 3.00291 against a predicted
+3.001668.
 
-| | `beta` | error vs 3.001668 |
+**Do not read that as agreement to 0.04 percent.** It is reproducibility, not
+accuracy. Applying the same window to the same estimator on two similar spectra
+returns the same biased answer, which says nothing about how close either is to
+the truth. Shifting the window from `128 to 512` across to
+`0.094 to 0.375 k_cut`, the same window to three digits, moves the answer from
+3.00315 to 2.98626. Across ten reasonable windows:
+
+| estimator | range | spread |
 | --- | --- | --- |
-| `N = 4096`, 128 to 512 | 3.00303 | +1.4e-3 |
-| `N = 8192`, 256 to 1024 | 3.00291 | +1.2e-3 |
+| binned, RMS per bin | 2.9829 to 3.0072 | 2.4e-2 |
+| raw, every mode | 3.0132 to 3.0510 | 3.8e-2 |
 
-**Two independent resolutions agree with the prediction to 0.04 percent, and
-with each other to 1e-4.**
+Unbinning hurts rather than helps, and biases the other way, since RMS binning
+is energy weighted while an unbinned log fit is a geometric mean. So the honest
+figures are:
+
+| quantity | value | limited by |
+| --- | --- | --- |
+| `beta` predicted | 3.002 +/- 0.005 | resolution, `f` is only `C^1,1` |
+| `beta` measured | 3.00 +/- 0.02 | choice of estimator and window |
+
+They agree, and nothing finer is resolvable here. The prediction is the better
+number of the two by a factor of four, so the spectral fits do not confirm the
+formula so much as fail to contradict it.
 
 So the regularity of the blowup profile varies continuously with `a`, and
 `beta = 3` is just where that curve happens to cross. The earlier reading of a

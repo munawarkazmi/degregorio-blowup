@@ -478,10 +478,68 @@ answer:
 | `N = 4096`, 128 to 512 | 3.00303 | +1.4e-3 |
 | `N = 8192`, 256 to 1024 | 3.00291 | +1.2e-3 |
 
-Two independent resolutions agreeing with the prediction to 0.04 percent, and
-with each other to 1e-4. The residual `+1.3e-3` is consistent across both, so
-it is systematic rather than noise, most likely the tail of the low `k`
-correction still leaking into the window.
+Two resolutions agreeing with the prediction to 0.04 percent, and with each
+other to 1e-4.
+
+**That reading was wrong, and finding 10 retracts it.** The agreement is
+reproducibility, not accuracy: the same deterministic window bias applied to
+two similar spectra returns the same biased answer. The measurement is not
+good to 1e-4, or to 1e-3, and the residual quoted here is not a real quantity.
+
+## 10. Retraction: the measurement is only good to about 2e-2
+
+Chasing the `+1.3e-3` residual established that it does not exist to be chased.
+
+Three checks, in order of how much they moved.
+
+**Root finding was never the issue.** Polishing the zero of `U` by Newton on
+the spectral interpolant, rather than linear interpolation of the sign change,
+changes `mu2` by 0 to 4e-16. The linear estimate was already landing on the
+zero to machine precision, `|U(y*)| = 5.7e-16`. So the 4.6e-3 spread of `mu2`
+across `N` is the profile's own algebraic convergence and cannot be reduced
+this way.
+
+**Which profile is measured barely matters.** Simulated against Newton solved
+at `N = 4096` gives 3.003025 against 3.003150 over the same band, a difference
+of 1.3e-4, and their spectra differ by 2e-4 relative. Worth checking, since the
+prediction reads `c` off one particular profile, but not the explanation.
+
+**The estimator is the whole story.** The window `128 to 512` gives 3.003150.
+The window `0.094 to 0.375 k_cut`, which is 128.31 to 511.88 and the same
+window to three digits, gives 2.986260. With three or four bins in a fit, which
+modes land in which bin dominates the slope. Across ten reasonable windows:
+
+| estimator | range | spread |
+| --- | --- | --- |
+| binned, RMS per bin | 2.9829 to 3.0072 | 2.4e-2 |
+| raw, least squares over every mode | 3.0132 to 3.0510 | 3.8e-2 |
+
+Unbinning does not help, it hurts, and it biases the other way: the binned RMS
+is energy weighted while an unbinned log fit is a geometric mean, and where the
+spectrum has scatter those two diverge. The ranges barely overlap. The raw
+estimator sits `+2.25e-2` above the prediction on average, and its gap is flat
+across a 4x range in `N`:
+
+| `N` | 2048 | 4096 | 8192 |
+| --- | --- | --- | --- |
+| gap | +1.68e-2 | +1.54e-2 | +1.64e-2 |
+
+A discretisation error shrinks under refinement. This does not, which is what
+makes it the estimator rather than the grid.
+
+### The honest numbers
+
+| quantity | value | limited by |
+| --- | --- | --- |
+| `beta` predicted | 3.002 +/- 0.005 | resolution, since `f` is only `C^1,1` |
+| `beta` measured | 3.00 +/- 0.02 | choice of estimator and window |
+
+They agree, and nothing finer is resolvable with this machinery. The `+1.3e-3`
+residual was more than an order of magnitude below the measurement's own noise
+floor. The prediction is the better estimate of the two, by a factor of four,
+which inverts how findings 6 and 7 read: the formula is not being checked
+against a more reliable measurement, it *is* the more reliable number, and the
+spectral fits merely fail to contradict it.
 
 ### Practical consequence
 
