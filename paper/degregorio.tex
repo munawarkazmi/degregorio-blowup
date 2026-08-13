@@ -1,0 +1,665 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1.15in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}[proposition]{Lemma}
+\theoremstyle{definition}
+\newtheorem{remark}[proposition]{Remark}
+
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\Hil}{\mathcal{H}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+
+\title{Blowup profiles for the Okamoto, Sakajo and Wunsch family:\\
+exact stagnation point relations and the regularity exponent}
+
+\author{Munawar Kazmi}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study finite time blowup in the one parameter family of one dimensional
+models for the three dimensional Euler vorticity equation introduced by
+Okamoto, Sakajo and Wunsch, which interpolates between the Constantin, Lax and
+Majda model at $a=0$ and the De Gregorio model at $a=1$. Starting from
+$\omega_0 = \sin x$ on the circle we find finite time blowup for every $a<1$
+with rate exponent one, and two structurally distinct mechanisms: for small $a$
+the peak narrows, while for $a$ in a window around $0.8$ the normalised
+spectrum freezes and the solution converges to a fixed profile whose amplitude
+alone diverges. In the second regime the profile satisfies the fixed point
+equation $\mathcal{R}(f)=f$, where $\mathcal{R}$ is the same quadratic
+nonlinearity that drives the evolution. This equation admits no free scaling,
+so it determines the profile amplitude outright, and that amplitude is
+independently measurable from the simulation; the two agree to $10^{-5}$. The
+linearisation about the profile, taken in renormalised time, has exactly two
+eigenvalues outside the open left half plane, both forced by symmetry, so the
+profile is linearly stable and is selected by the dynamics. We show that the
+profile can only be singular where its own velocity vanishes, that the two such
+stagnation points are exactly $\pi$ apart, and that the local exponent there is
+$\mu = (c-1)/(ac)$ with $c$ the Hilbert transform of the profile at that point.
+At the stagnation point where the profile has a simple zero this closes in
+elementary form, $c=1/(1-a)$, verified to machine precision. The remaining
+stagnation point governs the spectral decay $\abs{\hat f_k}\sim k^{-\beta}$ with
+$\beta = \mu+1$; its value is genuinely global. Using the exact relation as a
+control variate we determine it to five digits or better and conclude that
+$\beta$ varies continuously with $a$ and is not equal to $3$. We also give an
+exact first integral of the profile equation and a global constraint,
+$\mathrm{PV}\oint \mathrm{d}y/U = 0$, which we verify to $10^{-12}$.
+\end{abstract}
+
+\section{Introduction}
+
+The question of whether solutions of the three dimensional incompressible Euler
+equations can develop singularities from smooth data remains open, and the same
+question for Navier and Stokes is one of the Clay Millennium Prize problems. A
+recurring strategy is to study one dimensional models which retain the
+competition between vortex stretching and transport while discarding the
+geometry.
+
+Constantin, Lax and Majda \cite{clm1985} introduced the model
+\begin{equation}
+  \omega_t = \omega \Hil\omega,
+  \label{eq:clm}
+\end{equation}
+where $\Hil$ is the Hilbert transform, and solved it in closed form. De Gregorio
+\cite{degregorio1990} restored the transport term, and Okamoto, Sakajo and
+Wunsch \cite{osw2008} embedded both in the one parameter family
+\begin{equation}
+  \omega_t + a\, u\, \omega_x = \omega\, u_x, \qquad u_x = \Hil\omega,
+  \label{eq:osw}
+\end{equation}
+posed here on the circle with $u$ of zero mean. The parameter $a$ tunes the
+strength of transport against stretching. At $a=0$ transport is absent and
+\eqref{eq:osw} reduces to \eqref{eq:clm}; at $a=1$ the two terms are in genuine
+competition, and this case is understood to be critical. Jia, Stewart and
+\v{S}ver\'{a}k \cite{jss2019} studied the ground state of the De Gregorio model,
+Lei, Liu and Ren \cite{llr2020} proved global regularity on the circle for data
+of one sign, and Chen, Hou and Huang \cite{chh2021} proved finite time blowup on
+the line for data of low H\"{o}lder regularity. The broader programme of
+computer assisted singularity detection in fluid equations is exemplified by
+Luo and Hou \cite{luohou2014}, Elgindi \cite{elgindi2021} and Chen and Hou
+\cite{chenhou2022}.
+
+Two features of \eqref{eq:osw} make it a good testbed. Both endpoints of the
+family are known exactly, which makes every numerical statement checkable, and
+the solution structure is simple enough that the blowup profile can be computed
+directly rather than inferred from a diverging simulation.
+
+Our contributions are as follows.
+
+\begin{enumerate}
+\item We separate two blowup mechanisms within the family and give a
+  translation invariant diagnostic that distinguishes them (Section
+  \ref{sec:regimes}).
+\item We formulate the blowup profile equation as a fixed point of the
+  evolution nonlinearity, observe that it fixes the profile amplitude with no
+  free scaling, and verify the resulting prediction against simulation to
+  $10^{-5}$ (Section \ref{sec:profile}).
+\item We compute the spectrum of the linearisation in renormalised time and
+  identify the two symmetry forced eigenvalues exactly, one of which is
+  provable in closed form (Section \ref{sec:spectrum}).
+\item We prove that singularities of the profile occur only at stagnation
+  points of its velocity, derive the local exponent, and show that one of the
+  two stagnation points admits the elementary closed form $c=1/(1-a)$ (Section
+  \ref{sec:stagnation}).
+\item We determine the remaining, global constant to five digits using the
+  exact relation as a control variate, and conclude that the spectral decay
+  exponent varies continuously with $a$ (Section \ref{sec:control}).
+\item We give a first integral of the profile equation and a global constraint
+  which we verify numerically (Section \ref{sec:integral}).
+\end{enumerate}
+
+Throughout, the initial datum is $\omega_0 = \sin x$. This is not a generic
+choice, and Section \ref{sec:caveats} records what that costs.
+
+\section{The model and its exactly known endpoints}
+
+Write $\omega$ for the vorticity on the circle $x \in [0,2\pi)$ and let
+$\Hil$ denote the Hilbert transform, acting on Fourier modes as
+$\widehat{\Hil\omega}_k = -i\,\mathrm{sgn}(k)\,\hat\omega_k$. The velocity is
+recovered from $u_x = \Hil\omega$ with $u$ of zero mean, so
+$\hat u_k = -\hat\omega_k/\abs{k}$ for $k\ne 0$.
+
+\paragraph{The case $a=0$.} Setting $z = \Hil\omega + i\omega$ converts
+\eqref{eq:clm} into the Riccati equation $z_t = z^2/2$, whence
+\begin{equation}
+  \omega(x,t) = \frac{4\,\omega_0(x)}
+  {\bigl(2 - t\,\Hil\omega_0(x)\bigr)^2 + t^2\omega_0(x)^2}.
+  \label{eq:clmexact}
+\end{equation}
+For $\omega_0 = \sin x$ the denominator collapses to $4 + 4t\cos x + t^2$ and
+\begin{equation}
+  \norm{\omega(t)}_\infty = \frac{4}{4-t^2},
+  \label{eq:clmsup}
+\end{equation}
+so the blowup time is $T=2$ and the rate exponent is exactly one.
+
+\paragraph{The case $a=1$.} For $\omega_0 = \sin x$ one has
+$\Hil\omega_0 = -\cos x$ and $u = -\sin x$, so $u\omega_x = \omega u_x$
+pointwise and $\sin x$ is a steady state. Hence $T=\infty$.
+
+The family therefore runs between a case whose blowup time is exactly $2$ and a
+case whose blowup time is exactly infinite, and any numerical scheme can be
+calibrated against both.
+
+\section{Numerical method}
+
+Space is treated pseudospectrally: products are formed on an equispaced grid of
+$N$ points, dealiased by the two thirds rule, with the Nyquist mode set to
+zero. Time stepping is classical fourth order Runge and Kutta, with the step
+governed by two constraints. Accuracy near blowup requires
+$\Delta t = \mathrm{cfl}/\max(\norm{u_x}_\infty,\norm{\omega}_\infty)$, since
+the stretching term drives the growth. Stability requires
+$\Delta t < c_{\mathrm{adv}}/(k_{\mathrm{cut}}\abs{a}\norm{u}_\infty)$, because
+the transport term has eigenvalues on the imaginary axis out to
+$i\,a\,u\,k_{\mathrm{cut}}$ and the method is stable there only to $2.828$.
+
+Two diagnostics require care. First, the supremum norm is computed from the
+spectral interpolant rather than the grid samples: the grid maximum errs by
+$O(\Delta x^2 f'')$, and since the peak narrows like $1/\norm{\omega}_\infty$
+near blowup, that error grows precisely when it matters. We locate the peak by
+Newton iteration on $f'(x)=0$ against the interpolant, at $O(N)$ cost for a
+single point. Second, spectral decay rates are measured over a band bounded
+away from both ends: the low wavenumber end is contaminated by the analytic
+factor multiplying the singular behaviour, and the high wavenumber end by the
+dealiasing mask. Section \ref{sec:control} quantifies both.
+
+The implementation passes nineteen checks against closed forms and conserved
+quantities, including \eqref{eq:clmexact} and \eqref{eq:clmsup} to
+$2\times 10^{-11}$, conservation of $\int\omega$ to $10^{-16}$ for
+$a\in\{0,\tfrac12,1,-\tfrac12\}$, spatial convergence following the predicted
+analyticity strip across four orders of magnitude, and fourth order temporal
+convergence with measured ratios $16.65$, $16.28$, $16.16$, $16.07$.
+
+\section{Blowup times and two distinct regimes}
+\label{sec:regimes}
+
+From $\omega_0 = \sin x$ we observe finite time blowup for every $a<1$, with
+rate exponent one throughout. Table \ref{tab:times} collects the blowup times,
+estimated by fitting $\omega/(\mathrm{d}\omega/\mathrm{d}t) = (T-t)/p$, a
+straight line in $t$ with slope $-1/p$ and root $T$.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lccccccccc}
+\toprule
+$a$   & $0$ & $0.2$ & $0.4$ & $0.5$ & $0.6$ & $0.7$ & $0.8$ & $0.9$ & $1$\\
+\midrule
+$T$   & $2$ (exact) & $2.3101$ & $2.7858$ & $3.1416$ & $3.6500$ & $4.4641$
+      & $6.0719$ & $10.757$ & $\infty$ (exact)\\
+$p$   & $1$ (exact) & $0.997$ & $1.000$ & $1.001$ & $1.001$ & $0.999$
+      & $1.000$ & $1.049$ & n/a\\
+\bottomrule
+\end{tabular}
+\caption{Blowup time and rate exponent from $\omega_0=\sin x$. No transition to
+global existence appears below $a=1$; instead $T$ diverges as $a\to 1$.}
+\label{tab:times}
+\end{table}
+
+\begin{remark}
+The value at $a=1/2$ agrees with $\pi$ to $1.2\times10^{-11}$ and continues to
+do so under refinement across an eightfold range in $N$. We have no explanation
+for this and record it as an observation.
+\end{remark}
+
+The blowups are not all alike. Comparing normalised spectra
+$\abs{\hat\omega_k}/\max_k\abs{\hat\omega_k}$ at successive decades of amplitude
+growth gives a diagnostic which is invariant under translation and assumes
+nothing about the profile shape. At $a=0.8$ the curves converge: successive
+deviations from the first snapshot are $3.30\times10^{-3}$,
+$3.68\times10^{-3}$, $3.76\times10^{-3}$, $3.78\times10^{-3}$ across four
+decades of growth, the peak location locks to $x=2.16699$, and the spectral
+tail remains at $2.7\times10^{-17}$ throughout, so a grid of $4096$ points
+carries an amplitude of $10^6$ without strain. At $a=0.4$ the same comparison
+moves by $0.72$ over a single decade and resolution is exhausted by
+$\norm{\omega}_\infty = 5.8\times 10^3$.
+
+We refer to the first behaviour as a \emph{frozen} profile and the second as
+\emph{narrowing}. Only the frozen case is analysed below.
+
+\section{The profile equation}
+\label{sec:profile}
+
+Substituting the ansatz
+\begin{equation}
+  \omega(x,t) = \frac{f(x-x_p)}{T-t}
+  \label{eq:ansatz}
+\end{equation}
+into \eqref{eq:osw} gives $f/(T-t)^2$ on the left and
+$\mathcal{R}(f)/(T-t)^2$ on the right, where
+\begin{equation}
+  \mathcal{R}(f) = f\,\Hil f - a\,U f', \qquad U' = \Hil f,
+  \quad \textstyle\int U = 0
+\end{equation}
+is the same quadratic nonlinearity that drives the evolution. The profile
+equation is therefore the fixed point problem
+\begin{equation}
+  \boxed{\;\mathcal{R}(f) = f.\;}
+  \label{eq:profile}
+\end{equation}
+
+\begin{proposition}[No free scaling]
+\label{prop:scaling}
+If $f$ solves \eqref{eq:profile} and $c\ne 1$, then $cf$ does not.
+\end{proposition}
+
+\begin{proof}
+$\mathcal{R}$ is quadratic, so $\mathcal{R}(cf) = c^2\mathcal{R}(f) = c^2 f$,
+which equals $cf$ only when $c^2 f = cf$, that is $c=1$.
+\end{proof}
+
+Proposition \ref{prop:scaling} is what makes \eqref{eq:profile} useful rather
+than merely descriptive: unlike a linear eigenvalue problem it fixes the
+amplitude of $f$ outright. Since \eqref{eq:ansatz} gives
+$\norm{\omega(t)}_\infty = \norm{f}_\infty/(T-t)$, we obtain the falsifiable
+prediction
+\begin{equation}
+  \frac{\mathrm{d}}{\mathrm{d}t}\frac{1}{\norm{\omega}_\infty}
+  = -\frac{1}{\norm{f}_\infty}.
+  \label{eq:rate}
+\end{equation}
+The left side is measured by time marching the partial differential equation;
+the right side by Newton's method on an algebraic fixed point. The two share
+nothing but the value of $a$.
+
+We solve \eqref{eq:profile} by Newton iteration, assembling the Jacobian one
+column at a time through the same masked transforms used to evaluate
+$\mathcal{R}$, and regularising the translation mode by a rank one shift along
+$f'$. At $a=0.8$ the profile taken directly from the simulation satisfies
+\eqref{eq:profile} to $1.3\times10^{-5}$ before Newton is applied; the
+iteration then converges quadratically, with residuals $1.35\times10^{-5}$,
+$4.07\times10^{-11}$, $1.77\times10^{-12}$. Table \ref{tab:amp} compares the
+two sides of \eqref{eq:rate}.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lccc}
+\toprule
+$N$ & simulation, via \eqref{eq:rate} & profile equation & agreement\\
+\midrule
+$2048$ & $4.148459148$ & $4.148481857$ & $5.5\times10^{-6}$\\
+$4096$ & $4.154779433$ & $4.154737187$ & $1.0\times10^{-5}$\\
+\bottomrule
+\end{tabular}
+\caption{$\norm{f}_\infty$ at $a=0.8$, computed two independent ways.}
+\label{tab:amp}
+\end{table}
+
+The shared value drifts by $1.5\times10^{-3}$ between the two resolutions,
+which is not Newton finding different branches: re-solving at $N=4096$ from the
+interpolated $N=2048$ solution returns the same answer, and mapping it back
+down reproduces the $N=2048$ value to $2\times10^{-12}$. Each grid has one
+solution and the simulation finds that grid's solution. The slow convergence is
+explained in Section \ref{sec:stagnation}: the profile is only $C^{1,1}$.
+
+\paragraph{Selection.} Solutions of \eqref{eq:profile} exist over a wider range
+of $a$ than the dynamics selects. Starting Newton from each simulation's own
+profile and recording the residual \emph{before} the iteration begins gives an
+order parameter: it reads $0.33$ to $0.56$ for $a$ between $0.3$ and $0.6$,
+then $0.19$, $5.0\times10^{-2}$, $2.6\times10^{-3}$, $1.3\times10^{-5}$ and
+$5.5\times10^{-5}$ at $a = 0.65, 0.70, 0.75, 0.80, 0.85$. The frozen regime is
+therefore roughly $0.75 \le a \le 0.85$ at the amplitudes reached, degrading
+smoothly rather than switching off.
+
+\section{Linear stability in renormalised time}
+\label{sec:spectrum}
+
+Set $s = -\log(T-t)$ and $W(y,s) = (T-t)\,\omega$. Then $\omega = e^s W$ and
+$\mathrm{d}s/\mathrm{d}t = e^s$, so $\omega_t = e^{2s}(W + W_s)$, while
+$\mathcal{R}$ is quadratic and gives $\mathcal{R}(\omega)=e^{2s}\mathcal{R}(W)$.
+The factors cancel and
+\begin{equation}
+  W_s = \mathcal{R}(W) - W.
+  \label{eq:renorm}
+\end{equation}
+The profile is exactly a fixed point of \eqref{eq:renorm}, and the eigenvalues
+of $J = D[\mathcal{R}(\cdot)-\cdot](f)$ are growth rates in renormalised time.
+
+\begin{proposition}[Forced eigenvalues]
+\label{prop:forced}
+$Jf = f$ and $Jf' = 0$.
+\end{proposition}
+
+\begin{proof}
+Since $\mathcal{R}$ is quadratic, its derivative satisfies
+$D\mathcal{R}(f)f = 2\mathcal{R}(f) = 2f$, so
+$Jf = D\mathcal{R}(f)f - f = f$. The second identity is translation
+invariance: $\mathcal{R}$ commutes with shifts, so differentiating
+$\mathcal{R}(f(\cdot+\epsilon)) = f(\cdot+\epsilon)$ at $\epsilon=0$ gives
+$D\mathcal{R}(f)f' = f'$ and hence $Jf'=0$.
+\end{proof}
+
+The eigenvalue $1$ is not an instability. It reflects the freedom to shift the
+blowup time: replacing $T$ by $T+\epsilon$ gives
+$W = f\tau/(\tau+\epsilon)$ with $\tau = T-t$, which to first order is
+$f - \epsilon e^s f$ and grows like $e^s$. The eigenvalue $0$ is translation.
+Numerically, $\norm{Jf-f}_\infty/\norm{f}_\infty = 1.3\times10^{-12}$ and
+$\norm{Jf'}_\infty/\norm{f'}_\infty = 4.0\times10^{-11}$, so Proposition
+\ref{prop:forced} also serves as a sharp check on the assembled Jacobian.
+
+Every remaining eigenvalue at $a=0.8$ lies in the open left half plane, at
+$N=512$, $1024$ and $2048$ alike. The profile is therefore linearly stable up
+to the two symmetry directions, which is the precise sense in which the
+dynamics selects it, and is consistent with a simulation from $\sin x$ reaching
+it without tuning. The same test applied to profiles taken from simulations at
+$a=0.65,0.70,0.75,0.80$ returns stability in every case.
+
+We note two limitations. The leading stable eigenvalue does not converge in $N$,
+taking values $-0.54$, $-0.146$, $-0.41$ at $N=512,1024,2048$, so the rate of
+approach to the profile is not determined here, only its sign. At $a=0.85$ and
+$N=1024$ the Newton solve lands on a different branch, with
+$\norm{f}_\infty = 6.249$ and an unstable eigenvalue at $+2.077$, whereas at
+$N=2048$ the same value of $a$ yields $\norm{f}_\infty = 5.668$ matching its
+simulation to $8\times10^{-6}$. Continuation in $a$ jumps branches outright.
+The branch structure is real and we have not mapped it.
+
+\section{Stagnation points and the local exponent}
+\label{sec:stagnation}
+
+Rearranging \eqref{eq:profile} as $a\,U f' = f(\Hil f - 1)$ gives
+\begin{equation}
+  \frac{f'}{f} = \frac{\Hil f - 1}{a\,U},
+  \label{eq:logderiv}
+\end{equation}
+so $f$ can only be singular where $U$ vanishes.
+
+\begin{proposition}[Local exponent]
+\label{prop:exponent}
+Let $U(y_\ast)=0$ with $U'(y_\ast)=c\ne 0$. Then $f(y_\ast)=0$, and
+$f \sim C\,(y-y_\ast)^{\mu}$ with
+\begin{equation}
+  \mu = \frac{c-1}{a\,c}.
+  \label{eq:mu}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Evaluating $a\,Uf' = f(\Hil f - 1)$ at $y_\ast$ gives
+$0 = f(y_\ast)\,(c-1)$, so $f(y_\ast)=0$ unless $c=1$. Expanding
+$U(y) = c\,(y-y_\ast) + O((y-y_\ast)^2)$ and using $U'=\Hil f$, so that
+$\Hil f(y_\ast) = c$, equation \eqref{eq:logderiv} becomes
+$f'/f = \mu/(y-y_\ast) + O(1)$ with $\mu$ as stated, and integrating gives the
+claim.
+\end{proof}
+
+Since $\abs{y}^\mu$ has Fourier coefficients decaying like $k^{-(\mu+1)}$, the
+spectral decay exponent of the profile is
+\begin{equation}
+  \beta = 1 + \frac{c-1}{a\,c}.
+  \label{eq:beta}
+\end{equation}
+One local number therefore predicts the entire spectral decay rate.
+
+\begin{proposition}[Exact value at a simple zero]
+\label{prop:c1}
+If in addition $f$ has a simple zero at $y_\ast$, that is $f'(y_\ast)\ne 0$,
+then
+\begin{equation}
+  c = \frac{1}{1-a}.
+  \label{eq:c1}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Write $f \sim A(y-y_\ast)$ with $A = f'(y_\ast)\ne 0$, $U \sim c(y-y_\ast)$ and
+$\Hil f \sim c$. Matching the coefficient of $(y-y_\ast)$ in
+$a\,Uf' = f(\Hil f - 1)$ gives $a\,c\,A = A\,(c-1)$, and dividing by $A$ yields
+$ac = c-1$, that is $c=1/(1-a)$.
+\end{proof}
+
+Equivalently $\mu = 1$ at such a point. Numerically, at $N=4096$, the measured
+deviation of $\mu$ from $1$ is $-1.7\times10^{-15}$, $-4.6\times10^{-14}$,
+$-2.0\times10^{-10}$ and $3.5\times10^{-8}$ at $a=0.70,0.72,0.74,0.76$. The
+growth of this deviation at larger $a$ tracks the profile's own accuracy, which
+degrades as the second exponent falls toward one.
+
+\paragraph{Two stagnation points, exactly $\pi$ apart.} Numerically $U$ has
+exactly two zeros and their separation is $\pi$ to within $9\times10^{-16}$ for
+every $a$ tested. This is forced. If $U(y_1)=0$ and $U(y_1+\pi)=0$, then
+expanding both conditions in Fourier modes and adding annihilates the odd
+modes while subtracting annihilates the even ones, so the even mode part and
+the odd mode part of $U$ must each vanish at $y_1$ separately. That is two
+conditions where a generic zero satisfies one. Direct measurement at $a=0.8$
+gives $U_{\mathrm{even}}$ and $U_{\mathrm{odd}}$ of order $10^{-15}$ at both
+points, against $\norm{U}_\infty = 3.48$. We emphasise that this is not the
+statement that $f$ has only odd modes, which is false: $\abs{\hat f_2}=3315$
+against $\abs{\hat f_1}=6520$.
+
+\paragraph{Regularity of the profile.} At $a=0.8$ the second stagnation point
+has $\mu \approx 2$, and the general solution of \eqref{eq:logderiv} near a
+regular singular point permits different constants on the two sides. We find
+$f'' $ bounded and exactly odd about $y_2$ to $10^{-9}$, equal to $+2.27045$ on
+one side and $-2.27045$ on the other, a jump of $4.54089$ with
+$C_+ = -C_- = 1.13522$. The profile is therefore $C^{1,1}$ but not $C^2$. It is
+not a logarithm: fitting $f'' = 2D\log\abs{y-y_2} + \text{const}$ returns a
+slope of $0.043$ at $R^2=0.46$, consistent with zero. Correspondingly $f'$ is
+continuous at both stagnation points, to $4\times10^{-12}$ and
+$1.6\times10^{-11}$.
+
+\section{Determination of the global constant}
+\label{sec:control}
+
+Proposition \ref{prop:c1} pins the stagnation point at which the profile is
+smooth, and which therefore contributes no singularity. The exponent $\beta$ is
+set by the other one, whose $c$, written $c_2$ below, is genuinely global: no
+local balance determines it.
+
+Reading $c_2$ off a single grid is unreliable. Across $N=512$ to $4096$ it
+wanders between $-1.6486$ and $-1.6681$ without a monotone trend, and a three
+parameter fit of the form $c_2(N) = c_2^\infty + AN^{-p}$ returns $p=3.3$ with
+amplitude $1.1\times10^7$, which is a fit to noise. The reason is the $C^{1,1}$
+regularity established above: every quantity read from the profile converges
+algebraically.
+
+The remedy is that $c_1$ is known exactly. Both constants are read from the
+same profile and carry the same discretisation error, entering linearly, so
+$c_2$ is a linear function of $c_1$ across resolutions and evaluating that line
+at the exact $c_1$ cancels the error without requiring its size or its rate. At
+$a=0.8$ the regression over seven resolutions is
+\begin{equation}
+  c_2 = -0.980361\,c_1 + 3.240505, \qquad R^2 = 0.99999744,
+\end{equation}
+and the raw spread of $1.95\times10^{-2}$ collapses to $2.43\times10^{-5}$, a
+factor of $801$. The corrected value from $N=512$ then lies within
+$1.5\times10^{-5}$ of that from $N=4096$. We obtain
+\begin{equation}
+  c_2 = -1.66130027 \pm 1.0\times10^{-5}, \quad
+  \mu_2 = 2.00242268, \quad
+  \beta = 3.00242268.
+\end{equation}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+$a$ & $c_2$ & scatter & $\mu_2$ & $\beta$\\
+\midrule
+$0.72$ & $-0.31519119$ & $1.4\times10^{-14}$ & $5.7953854$ & $6.7953854$\\
+$0.74$ & $-0.56651088$ & $4.2\times10^{-10}$ & $3.7367448$ & $4.7367448$\\
+$0.76$ & $-0.86560395$ & $1.8\times10^{-8}$  & $2.8358720$ & $3.8358720$\\
+$0.78$ & $-1.22477889$ & $1.3\times10^{-6}$  & $2.3288127$ & $3.3288127$\\
+$0.80$ & $-1.66130509$ & $1.2\times10^{-5}$  & $2.0024205$ & $3.0024205$\\
+$0.82$ & $-2.20024724$ & $5.3\times10^{-5}$  & $1.7737736$ & $2.7737736$\\
+\bottomrule
+\end{tabular}
+\caption{The global constant and the resulting exponents. The scatter is the
+spread of the corrected values across resolutions and measures self
+consistency, not residual systematic error.}
+\label{tab:c2}
+\end{table}
+
+\begin{remark}[$\beta \ne 3$]
+The value $\mu_2 = 2$, and hence $\beta=3$, would require
+$c_2 = 1/(1-2a) = -1.66666667$ at $a=0.8$. The corrected value misses this by
+$5.37\times10^{-3}$, some five hundred times the scatter of the corrected
+points. Since the correction removes eight hundred times the raw error, the
+conclusion survives allowing a residual systematic an order of magnitude above
+the observed scatter. Table \ref{tab:c2} shows $\beta$ varying continuously
+with $a$; the value $3$ is merely where that curve crosses.
+\end{remark}
+
+\begin{remark}[On measuring $\beta$ from the spectrum directly]
+We caution against it. Fitting $\abs{\hat f_k}\sim k^{-\beta}$ over a band is
+sensitive to the band at the $2\times10^{-2}$ level: shifting the window from
+$128 \le k \le 512$ to $0.094\,k_{\mathrm{cut}} \le k \le
+0.375\,k_{\mathrm{cut}}$, the same window to three digits, moves the answer
+from $3.00315$ to $2.98626$. Across ten reasonable windows a binned estimator
+spans $2.9829$ to $3.0072$ and an unbinned least squares fit spans $3.0132$ to
+$3.0510$, and the two barely overlap. The two ends of the spectrum are biased
+in opposite directions: the low end by the analytic factor multiplying
+$\abs{y-y_\ast}^\mu$, which contributes $k^{-(\mu+2)}$ and faster, and the high
+end by the dealiasing mask. Refinement distinguishes them, since the former is
+pinned to absolute $k$ and the latter to a fixed fraction of
+$k_{\mathrm{cut}}$. Equation \eqref{eq:beta} with a well determined $c_2$ is
+four orders of magnitude more accurate than any of these fits.
+\end{remark}
+
+\section{A first integral and a global constraint}
+\label{sec:integral}
+
+Equation \eqref{eq:logderiv} integrates in closed form. On any interval free of
+zeros of $U$,
+\begin{equation}
+  f = C\,\abs{U}^{1/a}\exp\Bigl(-\frac1a\int \frac{\mathrm{d}y}{U}\Bigr).
+  \label{eq:firstintegral}
+\end{equation}
+Near a simple zero this yields
+$\abs{y-y_\ast}^{1/a}\abs{y-y_\ast}^{-1/(ac)} = \abs{y-y_\ast}^{\mu}$,
+recovering Proposition \ref{prop:exponent} independently.
+
+\begin{proposition}[Global constraint]
+\label{prop:pv}
+If $f$ and $U$ are $2\pi$ periodic and $\log\abs{f}$ has no jump at either
+zero of $U$, then
+\begin{equation}
+  \mathrm{PV}\oint \frac{\mathrm{d}y}{U} = 0.
+  \label{eq:pv}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Integrating \eqref{eq:logderiv} once around the circle,
+$0 = \frac1a\bigl[0 - \mathrm{PV}\oint \mathrm{d}y/U\bigr]$, since both
+$\log\abs{f}$ and $\log\abs{U}$ return to their initial values.
+\end{proof}
+
+The hypothesis holds here: at $y_1$ the profile is smooth with $\mu=1$, and at
+$y_2$ the one sided constants satisfy $C_+=-C_-$, so $\abs{C_+}=\abs{C_-}$ and
+the logarithm does not jump. We verify \eqref{eq:pv} by subtracting both simple
+poles with $\cot$, which carries the same residue and whose own principal value
+on the circle vanishes. The resulting ratios are $2.2\times10^{-12}$,
+$6.7\times10^{-13}$, $9.8\times10^{-13}$ and $1.4\times10^{-12}$ at
+$a=0.75,0.78,0.80,0.82$, stable across three independent grid shifts.
+
+\begin{remark}
+A naive evaluation of \eqref{eq:pv} on the grid returns ratios between
+$10^{-2}$ and $1$ and appears to refute it. This is catastrophic cancellation:
+the stagnation points land on grid points to within $10^{-11}$ of a cell, so
+the subtraction differences two quantities of size $10^{8}$. Evaluating on a
+half shifted grid, which is exact for a band limited field, resolves it.
+\end{remark}
+
+\paragraph{No closed form for $c_2$.} With $c_2$ determined across eleven values
+of $a$, candidate shapes can be excluded rather than merely left unconfirmed.
+Every M\"{o}bius form is rejected: $\mu_2 = (p+qa)/(1+ra)$ leaves an rms
+residual of $1.9\times10^{-4}$, $c_2 = (p+qa)/(1+ra)$ leaves
+$3.0\times10^{-4}$, and the same shape in the variable $1/(1-a)$ leaves
+$6.0\times10^{-4}$, each one to two orders above the data's precision. Fits of
+quadratic over quadratic achieve residuals of order $10^{-7}$ but use five
+parameters against eleven points and dip below the data scatter at the rough
+end of the range, so they absorb smooth error rather than signal and we do not
+regard them as evidence.
+
+We suggest this is the correct answer rather than a gap. Proposition
+\ref{prop:c1} succeeds because it is a \emph{local} balance at a point where
+$f$ is smooth. No such balance is available at the second stagnation point, so
+its value is determined by the global solution. Writing $\psi$ for the positive
+frequency part of $U$, so that $U = \psi+\bar\psi$ and
+$f = i(\psi'-\bar\psi')$, equation \eqref{eq:profile} reads
+\begin{equation}
+  a\,(\psi+\bar\psi)(\psi''-\bar\psi'')
+  = (\psi'-\bar\psi')(\psi'+\bar\psi'-1),
+\end{equation}
+and the mixed products $\psi\bar\psi''$ and $\bar\psi\psi''$ straddle both
+halves of the spectrum. That failure to separate is exactly what makes $a=0$
+integrable and $a\ne 0$ not.
+
+\section{Limitations}
+\label{sec:caveats}
+
+The datum $\sin x$ is not generic: it is precisely the ground state of the
+$a=1$ model, so the results describe how that ground state destabilises as
+transport is weakened, a narrower question than when the family blows up. We
+have not surveyed other data.
+
+All statements about $a=0.9$ and above are unresolved. The residual of the
+profile equation there does not fall monotonically with the amplitude cap,
+taking values $0.78$, $2.93$, $1.77$ at caps $10^4$, $10^6$, $10^8$, so those
+measurements reflect the fitting window rather than the solution. Since
+$T(0.9)\approx 10.8$ against $6.1$ at $a=0.8$, comparisons should be made at a
+fixed fraction of $T$ rather than a fixed amplitude.
+
+The scatter quoted in Table \ref{tab:c2} measures how consistently the control
+variate reproduces itself across resolutions. A residual nonlinear dependence
+of the discretisation error on $c_1$ would cancel from it and go undetected, so
+the figure of $1.4\times10^{-14}$ at $a=0.72$ should not be read as fourteen
+digit accuracy.
+
+Finally, nothing here is a proof. A computer assisted proof in this setting, in
+the style of Chen and Hou \cite{chenhou2022}, requires interval arithmetic
+producing certified enclosures rather than floating point with convergence
+studies. The objects this paper produces, a profile equation with a linearly
+stable solution and an exact relation fixing one of its two local constants,
+are the objects such a proof would need to enclose.
+
+\begin{thebibliography}{99}
+
+\bibitem{clm1985} P. Constantin, P. D. Lax and A. Majda,
+  \emph{A simple one dimensional model for the three dimensional vorticity
+  equation}, Comm. Pure Appl. Math. \textbf{38} (1985), 715-723.
+
+\bibitem{degregorio1990} S. De Gregorio,
+  \emph{On a one dimensional model for the three dimensional vorticity
+  equation}, J. Statist. Phys. \textbf{59} (1990), 1251-1263.
+
+\bibitem{osw2008} H. Okamoto, T. Sakajo and M. Wunsch,
+  \emph{On a generalization of the Constantin, Lax and Majda equation},
+  Nonlinearity \textbf{21} (2008), 2447-2461.
+
+\bibitem{jss2019} H. Jia, S. Stewart and V. \v{S}ver\'{a}k,
+  \emph{On the De Gregorio modification of the Constantin, Lax and Majda
+  model}, Arch. Ration. Mech. Anal. \textbf{231} (2019), 1269-1304.
+
+\bibitem{llr2020} Z. Lei, J. Liu and X. Ren,
+  \emph{On the Constantin, Lax and Majda model with convection},
+  Comm. Math. Phys. \textbf{375} (2020), 765-783.
+
+\bibitem{chh2021} J. Chen, T. Y. Hou and D. Huang,
+  \emph{On the finite time blowup of the De Gregorio model for the 3D Euler
+  equations}, Comm. Pure Appl. Math. \textbf{74} (2021), 1282-1350.
+
+\bibitem{luohou2014} G. Luo and T. Y. Hou,
+  \emph{Potentially singular solutions of the 3D axisymmetric Euler
+  equations}, Proc. Natl. Acad. Sci. USA \textbf{111} (2014), 12968-12973.
+
+\bibitem{elgindi2021} T. M. Elgindi,
+  \emph{Finite time singularity formation for $C^{1,\alpha}$ solutions to the
+  incompressible Euler equations on $\Real^3$}, Ann. of Math. \textbf{194}
+  (2021), 647-727.
+
+\bibitem{chenhou2022} J. Chen and T. Y. Hou,
+  \emph{Stable nearly self similar blowup of the 2D Boussinesq and 3D Euler
+  equations with smooth data}, preprint, arXiv:2210.07191 (2022).
+
+\end{thebibliography}
+
+\end{document}

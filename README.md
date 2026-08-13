@@ -295,6 +295,12 @@ mixed products straddle both halves of the spectrum. If `c2` were elementary,
 De Gregorio would not be hard.
 
 Full detail, including what is not settled, is in [FINDINGS.md](FINDINGS.md).
+A paper draft written up from those findings is in
+[paper/degregorio.tex](paper/degregorio.tex).
+
+```bash
+cd paper && pdflatex degregorio.tex && pdflatex degregorio.tex
+```
 
 ## How the pieces fit together
 
