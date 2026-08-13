@@ -95,6 +95,29 @@ family are known exactly, which makes every numerical statement checkable, and
 the solution structure is simple enough that the blowup profile can be computed
 directly rather than inferred from a diverging simulation.
 
+\paragraph{Relation to existing work.} Self similar blowup for this family is
+under active study and the present results must be read against it. Huang, Tong
+and Wei \cite{htw2022} construct infinitely many compactly supported self
+similar blowup solutions of the De Gregorio model on the real line, organised
+as eigenfunctions of a compact operator and as solutions of nonlinear
+eigenvalue problems. Huang, Tong and Wang \cite{htw2026} study self similar
+blowup of the generalised model from data with derivative degeneracy, and
+report one scale blowup with regular profiles for $a>0$ against a two scale
+scenario with a singular outer profile for $a\le 0$, constructing an explicit
+family of singular profiles in the latter regime.
+
+Our setting differs in domain, in datum and in parameter range: we work on the
+circle rather than the line, from $\omega_0 = \sin x$ rather than degenerate
+data, and in the window $0.7 \lesssim a \lesssim 0.85$. The fixed point
+formulation \eqref{eq:profile} is the standard self similar profile equation
+and we claim no novelty for it. What we have not been able to establish is
+whether the local relation of Proposition \ref{prop:exponent}, and in
+particular the closed form of Proposition \ref{prop:c1}, appear in that
+literature. They are elementary enough that they may well be known, and this
+draft should not be circulated until that has been checked directly against
+\cite{osw2008}, \cite{htw2022} and \cite{htw2026} rather than against their
+abstracts.
+
 Our contributions are as follows.
 
 \begin{enumerate}
@@ -687,6 +710,13 @@ of the discretisation error on $c_1$ would cancel from it and go undetected, so
 the figure of $1.4\times10^{-14}$ at $a=0.72$ should not be read as fourteen
 digit accuracy.
 
+Priority is unestablished. The bibliographic details of every reference above
+have been verified, but the results themselves have not been checked against
+the contents of those papers, only against their abstracts. Given
+\cite{htw2022} and \cite{htw2026}, the possibility that some or all of Sections
+\ref{sec:regimes} to \ref{sec:stagnation} is known must be treated as likely
+rather than remote until checked.
+
 Finally, nothing here is a proof. A computer assisted proof in this setting, in
 the style of Chen and Hou \cite{chenhou2022}, requires interval arithmetic
 producing certified enclosures rather than floating point with convergence
@@ -698,7 +728,7 @@ are the objects such a proof would need to enclose.
 
 \bibitem{clm1985} P. Constantin, P. D. Lax and A. Majda,
   \emph{A simple one dimensional model for the three dimensional vorticity
-  equation}, Comm. Pure Appl. Math. \textbf{38} (1985), 715-723.
+  equation}, Comm. Pure Appl. Math. \textbf{38} (1985), 715-724.
 
 \bibitem{degregorio1990} S. De Gregorio,
   \emph{On a one dimensional model for the three dimensional vorticity
@@ -731,7 +761,21 @@ are the objects such a proof would need to enclose.
 
 \bibitem{chenhou2022} J. Chen and T. Y. Hou,
   \emph{Stable nearly self similar blowup of the 2D Boussinesq and 3D Euler
-  equations with smooth data}, preprint, arXiv:2210.07191 (2022).
+  equations with smooth data I: Analysis}, preprint, arXiv:2210.07191 (2022).
+
+\bibitem{chenhou2025} J. Chen and T. Y. Hou,
+  \emph{Stable nearly self similar blowup of the 2D Boussinesq and 3D Euler
+  equations with smooth data II: Rigorous numerics},
+  Multiscale Model. Simul. \textbf{23} (2025), 25-130.
+
+\bibitem{htw2022} D. Huang, J. Tong and D. Wei,
+  \emph{On self similar finite time blowups of the De Gregorio model on the
+  real line}, preprint, arXiv:2209.08232 (2022).
+
+\bibitem{htw2026} D. Huang, J. Tong and X. Wang,
+  \emph{Self similar finite time blowups with singular profiles of the
+  generalized Constantin, Lax and Majda model: theoretical and numerical
+  investigations}, preprint, arXiv:2603.25104 (2026).
 
 \end{thebibliography}
 
