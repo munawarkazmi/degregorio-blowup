@@ -3,7 +3,10 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage[margin=3.5cm]{geometry}
+% headheight and headsep are zeroed because the header is empty; left at their
+% defaults, fancyhdr reserves about 1.3cm above the text block and the title
+% sits well down the first page.
+\usepackage[margin=3.5cm,top=2.8cm,headheight=0pt,headsep=0pt]{geometry}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -45,11 +48,13 @@
 \begin{center}
   {\LARGE\bfseries\color{headingblue} Sharper, or taller?}\\[6pt]
   {\large Two ways a wave can become infinite, and how to tell them apart}\\[12pt]
-  {\normalsize Munawar Kazmi \quad$\bullet$\quad munawarkazmi.com}\\[6pt]
+  {\normalsize Munawar Kazmi \quad$\bullet$\quad
+  \href{https://munawarkazmi.com}{munawarkazmi.com}}\\[6pt]
   {\normalsize A plain-language guide to \textbf{degregorio-blowup}, an open
   study of how simplified models of fluid flow tear themselves apart.}\\[4pt]
   {\normalsize Code, data, and every figure:
-  github.com/munawarkazmi/degregorio-blowup}
+  \href{https://github.com/munawarkazmi/degregorio-blowup}%
+  {github.com/munawarkazmi/degregorio-blowup}}
 \end{center}
 
 \vspace{4pt}
@@ -122,8 +127,23 @@ an instrument.
 \section{Two ways to become infinite}
 
 Turn the dial part way, run the model, and the wave becomes infinite. That much
-happens for every setting below one. The blowup time stretches out as the dial
-approaches one, from 2 to about 57, but it always arrives.
+happens for every setting below one. The moment it happens gets later and later
+as the dial is turned up, but it always arrives.
+
+\begin{center}
+\begin{tabular}{lcccccccc}
+\hline
+dial setting & 0 & 0.4 & 0.6 & 0.8 & 0.9 & 0.95 & 0.98 & 0.99\\
+becomes infinite at & 2.00 & 2.79 & 3.65 & 6.07 & 10.76 & 17.71 & 32.18
+& 56.97\\
+\hline
+\end{tabular}
+\end{center}
+
+The first column is the 1985 answer, known exactly. The last is a computation
+that took nearly a million steps. Push the dial closer to one and the time
+keeps growing, without ever becoming infinite until the dial reaches one
+exactly.
 
 What was not expected is that it arrives in two completely different ways.
 
@@ -216,6 +236,16 @@ $+2.27$ on the other.
 You could not see this by eye. The curve looks perfectly ordinary. It is the
 kind of defect that only appears when you ask the third question about it.
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{fig_kink.png}
+  \caption{On the left, the shape the wave settles into, with the point where
+  the flow is at rest marked. Nothing about it looks wrong. On the right, the
+  curvature of that same shape near that same point, which does not pass
+  through zero but leaps across it. The small ripples either side are an
+  artefact of measuring curvature, not part of the shape.}
+\end{figure}
+
 It also settles a small puzzle. Other researchers have proved that in this
 family the blowup shapes are smooth. The shape here is not, and both statements
 are correct. Their work is on an infinite line; this is on a circle. On a
@@ -290,6 +320,7 @@ Having them stated, measured, and checkable is the point.
 {\small Every figure, every number, and the code that produced them are public,
 along with a technical paper and a written record of the results that were
 withdrawn.\\
-Repository: github.com/munawarkazmi/degregorio-blowup}
+Repository: \href{https://github.com/munawarkazmi/degregorio-blowup}%
+{github.com/munawarkazmi/degregorio-blowup}}
 
 \end{document}
