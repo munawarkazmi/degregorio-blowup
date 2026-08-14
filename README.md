@@ -295,6 +295,13 @@ mixed products straddle both halves of the spectrum. If `c2` were elementary,
 De Gregorio would not be hard.
 
 Full detail, including what is not settled, is in [FINDINGS.md](FINDINGS.md).
+The technical write up is in [paper/](paper/degregorio.pdf).
+
+If none of the above meant anything to you, start here instead:
+**[Sharper, or taller?](docs/explainer/degregorio-blowup-explained.pdf)**, six
+pages, no mathematics assumed. It covers the same results and the same
+retractions, and explains what a blowup is before claiming to have measured
+one.
 A paper draft written up from those findings is in
 [paper/degregorio.tex](paper/degregorio.tex).
 
@@ -337,6 +344,9 @@ flowchart TD
 | `pi_check.py` | whether `T(1/2) = pi` survives refinement |
 | `diagnose.py` | grid refinement study, for when a result looks too good |
 | `figures.py` | regenerates the figures above |
+| `explainer_figure.py`, `explainer_figure2.py` | the two figures used only by the plain-language guide |
+| `docs/explainer/` | the plain-language guide, source and PDF |
+| `paper/` | the technical write up, source and PDF |
 
 `profile_solve.py`, `profile_refine.py` and `shape_check.py` are earlier passes,
 kept because their working parts stand and their failures are instructive: the

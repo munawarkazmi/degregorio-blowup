@@ -14,10 +14,10 @@ paper/*.toc
 paper/*.synctex.gz
 paper/*.fls
 paper/*.fdb_latexmk
-explainer/*.aux
-explainer/*.log
-explainer/*.out
-explainer/*.toc
-explainer/*.synctex.gz
-explainer/*.fls
-explainer/*.fdb_latexmk
+docs/explainer/*.aux
+docs/explainer/*.log
+docs/explainer/*.out
+docs/explainer/*.toc
+docs/explainer/*.synctex.gz
+docs/explainer/*.fls
+docs/explainer/*.fdb_latexmk
