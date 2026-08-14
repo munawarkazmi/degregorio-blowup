@@ -1,7 +1,7 @@
 # De Gregorio blowup
 
 > Everything here blows up in finite time, including the author. Fittingly,
-> most of the crash outs came from fitting: twice this repo handed me
+> most of the damage came from fitting: twice this repo handed me
 > `R^2 = 0.99` on a model of the wrong shape, and twice I fell for it. I also
 > refuted one of my own exact identities before noticing the refutation was a
 > cancellation error. Finding 10 retracts finding 9.
