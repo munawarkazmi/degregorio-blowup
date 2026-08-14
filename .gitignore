@@ -4,3 +4,13 @@ __pycache__/
 # Regenerable run output. Figures are tracked because the README embeds them.
 sweep.csv
 sweep.png
+
+# LaTeX byproducts. The PDF itself is tracked, since it is the deliverable and
+# nobody should need a TeX installation to read it.
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.synctex.gz
+paper/*.fls
+paper/*.fdb_latexmk
