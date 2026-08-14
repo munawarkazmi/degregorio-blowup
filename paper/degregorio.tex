@@ -11,6 +11,7 @@
 \newtheorem{lemma}[proposition]{Lemma}
 \theoremstyle{definition}
 \newtheorem{remark}[proposition]{Remark}
+\newtheorem{observation}[proposition]{Observation}
 
 \newcommand{\Real}{\mathbb{R}}
 \newcommand{\Hil}{\mathcal{H}}
@@ -941,6 +942,163 @@ and the mixed products $\psi\bar\psi''$ and $\bar\psi\psi''$ straddle both
 halves of the spectrum. That failure to separate is exactly what makes $a=0$
 integrable and $a\ne 0$ not.
 
+\section{The critical limit \texorpdfstring{$a\to 1$}{a to 1}}
+\label{sec:critical}
+
+The case $a=1$ is degenerate in a way no other member of the family is.
+
+\begin{proposition}[Line of equilibria]
+\label{prop:line}
+At $a=1$, every $A\sin x$ with $A\in\Real$ is a steady state of
+\eqref{eq:osw}, as is every translate.
+\end{proposition}
+
+\begin{proof}
+With $\omega = A\sin x$ we have $\Hil\omega = -A\cos x$, $u = -A\sin x$ and
+$\omega_x = A\cos x$, so
+$\omega\,\Hil\omega = -A^2\sin x\cos x = u\,\omega_x$ and
+$\mathcal{R}_1(\omega) = \omega\,\Hil\omega - u\,\omega_x = 0$.
+\end{proof}
+
+So the critical case carries a two parameter manifold of equilibria, amplitude
+and translation, which exists at $a=1$ and nowhere else. Writing
+$\varepsilon = 1-a$, the family is destroyed at order $\varepsilon$ and the
+blowup time diverges. We measure $T$ without fitting: for a frozen profile
+$\norm{\omega}_\infty = \norm{f}_\infty/(T-t)$ exactly, so
+$T = t + \norm{f}_\infty/\norm{\omega}_\infty$ at any late time, and running to
+$\norm{\omega}_\infty = 10^6$ makes the correction term of order $10^{-6}$.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lcccccccc}
+\toprule
+$a$ & $0.80$ & $0.90$ & $0.93$ & $0.95$ & $0.96$ & $0.97$ & $0.98$ & $0.99$\\
+\midrule
+$T$ & $6.0719$ & $10.7569$ & $14.0844$ & $17.7129$ & $20.4591$ & $24.5830$
+    & $32.1786$ & $56.9742$\\
+$T\varepsilon$ & $1.214$ & $1.076$ & $0.986$ & $0.886$ & $0.818$ & $0.737$
+    & $0.644$ & $0.570$\\
+local $p$ & - & $0.828$ & $0.755$ & $0.681$ & $0.646$ & $0.638$ & $0.664$
+    & $0.824$\\
+\bottomrule
+\end{tabular}
+\caption{Blowup time as $a\to1$, and the local exponent in
+$T\sim\varepsilon^{-p}$ between consecutive entries. $T\varepsilon$ decreases
+throughout, so $T$ grows strictly slower than $1/\varepsilon$, but $p$ does not
+converge.}
+\label{tab:critical}
+\end{table}
+
+The exponent does not settle: it falls from $0.83$ to $0.64$ and returns to
+$0.82$ at the smallest $\varepsilon$. No functional form fits the last points,
+$C\varepsilon^{-p}$, $C/\varepsilon+D$, $C\log(1/\varepsilon)+D$ and
+$A/\varepsilon + B\log(1/\varepsilon)+C$ leaving rms residuals of $0.99$,
+$0.71$, $4.22$ and $0.38$ against $T$ values from $6$ to $57$. We therefore
+quote no exponent. What follows instead is an account of why the natural
+reductions do not settle it either.
+
+\subsection{The two mode reduction is exact, and gives the wrong answer}
+
+Expanding about the manifold, put $\omega = A\sin x + B\sin 2x$. Using
+$\Hil\sin kx = -\cos kx$ and $u = -k^{-1}\sin kx$,
+\begin{align*}
+  \omega\,\Hil\omega &= -\tfrac{A^2}{2}\sin 2x - AB\sin 3x
+                        - \tfrac{B^2}{2}\sin 4x,\\
+  u\,\omega_x        &= -\tfrac{A^2}{2}\sin 2x - \tfrac{5AB}{4}\sin 3x
+                        + \tfrac{3AB}{4}\sin x - \tfrac{B^2}{2}\sin 4x,
+\end{align*}
+so that $\mathcal{R}_a = \omega\,\Hil\omega - a\,u\,\omega_x$ has coefficients
+$-\tfrac{3a}{4}AB$ on $\sin x$, $-\tfrac{\varepsilon}{2}A^2$ on $\sin 2x$,
+$(\tfrac{5a}{4}-1)AB$ on $\sin 3x$ and $-\tfrac{\varepsilon}{2}B^2$ on
+$\sin 4x$, each verified against the solver to $10^{-17}$.
+
+The $\sin x$ terms cancel in the first line but not the second, so the feedback
+of mode two into mode one survives at \emph{linear} order. Any argument
+predicting $p=2/3$ from a parity cancellation is therefore excluded, not by
+numerics but by the calculation.
+
+Retaining the two modes gives $A' = -\tfrac{3a}{4}AB$,
+$B' = -\tfrac{\varepsilon}{2}A^2$, which integrates in closed form. Setting
+$L=\log A$ at $a=1$ gives $L' = -\tfrac34 B$ and
+$L'' = \tfrac{3\varepsilon}{8}e^{2L}$, a Liouville equation; multiplying by
+$L'$ and using $L(0)=L'(0)=0$ gives
+$L'^2 = \tfrac{3\varepsilon}{8}(e^{2L}-1)$, and since
+$\int_0^\infty (e^{2L}-1)^{-1/2}\,\mathrm{d}L = \arccos(e^{-L})\big|_0^\infty
+= \pi/2$,
+\begin{equation}
+  T_{2} = \frac{\pi}{2}\sqrt{\frac{8}{3\varepsilon}}
+        = 2.56510\,\varepsilon^{-1/2}.
+  \label{eq:liouville}
+\end{equation}
+Against a two mode Galerkin truncation the ratio $T/T_2$ reads $1.118$,
+$1.054$, $1.026$, $1.010$, $1.005$ at
+$\varepsilon = 0.2, 0.1, 0.05, 0.02, 0.01$. The reduction is exact and gives
+$p = 1/2$, which is not the behaviour of the full equation.
+
+\subsection{The exponent is carried by the cascade}
+
+Retaining $m$ modes and measuring the exponent over
+$0.02\le\varepsilon\le0.1$ gives $p = 0.474, 0.506, 0.518, 0.525, 0.536,
+0.554$ at $m = 2, 4, 6, 8, 12, 24$. The value climbs monotonically and is still
+climbing at $m=24$, and at $\varepsilon=0.1$ the gap to the full answer closes
+like $m^{-1/2}$. No finite truncation reproduces the exponent. The case $m=3$
+is degenerate and sits outside the trend, giving $T=405$ at $\varepsilon=0.1$
+and no blowup at all at $0.05$ or $0.02$.
+
+\subsection{There is no spectral gap, hence no reduction}
+
+Both failures have one cause. Since $\mathcal{R}$ is quadratic,
+$D\mathcal{R}_1(A\sin x) = A\,M$ with $M = D\mathcal{R}_1(\sin x)$ independent
+of $A$, and writing $\omega = A\sin x + v$,
+\begin{equation}
+  v_t = A\,Mv - \tfrac{\varepsilon}{2}A^2\sin 2x,
+  \qquad A' = -\tfrac{3}{4}A\,b_2,
+  \label{eq:escape}
+\end{equation}
+with $b_2$ the $\sin 2x$ component of $v$. Were $M$ strictly stable, $v$ would
+saturate at $\tfrac{\varepsilon}{2}AM^{-1}\sin 2x$ and \eqref{eq:escape} would
+reduce to $A' = \kappa\varepsilon A^2$, a Riccati equation giving $p=1$. That
+step is unavailable.
+
+\begin{observation}[No gap]
+\label{obs:gap}
+The spectrum of $M$ is purely imaginary. Computed densely at $N=128,256,512$,
+every eigenvalue has real part at the $10^{-5}$ roundoff level against
+imaginary parts reaching $72$, and at $N=256$ none has positive real part.
+Its kernel contains the tangent directions to the manifold exactly:
+$\norm{M\sin x}_\infty = 8\times10^{-14}$ and
+$\norm{M\cos x}_\infty = 6\times10^{-14}$.
+\end{observation}
+
+Moreover $M$ is not diagonalisable. Integrating $v_t = Mv$ from a random
+perturbation, $\norm{v}$ grows linearly, by factors $187, 736, 1392, 2873,
+5738$ at $t = 10, 50, 100, 200, 400$, doubling as $t$ doubles; with imaginary
+spectrum this means a Jordan block at zero. Splitting the state identifies its
+origin. The components along $\sin x$ and $\cos x$ grow linearly, reaching
+$2663$ and $-845$ at $t=400$, while the remainder stays bounded and oscillates
+between $135$ and $467$. The secular growth is therefore \emph{drift along the
+manifold of equilibria} rather than instability: a perturbation alters the
+amplitude and phase at a constant rate, carrying the state to a different
+steady state rather than away from all of them. The Jordan block is generated
+by the symmetries themselves, consistent with the stability theorem of Jia,
+Stewart and Sverak \cite{jss2019}, which is stability modulo exactly these
+symmetries.
+
+We note also that $M$ is strongly non-normal: the remainder above is amplified
+from $7.8$ to $467$ before returning, a transient factor near $60$ with no
+eigenvalue to account for it.
+
+The consequence is structural. Modulo the kernel every mode oscillates without
+decay and the kernel modes drift linearly, so there is no gap anywhere. Hence
+quasi steady elimination is invalid, because the transient it discards never
+dies; mode truncation is not a reduction, because the discarded modes never
+relax, which is why the truncated exponent converges only algebraically; and
+there is no centre manifold to reduce onto, because the centre subspace is the
+whole space. The cascade cannot be eliminated because nothing within it is fast
+relative to anything else, and \eqref{eq:liouville}, exact yet giving the wrong
+exponent, is the sharpest available demonstration that a finite reduction
+misses the mechanism rather than approximating it.
+
 \section{Limitations}
 \label{sec:caveats}
 
@@ -981,6 +1139,14 @@ verification of every lemma. Both numerical coincidences with \cite{htw2026}
 have been examined and neither is an overlap, but the first of them, the
 exchange of stability near $a\approx 0.75$, is stated there as a hypothesis and
 would be worth settling on its own merits.
+
+The critical limit is left open. Section \ref{sec:critical} reports no exponent
+for $T(\varepsilon)$ because the measured one does not converge over the range
+we can reach, and reaching $\varepsilon = 10^{-3}$ would need some thirty times
+the $866{,}000$ steps that $\varepsilon = 10^{-2}$ already took. Observation
+\ref{obs:gap} explains why the shortfall cannot be made up by analysis in place
+of computation, but it is an explanation of a difficulty rather than a
+resolution of it.
 
 Finally, nothing here is a proof. A computer assisted proof in this setting, in
 the style of Chen and Hou \cite{chenhou2022}, requires interval arithmetic
