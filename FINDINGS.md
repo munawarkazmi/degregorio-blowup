@@ -1177,6 +1177,73 @@ singularities at `zeta = +-i`. So the narrowing profile is smooth where the
 frozen profiles of finding 6 are only `C^{1,1}` with `k^-3.05` spectra. The
 roughness is a feature of the frozen regime, not of blowup in this family.
 
+## 18. The overlap search, and what it cost
+
+Findings 1 to 17 were recorded before the pole dynamics school was found. That
+school works on the circle, owns the exact solutions, and searches organised
+around the other seven papers do not surface it. Everything below is now cited
+in the paper.
+
+**Lushnikov, Silantyev and Siegel, arXiv:2010.01201, contains:** the frozen
+ansatz `w = f(x)/(T-t)`, their Eq. (9), as `alpha = 0`, for
+`a_c < a <= 0.95` on the circle; its numerical profile for `a_c < a <= 0.85`,
+solved by Petviashvili iteration; the jump in `w_xx` at `x = +-pi`, antipodal
+to the singularity, at `a = 0.8`; the resulting algebraic spectral decay, whose
+exponent they call `p_b` and we call `beta`, with `p_b -> infinity` as
+`a -> a_c^+`; `gamma = 1/(1-a)` for the leading complex singularity, from
+`a gamma = gamma - 1`, the same algebra as finding 8; the width exponent
+`alpha(a)`, our `c_l`, to 5 to 8 digits, with
+`a_c = 0.6890665337007457`; `alpha = 1/3` at `a = 1/2`; and nonlinear stability
+of the frozen profile, inferred from convergence in simulations.
+
+**Xu, arXiv:2607.19762, 22 July 2026, contains:** the general self similar
+profile equation, same `c_l` symbol; `H Om(0) = (1 + c_l)/(1 - a)` derived by
+differentiating it at the stagnation point under `Om'(0) != 0`, which is
+finding 17's relation argument for argument; and the spectrum of the
+linearisation at `a = 0` on the line, point spectrum `{0,1}` of symmetry modes.
+He states the formula in passing and claims no novelty for it.
+
+**Silantyev, Lushnikov, Siegel and Ambrose, arXiv:2411.01891:** the exact
+`a = 1/2` solution of finding 3, whose Remark 2 flags the `v_c(0) = 1`
+degeneracy that finding 3 clears.
+
+### Retraction
+
+The paper claimed the narrowing to frozen changeover satisfies `a_c >~ 0.795`,
+from `c_l = 0.004536 +/- 0.000543` at `a = 0.751` being eight standard errors
+from zero. **Withdrawn.** Against the published branch the width measurement
+reads 1.058 vs 1.0000 at `a = 0`, 0.748 vs 0.7474 at 0.2, 0.512 vs 0.4809 at
+0.4, 0.325 vs the exact 1/3 at 0.5, and 0.179 vs 0.1691 at 0.6. A few percent
+method cannot resolve 0.0045. The true value is 0.68907, confirmed
+independently by Xu's Newton continuation crossing zero at 0.6888.
+
+### What survives, and the number that sharpens
+
+Finding 8 at the **non-simple** zero, which Xu does not cover and which turns
+their fitted `p_b` into a predicted quantity; the parity proof of finding 11;
+the control variate of finding 12 and the exclusion of `beta = 3`; the linear
+stability spectrum of finding 5; the PV identity; `T = pi`.
+
+`beta_lss.py` quantifies the correction. Their one value recoverable from
+running text is `p_b = 9.32592` at `a = 0.71`, from a two domain spectral fit.
+The local relation gives:
+
+| `a` | 0.70 | 0.71 | 0.72 | 0.75 |
+| --- | --- | --- | --- | --- |
+| `beta` | 16.36200 | 9.29546 | 6.79539 | 4.21283 |
+
+so **9.29546 against their 9.32592, lower by 0.33 percent**. The run reproduces
+finding 12 at `a = 0.75` to 3e-8 and finding 8's `mu2` at 0.70 and 0.72 to five
+decimals, so the new rows are worth the same as the old ones. Their Table 2
+holds the rest of `p_b(a)` but does not render in the arXiv PDF and ar5iv
+truncates before it.
+
+Their `p_b` diverges as `a -> a_c^+` and so does this `beta`. Extrapolating
+`1/beta` to zero from the pairs (0.70, 0.71) and (0.71, 0.72) gives 0.6868 and
+0.6828, the closer pair larger, pointing at 0.68907 and not at 0.795. Convex
+data again, so direction only, but it is a second and independent route to the
+retraction above.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this
@@ -1216,6 +1283,10 @@ before any effort is spent deriving it.
    confirmed instead, with `c_l = 1/3` and `c = 8/3` to 4.5e-7. The paper
    should say so: the remark is currently stated and then never used, and it
    is now the best supported part of the local analysis.
-8. Redo the overlap search against the pole dynamics school. arXiv:2411.01891
-   was missed entirely, and its reference list is the obvious place to start,
-   along with Schochet, and Ambrose and co-authors on the periodic problem.
+8. Done, see finding 18. arXiv:2010.01201 read in full, arXiv:2607.19762 in
+   part. Still unread: Schochet, arXiv:2207.07548, and Xu's sections 3 to 7.
+   The paper now cites ten related works and states plainly what is not ours.
+9. Get LSS Table 2. It holds `p_b(a)` across the frozen window and would let
+   the correction in finding 18 be quoted at more than one value of `a`. It
+   does not render in the arXiv PDF and ar5iv truncates; the published version
+   or a request to the authors is the way in.
