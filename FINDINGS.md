@@ -89,14 +89,77 @@ unbiased estimator, against an `a = 0` control whose `4 / (4 - t^2)` carries a
 biasing `(2 + t)` factor. The second half of that still holds, but the first
 half does not: finding 4 measures the residual of the profile equation directly
 and `a = 0.5` comes out at 0.49, nowhere near a frozen profile. It is in the
-narrowing regime. Why its amplitude nonetheless follows a power law clean
-enough to place `T` to eleven digits is unexplained.
+narrowing regime.
 
-The observation is unaffected by the failed explanation. It converges across an
-8x range in `N`, which is evidence that `T = pi` exactly for `a = 1/2` from
-`w_0 = sin x`. It is not a proof and no derivation is offered. It either falls
-out of an exact solution at `a = 1/2` or is a coincidence at the eleventh
-decimal, and finding out which is a well posed question.
+**Settled: it is exact, and it is a theorem.** `a = 1/2` is one of the two
+exactly solvable cases of this family on the circle, the other being `a = 0`.
+Silantyev, Lushnikov, Siegel and Ambrose, arXiv:2411.01891, solve both by pole
+dynamics. Our datum lies in their class. In their variable `X = tan(x/2)`,
+
+```
+sin x = 2X / (1 + X^2) = 1/(X - i) + 1/(X + i)
+```
+
+a single conjugate pole pair at `v_c = 1`, which is their `v_c -> 1` limit where
+the complex singularity sits at infinite height, the statement that `sin x` is
+entire. At `a = 1/2` advection makes logarithms out of simple poles, so their
+invariant class is a double pole plus a simple pole tied by their (42),
+`w_1 = 2 i v_c w_2 / (1 - v_c^2)`. At `v_c = 1` that reads `1 = (2i/0) * 0`, so
+`sin x` is the one point where the parametrisation degenerates. The degeneracy
+is removable: (42) forces `w_2i(0) = (v_c^2(0) - 1)/(2 v_c(0))`, and that
+vanishing amplitude cancels the vanishing denominator in the coefficient of
+their (59), leaving `K = 1/[2(v_c^2(0) + 1)^2]`, which is `1/8` at `v_c(0) = 1`.
+So the flow through `sin x` is regular and
+
+```
+dv_c/dt = (v_c^2 + 1)^3 / (32 v_c^2),      v_c(0) = 1.
+```
+
+With `G(x) = x(x^2 - 1)/(x^2 + 1)^2 + arctan x`, which has
+`G'(x) = 8x^2/(x^2 + 1)^3`, this integrates to `G(v_c(t)) = G(1) + t/4`. `K > 0`
+so `v_c` increases, and blowup is `v_c -> infinity`, their type B, the complex
+singularity reaching the real axis at `x = +-pi`. Since `G(1) = pi/4` and
+`G(infinity) = pi/2`,
+
+```
+T = 4 [G(infinity) - G(1)] = 4 [pi/2 - pi/4] = pi     exactly.
+```
+
+The whole solution is closed form, with `v = v_c(t)` and `X = tan(x/2)`:
+
+```
+w_1(t)  = (v^2 + 1)^2 / 4
+w_2i(t) = (v^2 - 1)(v^2 + 1)^2 / (8v)
+w(x, t) = 2 w_1 X / (X^2 + v^2)  -  4 w_2i v X / (X^2 + v^2)^2
+```
+
+`pi_exact.py` checks this against the solver. Agreement is at machine precision
+and tightens with `N`:
+
+| `t` | `N` | max abs error | relative |
+| --- | --- | --- | --- |
+| 0.50 | 2048 | 2.8e-14 | 2.7e-14 |
+| 0.50 | 8192 | 7.6e-15 | 7.3e-15 |
+| 1.00 | 8192 | 8.0e-15 | 7.0e-15 |
+| 2.00 | 8192 | 1.9e-14 | 1.1e-14 |
+| 2.50 | 8192 | 3.4e-14 | 1.1e-14 |
+
+The same script carries `a = 0` as a control, where switching the double pole
+off and taking `nu -> 0` gives `v_c = (2 + t)/(2 - t)` and `w_1 = (v + 1)^2/4`,
+which reduces by hand to `4 sin x / (4 + 4t cos x + t^2)`, the
+Constantin-Lax-Majda solution, and returns `T = 2`. That control earned its
+place: it caught a wrong amplitude in the first draft of the script, which had
+`w_1 = (v^2 + 1)/2`, right at `t = 0` by coincidence and wrong after. Note also
+that the biasing `(2 + t)` blamed above is exactly this pole trajectory.
+
+So the eleven digit agreement was neither a coincidence nor a lucky fit, and the
+two decimals the fit could not reach were real.
+
+**This was a literature miss, not a discovery.** The overlap list had settled at
+seven papers, all from the Hou, Chen, Huang, Zheng and Okamoto line. The pole
+dynamics school, Lushnikov, Silantyev, Siegel, Ambrose and Schochet, was absent
+from it entirely, and it is the one that owns exact solutions of this family.
+Searching by topic and by author within one school does not surface the other.
 
 ## 4. The blowup profile solves a fixed point equation, confirmed to 1e-5
 
@@ -1081,6 +1144,16 @@ before any effort is spent deriving it.
    assembled in `profile_eq.jacobian`, and its eigenvalues decide stability,
    which is what "the dynamics selects this profile" means precisely. That is
    also the quantity a computer assisted proof would need to enclose.
-6. Settle `T(1/2) = pi`, starting with a literature search. The explanation
-   originally offered for its precision is refuted, so it is now purely an
-   observation.
+6. Done, see finding 3. `T(1/2) = pi` is exact, and the literature search is
+   what settled it: `a = 1/2` is exactly solvable and the closed form gives
+   `T = pi` in three lines. `pi_exact.py` verifies it against the solver at
+   machine precision.
+7. Test the stagnation point relations of findings 8 and 11 against the exact
+   `a = 1/2` solution. That solution is now known in closed form for our datum,
+   so `c = Hf(y*)`, `mu = (c - 1)/(a c)` and `c = 1/(1 - a)` are checkable
+   against an exact answer rather than against a simulation. `c = 1/(1 - a) = 2`
+   at `a = 1/2` is a sharp prediction, and this is the strongest available test
+   of the paper's central claim.
+8. Redo the overlap search against the pole dynamics school. arXiv:2411.01891
+   was missed entirely, and its reference list is the obvious place to start,
+   along with Schochet, and Ambrose and co-authors on the periodic problem.
