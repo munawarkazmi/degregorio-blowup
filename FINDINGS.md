@@ -1244,6 +1244,74 @@ Their `p_b` diverges as `a -> a_c^+` and so does this `beta`. Extrapolating
 data again, so direction only, but it is a second and independent route to the
 retraction above.
 
+## 19. Chen takes the last proposition, and finding 11 was never one
+
+Finding 18 left finding 8 at the non-simple zero as the surviving core. It is
+not ours either.
+
+**J. Chen, "On the Slightly Perturbed De Gregorio Model on S^1", ARMA
+241(3):1843-1869 (2021), arXiv:2010.12700.** Theorem 1 proves that for
+`1 - d < a < 1 + d` the model on the circle admits `w = w_a(x)/(1 + c_w t)`
+with an odd profile and **no spatial rescaling**, which is `c_l = 0`: the
+frozen profile, existence proven rather than observed. Theorem 2 gives its
+nonlinear stability and asymptotic self-similarity from smooth data. The same
+Theorem 1 states
+
+```
+alpha(a) = (c_w + (1-a) H w_a(pi)) / (a H w_a(pi))
+```
+
+where `alpha` is the Holder exponent of the profile's **derivative**, so the
+profile exponent is `1 + alpha`. With `c_w = -1` and `H w_a(pi) = c`:
+
+```
+mu = 1 + (-1 + (1-a)c)/(ac) = (ac - 1 + c - ac)/(ac) = (c - 1)/(ac)
+```
+
+which is finding 8 exactly. Theorem 1 also gives `C^1` but not `C^{1,alpha}`
+at the singular stagnation point, which is the regularity statement.
+
+**The simple zero relation is a normalisation, not a result.** Four prior
+appearances: Chen ARMA (2.8), `c_w = (a-1)u_x(0)`, imposed as the gauge fixing
+the time rescaling; `htw2026` **(2.10)**, `c_l = c_w + (1-a)U_X(0)`, in a paper
+already cited here, whose comparison paragraph examined their Theorem 2.6 and
+missed (2.10); Xu page 17; and the same algebra in LSS Theorem 1.
+
+**Finding 11 retracted.** `parity_check.py` minimises
+`||Re[f_k e^{i k y0}]|| / ||f_k||` over `y0`. It returns 1.4e-13 at `a = 0.8`
+at `y0 = 0.975612`, which is the first stagnation point, and 1e-13 or smaller
+at 0.75, 0.78 and 0.82, against 4.5e-1 for a non-odd control. **The profile is
+odd about `y1`.** The earlier check that `f` lacks pure odd modes,
+`|f_2|/|f_1| = 0.51`, was the wrong test: oddness about a shifted point is much
+weaker than having only odd modes.
+
+The reason needs no computation. Oddness is preserved by the flow, since `w`
+odd gives `Hw` even, `u` odd, and both `u w_x` and `u_x w` odd. `sin x` is odd
+about 0 and about `pi`, so the solution stays odd about both forever, so
+`U(0) = U(pi) = 0` for all time, and two antipodal points on a circle are `pi`
+apart. The parity argument proves a corollary of the datum's symmetry, and
+Chen takes his profile odd from the outset.
+
+### What is left, and what the paper became
+
+The first integral and `PV oint dy/U = 0` were not found in Chen ARMA,
+`htw2026`, or targeted searches; Chen works by weighted Sobolev energy
+estimates and never separates the profile ODE. Both are elementary
+consequences of that separation, so treat "not found" with the caution this
+session has earned.
+
+Surviving: the control variate and `beta` to five digits, `beta = 3` excluded
+at `a = 0.8`, the 0.33 percent correction to LSS's `p_b` at `a = 0.71`, the
+linear spectrum at `a = 0.8` where Chen has a theorem near `a = 1`, the first
+integral and PV constraint, and `T = pi`.
+
+The paper is recast accordingly: retitled around the control variate, abstract
+and contributions leading with the method and the two corrected constants,
+every proposition demoted to attributed background with the mapping to Chen's
+(1.5) spelled out, the parity paragraph replaced by the oddness explanation,
+the `htw2026` comparison corrected, and the priority paragraph rewritten around
+twelve references.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this
