@@ -1280,9 +1280,10 @@ before any effort is spent deriving it.
    `T = pi` in three lines. `pi_exact.py` verifies it against the solver at
    machine precision.
 7. Done, see finding 17. `c = 2` is refuted and Remark `rem:general` is
-   confirmed instead, with `c_l = 1/3` and `c = 8/3` to 4.5e-7. The paper
-   should say so: the remark is currently stated and then never used, and it
-   is now the best supported part of the local analysis.
+   confirmed instead, with `c_l = 1/3` and `c = 8/3` to 4.5e-7. Carried into
+   the paper: the remark is now Proposition `prop:general` with a proof,
+   `T = pi` is Proposition `prop:pi`, and Section `sec:exacthalf` is the exact
+   test. 25 pages, compiles clean.
 8. Done, see finding 18. arXiv:2010.01201 read in full, arXiv:2607.19762 in
    part. Still unread: Schochet, arXiv:2207.07548, and Xu's sections 3 to 7.
    The paper now cites ten related works and states plainly what is not ours.

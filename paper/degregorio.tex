@@ -37,30 +37,45 @@ exact stagnation point relations and the regularity exponent}
 We study finite time blowup in the one parameter family of one dimensional
 models for the three dimensional Euler vorticity equation introduced by
 Okamoto, Sakajo and Wunsch, which interpolates between the Constantin, Lax and
-Majda model at $a=0$ and the De Gregorio model at $a=1$. Starting from
-$\omega_0 = \sin x$ on the circle we find finite time blowup for every $a<1$
-with rate exponent one, and two structurally distinct mechanisms: for small $a$
-the peak narrows, while for $a$ in a window around $0.8$ the normalised
-spectrum freezes and the solution converges to a fixed profile whose amplitude
-alone diverges. In the second regime the profile satisfies the fixed point
-equation $\mathcal{R}(f)=f$, where $\mathcal{R}$ is the same quadratic
-nonlinearity that drives the evolution. This equation admits no free scaling,
-so it determines the profile amplitude outright, and that amplitude is
-independently measurable from the simulation; the two agree to $10^{-5}$. The
-linearisation about the profile, taken in renormalised time, has exactly two
-eigenvalues outside the open left half plane, both forced by symmetry, so the
-profile is linearly stable and is selected by the dynamics. We show that the
-profile can only be singular where its own velocity vanishes, that the two such
-stagnation points are exactly $\pi$ apart, and that the local exponent there is
-$\mu = (c-1)/(ac)$ with $c$ the Hilbert transform of the profile at that point.
-At the stagnation point where the profile has a simple zero this closes in
-elementary form, $c=1/(1-a)$, verified to machine precision. The remaining
-stagnation point governs the spectral decay $\abs{\hat f_k}\sim k^{-\beta}$ with
-$\beta = \mu+1$; its value is genuinely global. Using the exact relation as a
-control variate we determine it to five digits or better and conclude that
-$\beta$ varies continuously with $a$ and is not equal to $3$. We also give an
-exact first integral of the profile equation and a global constraint,
-$\mathrm{PV}\oint \mathrm{d}y/U = 0$, which we verify to $10^{-12}$.
+Majda model at $a=0$ and the De Gregorio model at $a=1$. On the circle,
+Lushnikov, Silantyev and Siegel identified two regimes separated by a critical
+advection $a_c = 0.6890665\ldots$: below it the blowup narrows, while above it
+the solution converges to a fixed profile $f$ with $\omega = f(x)/(T-t)$, whose
+Fourier spectrum decays algebraically because a high order derivative of $f$
+jumps at the point antipodal to the singularity. They obtained the exponent of
+that decay by fitting the spectrum. This paper supplies a local theory for the
+frozen profile which predicts the exponent instead of fitting it.
+
+Rearranging the profile equation shows that $f$ can be singular only where its
+own velocity vanishes. There are exactly two such stagnation points, they are
+exactly $\pi$ apart, which we show is forced by a parity argument, and at each
+the local exponent is $\mu = (c-1)/(ac)$ where $c$ is the Hilbert transform of
+$f$ at that point. Since $\abs{y}^\mu$ has Fourier coefficients decaying like
+$k^{-(\mu+1)}$, one local number therefore predicts the entire spectral decay
+rate $\beta = \mu+1$. At the stagnation point where $f$ has a simple zero this
+closes in elementary form as $c = 1/(1-a)$, verified to machine precision; the
+general self similar version, $h = (1+c_l)/(1-a)$, also appears in recent work
+of Xu, and an equivalent balance gives the complex singularity exponent of
+Lushnikov, Silantyev and Siegel. The other stagnation point is the one that
+carries the singularity, and its $c$ is genuinely global: no local balance
+determines it. Using the exact value at the first point as a control variate
+removes the discretisation error at the second, giving five digits or better.
+We conclude that $\beta$ varies continuously with $a$ and is not equal to $3$,
+with $\beta = 3.0024227$ at $a=0.8$, and that at $a=0.71$ the predicted
+$\beta = 9.2955$ sits $0.33$ percent below the published fitted value
+$9.3259$.
+
+We add three further results. The linearisation about the profile, taken in
+renormalised time, has exactly two eigenvalues outside the open left half
+plane, both forced by symmetry, so the profile is linearly stable modulo those
+symmetries, which sharpens the nonlinear stability previously inferred from
+convergence in simulations. The profile satisfies a fixed point equation
+$\mathcal{R}(f)=f$ admitting no free scaling, so it determines its own
+amplitude, and that amplitude agrees with the simulation to $10^{-5}$. Finally
+we give an exact first integral of the profile equation and a global
+constraint, $\mathrm{PV}\oint \mathrm{d}y/U = 0$, verified to $10^{-12}$, and
+we record that at $a=1/2$, where the model is exactly solvable, the datum
+$\omega_0 = \sin x$ blows up at $T = \pi$ exactly.
 \end{abstract}
 
 \section{Introduction}
@@ -103,6 +118,44 @@ directly rather than inferred from a diverging simulation.
 
 \paragraph{Relation to existing work.} Self similar blowup for this family is
 under active study and the present results must be read against it.
+
+\emph{The pole dynamics line.} The closest work to this paper is a body of
+results obtained by complex singularity and pole dynamics methods, and it
+already contains much of the setting used here. Lushnikov, Silantyev and Siegel
+\cite{lss2020} sweep $a$ on both the real line and the circle with high
+precision spectral simulations and a nonlinear eigenvalue solve. They locate
+the critical advection $a_c = 0.6890665337007457\ldots$ at which the width
+exponent $c_l$ vanishes; they identify, for $a_c<a\lesssim 0.95$ on the circle,
+the frozen blowup $\omega = f(x)/(T-t)$ which is the object of this paper, and
+compute its profile for $a_c<a\le 0.85$; they observe that $f$ has a jump in a
+high order derivative at $x=\pm\pi$, antipodal to the singularity, which at
+$a=0.8$ is a jump in $f''$; and they measure the resulting algebraic spectral
+decay, reporting its exponent as $p_b$, which is our $\beta$. Their Theorem 1
+gives the exponent $\gamma = 1/(1-a)$ of the leading complex singularity, from
+the balance $a\gamma = \gamma-1$, which is the same algebra as Proposition
+\ref{prop:c1} applied to a different object. We claim none of this, and the
+regime diagram of Section \ref{sec:regimes} should be read as reproducing
+theirs rather than as establishing it.
+
+What this paper adds to that is the local theory. Their $p_b$ comes from a
+least squares fit to the spectrum over a window; ours follows from
+\eqref{eq:beta} given a single value of $\Hil f$, and Section
+\ref{sec:control} shows that the two differ in the third digit.
+
+Silantyev, Lushnikov, Siegel and Ambrose \cite{slsa2025} construct exact pole
+dynamics solutions on the circle for $a=0$ and $a=1/2$; Section
+\ref{sec:exacthalf} is an application of theirs and claims no more. Xu
+\cite{xu2026} studies the spectrum of the linearisation about the collapse
+profile at $a=0$ on the real line, obtaining the essential spectrum, a point
+spectrum $\{0,1\}$ consisting of symmetry modes, and a spectral gap. His
+Section 2 records the general self similar profile equation
+\eqref{eq:profgeneral}, and in the course of his Section 4 he derives
+$\Hil\Omega(0) = (1+c_l)/(1-a)$, which is \eqref{eq:hgeneral} below;
+Proposition \ref{prop:general} is therefore his, obtained independently here,
+and we retain it only because Proposition \ref{prop:exponent} needs it. Our
+Section \ref{sec:spectrum} asks his question for the frozen profile on the
+circle, where the second symmetry mode is translation rather than dilation, and
+answers it numerically where he answers it with proof.
 
 Okamoto, Sakajo and Wunsch \cite{osw2008} study global existence against
 blowup using a criterion in the spirit of Beale, Kato and Majda together with
@@ -159,18 +212,26 @@ Zheng \cite{zheng2023} constructs exactly self similar $C^\alpha$ blowup for
 the generalised De Gregorio equation at small $\abs{a\alpha}$, again on the
 line and again narrowing, with rescaling factor $(1-t)^{1+\lambda(a)}$.
 
-A pattern runs through all of these. Every construction we are aware of works
-on the real line with a narrowing profile, $c_l\ne0$. The circle behaves
-differently for a reason that is not a matter of taste: there $U$ has zero mean
-by construction, so it must change sign, interior stagnation points are forced,
-and by Proposition \ref{prop:exponent} the profile cannot be smooth at them.
-That is the setting in which a frozen profile, $c_l = 0$, becomes the attractor
-and in which the local relations below have content. None of these references
-performs the local analysis at stagnation points which gives Propositions
-\ref{prop:exponent} and \ref{prop:c1}, nor the linear stability computation of
-Section \ref{sec:spectrum}. Two numerical coincidences with
-\cite{htw2026} invited closer comparison, and Remark \ref{rem:general} is what
-makes that comparison possible, since it puts both settings in one formula.
+A pattern runs through the constructive part of this literature. With the
+exception of \cite{lss2020} and \cite{slsa2025}, every construction we are
+aware of works on the real line with a narrowing profile, $c_l\ne0$. The circle
+behaves differently for a reason that is not a matter of taste: there $U$ has
+zero mean by construction, so it must change sign, interior stagnation points
+are forced, and by Proposition \ref{prop:exponent} the profile cannot be smooth
+at them. That is the setting in which a frozen profile, $c_l=0$, becomes the
+attractor, and it is the setting \cite{lss2020} already works in.
+
+What remains to be done there is the local analysis at those stagnation points.
+Proposition \ref{prop:exponent} at the \emph{singular} stagnation point, where
+$f$ has no simple zero and $\mu\ne1$, is the part that none of these references
+contains, and it is what turns the fitted exponent of \cite{lss2020} into a
+predicted one. The parity statement fixing the two stagnation points $\pi$
+apart, the control variate of Section \ref{sec:control}, the first integral and
+global constraint of Section \ref{sec:integral}, and the linear stability
+computation of Section \ref{sec:spectrum} are likewise not in them. Two
+numerical coincidences with \cite{htw2026} invited closer comparison, and
+Proposition \ref{prop:general} is what makes that comparison possible, since it
+puts both settings in one formula.
 
 \paragraph{The transition near $a\approx 0.75$.} \cite{htw2026} identifies
 $a^{c,2}\approx 0.751$ as the value at which its self similar profile
@@ -189,23 +250,41 @@ The mechanism: $c_l$ falls smoothly to zero rather than jumping, so the
 narrowing branch merges with the frozen one rather than being replaced by it,
 which is the right shape for an exchange.
 
-The location: $c_l$ is not zero at $a=0.751$. It measures
-$0.004536 \pm 0.000543$ there, eight standard errors from zero, and nine times
-the conservative $5\times10^{-4}$ noise floor. Whatever happens at $0.751$ on
-the line, the narrowing branch on the circle is still narrowing there. The
-merger itself is bracketed rather than determined, since the exponent and the
-root trade off against each other in a fit of $c_l = A(a_c-a)^p$: the best
-$a_c$ runs from $0.795$ at $p=2$ to $0.844$ at $p=4.5$, with the fit quality
-improving monotonically in $p$, so all that follows is $a_c \gtrsim 0.795$.
+The location: an earlier version of this paper read Table \ref{tab:cl} as
+giving $c_l = 0.004536\pm0.000543$ at $a=0.751$, eight standard errors from
+zero, and concluded $a_c\gtrsim0.795$. That is withdrawn, and it was wrong.
+The critical advection is known to far better precision than anything measured
+here: \cite{lss2020} obtains $a_c = 0.6890665337007457\ldots$ from a nonlinear
+eigenvalue problem, and \cite{xu2026} recomputes the branch independently by
+Newton continuation, finding its zero crossing at $0.6888$, in agreement to
+$0.04$ percent.
 
-We therefore withdraw the coincidence as refuted rather than unsupported. This
-is not a contradiction of \cite{htw2026}. A branch merger and a loss of
-stability are different events which need not occur together, and their
-$a^{c,2}$ is a stability boundary for a profile on the line while $a_c$ here is
-where a scaling exponent vanishes on the circle. The conclusion is only that
-the two numbers are not the same number, and that the resemblance which
-prompted the comparison was an artefact of a linear extrapolation through
-convex data, the same trap as in Section \ref{sec:control}.
+The failure is one of resolution, and it is visible in Table \ref{tab:cl}
+itself once the published branch is put beside it: $1.058$ against $1.0000$ at
+$a=0$, $0.748$ against $0.7474$ at $a=0.2$, $0.512$ against $0.4809$ at
+$a=0.4$, $0.325$ against the exact $1/3$ at $a=0.5$, and $0.179$ against
+$0.1691$ at $a=0.6$. A half width measurement carrying several percent of bias
+cannot resolve a quantity of size $0.0045$, and fitting $c_l = A(a_c-a)^p$
+through it, with the best $a_c$ running from $0.795$ at $p=2$ to $0.844$ at
+$p=4.5$, was an extrapolation through convex data of exactly the kind warned
+against in Section \ref{sec:control}.
+
+An independent check from this paper agrees with the published value rather
+than with the withdrawn one. \cite{lss2020} reports the spectral exponent
+diverging as $a\to a_c^+$, and $\beta$ as determined in Section
+\ref{sec:control} does the same, taking the values $16.362$, $9.295$, $6.795$
+and $4.213$ at $a=0.70,0.71,0.72,0.75$. Extrapolating $1/\beta$ linearly to
+zero from the two closest pairs gives $0.6868$ and $0.6828$, with the pair
+nearer the transition giving the larger value, consistent with
+$a_c = 0.68907$ and not with $0.795$. We quote this loosely, since $1/\beta$ is
+convex and this is the same trap once more, but its direction is not in doubt.
+
+The coincidence with \cite{htw2026} therefore stands unresolved rather than
+refuted, and our earlier reason for refuting it was itself an artefact. Their
+$a^{c,2}\approx0.751$ is a stability boundary for a profile on the line, while
+$a_c = 0.68907$ is where the width exponent vanishes on the circle. The two
+numbers are close and describe different events, and nothing established here
+decides whether they are related.
 
 \paragraph{The constant $1/(1-a)$.} Theorem 2.6 of \cite{htw2026} gives, for
 $a<0$, an exact solution $\Ob_a(X) = -\sin(\pi\mu)\,\mathbf{1}_{X>1}
@@ -221,26 +300,49 @@ balanced against the advection coefficient $a$, entering our case through
 $h(1-a) = 1+c_l$ and theirs through the scaling normalisation. Neither
 statement implies the other.
 
+The same factor appears twice more in the pole dynamics literature, and once by
+the same computation. Theorem 1 of \cite{lss2020} gives $\gamma = 1/(1-a)$ for
+the power of the leading complex singularity of $\omega$ off the real axis,
+from the balance $a\gamma/(\gamma-1) = 1$, that is $a\gamma = \gamma-1$, which
+is identical in form to the $ac = c-1$ of Proposition \ref{prop:c1}. The
+objects are different, theirs a power at a complex singularity and ours a value
+of $\Hil f$ at a real stagnation point, but the balance of stretching against
+advection which produces the factor is the same, and we make no priority claim
+for it. More directly, \cite{xu2026} states the general form
+$\Hil\Omega(0) = (1+c_l)/(1-a)$ outright, which is Proposition
+\ref{prop:general}, of which Proposition \ref{prop:c1} is the $c_l=0$ case.
+
 Our contributions are as follows.
 
 \begin{enumerate}
-\item We separate two blowup mechanisms within the family and give a
-  translation invariant diagnostic that distinguishes them (Section
-  \ref{sec:regimes}).
-\item We formulate the blowup profile equation as a fixed point of the
-  evolution nonlinearity, observe that it fixes the profile amplitude with no
-  free scaling, and verify the resulting prediction against simulation to
-  $10^{-5}$ (Section \ref{sec:profile}).
-\item We compute the spectrum of the linearisation in renormalised time and
-  identify the two symmetry forced eigenvalues exactly, one of which is
-  provable in closed form (Section \ref{sec:spectrum}).
+\item We recover the two regime picture of \cite{lss2020} on the circle with an
+  independent and translation invariant diagnostic, and record where our
+  resolution falls short of theirs (Section \ref{sec:regimes}).
+\item We formulate the frozen profile equation as a fixed point of the
+  evolution nonlinearity, observe that it admits no free scaling and therefore
+  fixes the profile amplitude outright, and verify that prediction against
+  simulation to $10^{-5}$ (Section \ref{sec:profile}).
+\item We compute the spectrum of the linearisation about the frozen profile in
+  renormalised time and identify the two symmetry forced eigenvalues exactly,
+  one of which is provable in closed form, which sharpens the nonlinear
+  stability inferred in \cite{lss2020} from observed convergence (Section
+  \ref{sec:spectrum}).
 \item We prove that singularities of the profile occur only at stagnation
-  points of its velocity, derive the local exponent, and show that one of the
-  two stagnation points admits the elementary closed form $c=1/(1-a)$ (Section
-  \ref{sec:stagnation}).
+  points of its velocity, that there are exactly two and that they are exactly
+  $\pi$ apart, and we derive the local exponent $\mu = (c-1)/(ac)$ there. The
+  closed form $c = 1/(1-a)$ at the stagnation point where $f$ is smooth is the
+  $c_l=0$ case of a relation also given in \cite{xu2026}; the exponent at the
+  \emph{singular} stagnation point, where $\mu\ne1$, is the one the rest of the
+  paper rests on (Section \ref{sec:stagnation}).
 \item We determine the remaining, global constant to five digits using the
-  exact relation as a control variate, and conclude that the spectral decay
-  exponent varies continuously with $a$ (Section \ref{sec:control}).
+  exact relation as a control variate, concluding that the spectral decay
+  exponent varies continuously with $a$, that it is not equal to $3$, and that
+  at $a=0.71$ it sits $0.33$ percent below the value obtained in
+  \cite{lss2020} by fitting the spectrum (Section \ref{sec:control}).
+\item We test the $c_l$ dependence of Proposition \ref{prop:general} against
+  the exact $a=1/2$ solution of \cite{slsa2025}, and record that the datum
+  $\omega_0 = \sin x$ blows up there at $T=\pi$ exactly (Section
+  \ref{sec:exacthalf}).
 \item We give a first integral of the profile equation and a global constraint
   which we verify numerically (Section \ref{sec:integral}).
 \end{enumerate}
@@ -321,7 +423,7 @@ straight line in $t$ with slope $-1/p$ and root $T$.
 \toprule
 $a$   & $0$ & $0.2$ & $0.4$ & $0.5$ & $0.6$ & $0.7$ & $0.8$ & $0.9$ & $1$\\
 \midrule
-$T$   & $2$ (exact) & $2.3101$ & $2.7858$ & $3.1416$ & $3.6500$ & $4.4641$
+$T$   & $2$ (exact) & $2.3101$ & $2.7858$ & $\pi$ (exact) & $3.6500$ & $4.4641$
       & $6.0719$ & $10.757$ & $\infty$ (exact)\\
 $p$   & $1$ (exact) & $0.997$ & $1.000$ & $1.001$ & $1.001$ & $0.999$
       & $1.000$ & $1.049$ & n/a\\
@@ -381,15 +483,26 @@ We refer to the first behaviour as a \emph{frozen} profile and the second as
 \emph{narrowing}, illustrated in Figure \ref{fig:frozen}. Only the frozen case
 is analysed below.
 
-The distinction is quantitative. In the general self similar ansatz of Remark
-\ref{rem:general}, the peak width scales like $(T-t)^{c_l}$ while the amplitude
+The dichotomy is due to \cite{lss2020}, who established it on the circle,
+located the transition at $a_c = 0.6890665337007457\ldots$, and computed the
+width exponent to five to eight digits by a nonlinear eigenvalue solve. What
+this section reports is an independent measurement of the same quantity by a
+different and much cruder route, and it should be read as a check on our
+diagnostic rather than as a determination of theirs.
+
+The distinction is quantitative. In the general self similar ansatz of
+Proposition \ref{prop:general}, the peak width scales like $(T-t)^{c_l}$ while
+the amplitude
 grows like $(T-t)^{-1}$, so $\text{width}\sim\text{amplitude}^{-c_l}$ and $c_l$
 is minus the slope of one against the other on logarithmic axes. A frozen
 profile is exactly $c_l=0$. Measuring the width as the half width at half
 maximum around the peak, which is robust whether the spectrum is exponential or
 algebraic, gives Table \ref{tab:cl}. The method is calibrated at $a=0$, where
 the exact solution \eqref{eq:clmexact} has width proportional to $(2-t)$ and
-amplitude $4/(4-t^2)$, so $c_l=1$; the measurement returns $1.048$.
+amplitude $4/(4-t^2)$, so $c_l=1$; the measurement returns $1.048$. Against the
+published branch, Table \ref{tab:cl} is accurate to a few percent and not of
+one sign; the introduction gives that comparison term by term, together with
+the estimate of $a_c$ it forces us to withdraw.
 
 \begin{table}[htbp]
 \centering
@@ -749,22 +862,61 @@ $f'/f = \mu/(y-y_\ast) + O(1)$ with $\mu$ as stated, and integrating gives the
 claim.
 \end{proof}
 
-\begin{remark}[General self similar form]
-\label{rem:general}
-The same computation applies to the full self similar ansatz
-$\omega = (T-t)^{c_\omega}\Omega(x/(T-t)^{c_l})$, whose profile equation is
-$(c_l X + a\,\Ub)\Ob_X = (c_\omega + \Ub_X)\Ob$. A stagnation point is now a
-zero of the total advection velocity $c_l X + a\Ub$ rather than of $\Ub$ alone,
-and writing $h = \Hil\Ob(X_\ast)$ the exponent is
+The same computation applies to a narrowing profile. Since the narrowing regime
+is where most of this family lives, and since it is the case that can be tested
+against an exact solution, we state it in full rather than as an aside.
+
+\begin{proposition}[Local exponent, general self similar form]
+\label{prop:general}
+Let $\omega = (T-t)^{c_\omega}\Ob\big(x/(T-t)^{c_l}\big)$, so that the profile
+equation is
+\begin{equation}
+  (c_l X + a\,\Ub)\,\Ob_X = (c_\omega + \Ub_X)\,\Ob ,
+  \label{eq:profgeneral}
+\end{equation}
+and let $X_\ast$ be a zero of the total advection velocity $c_l X + a\Ub$,
+which replaces $\Ub$ as the transported quantity. Write
+$h = \Hil\Ob(X_\ast) = \Ub_X(X_\ast)$ and suppose $c_l + a\,h \ne 0$. Then
+$\Ob(X_\ast)=0$ unless $h = -c_\omega$, and $\Ob \sim C\,(X-X_\ast)^{\nu}$ with
 \begin{equation}
   \nu = \frac{c_\omega + h}{c_l + a\,h}.
   \label{eq:nugeneral}
 \end{equation}
+If in addition the zero is simple, that is $\nu = 1$, then
+\begin{equation}
+  h = \frac{c_l - c_\omega}{1-a},
+  \label{eq:hgeneral}
+\end{equation}
+which for $c_\omega = -1$ reads $h = (1+c_l)/(1-a)$.
+\end{proposition}
+
+\begin{proof}
+Evaluating \eqref{eq:profgeneral} at $X_\ast$ annihilates the left hand side,
+leaving $0 = (c_\omega + h)\,\Ob(X_\ast)$, so $\Ob(X_\ast)=0$ unless
+$h = -c_\omega$. Differentiating the advection velocity gives
+$(c_l X + a\Ub)_X = c_l + a\,\Ub_X$, which equals $c_l + a\,h$ at $X_\ast$, so
+$c_l X + a\Ub \sim (c_l + a\,h)(X-X_\ast)$ there. Dividing
+\eqref{eq:profgeneral} by $\Ob$ and by the advection velocity gives
+$\Ob_X/\Ob = \nu/(X-X_\ast) + O(1)$ with $\nu$ as stated, and integrating gives
+the claim. For \eqref{eq:hgeneral}, setting $\nu=1$ in \eqref{eq:nugeneral}
+gives $c_\omega + h = c_l + a\,h$, that is $h(1-a) = c_l - c_\omega$.
+\end{proof}
+
 Proposition \ref{prop:exponent} is the case $c_l = 0$, $c_\omega = -1$, which is
-what a frozen profile requires: no spatial rescaling. Likewise a simple zero
-forces $h = (1+c_l)/(1-a)$, of which Proposition \ref{prop:c1} is again the
-$c_l=0$ case.
-\end{remark}
+what a frozen profile requires: no spatial rescaling, and Proposition
+\ref{prop:c1} below is the same case of \eqref{eq:hgeneral}.
+
+Equation \eqref{eq:hgeneral} is not new. \cite{xu2026} derives
+$\Hil\Omega(0) = (1+c_l)/(1-a)$ by the same argument, differentiating the
+profile equation at the stagnation point under the same nondegeneracy
+$\Omega'(0)\ne0$, and records the slope $c_l + a\,\Hil\Omega(0)$ used in the
+proof above; we obtained it independently and state it here only because
+Proposition \ref{prop:exponent} is the case it does not cover. The content
+that remains with us is the exponent at a stagnation point where the zero is
+\emph{not} simple, which is the situation at the second stagnation point on the
+circle and the one that fixes the spectral decay in
+Section \ref{sec:control}. Section \ref{sec:exacthalf} checks the $c_l$
+dependence where $c_l\ne0$ and the answer is known exactly.
 
 Since $\abs{y}^\mu$ has Fourier coefficients decaying like $k^{-(\mu+1)}$, the
 spectral decay exponent of the profile is
@@ -820,6 +972,135 @@ slope of $0.043$ at $R^2=0.46$, consistent with zero. Correspondingly $f'$ is
 continuous at both stagnation points, to $4\times10^{-12}$ and
 $1.6\times10^{-11}$.
 
+\section{An exact test at \texorpdfstring{$a=1/2$}{a = 1/2}}
+\label{sec:exacthalf}
+
+Every measurement reported above was taken on a frozen profile, where $c_l=0$
+and \eqref{eq:nugeneral} cannot be told apart from \eqref{eq:mu}. This section
+checks the $c_l$ dependence directly, because \eqref{eq:osw} is solvable in
+closed form at $a=1/2$. Nothing in the section is claimed as new: the exact
+solution is from \cite{slsa2025}, the exponent $c_l = 1/3$ at $a=1/2$ is stated
+in \cite{lss2020} and again in \cite{slsa2025}, and \eqref{eq:hgeneral} is from
+\cite{xu2026}. It is included because the three fit together into a
+consistency check which is exact rather than numerical, and because the blowup
+time it produces for our datum does not appear in any of them.
+
+Silantyev, Lushnikov, Siegel and Ambrose \cite{slsa2025} construct exact pole
+dynamics solutions of \eqref{eq:osw} on the circle for $a=0$ and $a=1/2$. In
+the variable $X=\tan(x/2)$, which maps $(-\pi,\pi)$ onto $\Real$, their $a=1/2$
+solution is a conjugate pair consisting of one double and one simple pole,
+whose amplitudes are tied by
+$\omega_{-1} = 2iv\,\omega_{-2}/(1-v^2)$; that constraint is what cancels the
+logarithmic singularities which advection otherwise generates out of poles. The
+initial datum used throughout this paper lies in their class, since partial
+fractions give
+\begin{equation}
+  \sin x \;=\; \frac{2X}{1+X^2} \;=\; \frac{1}{X-i}+\frac{1}{X+i},
+  \label{eq:sinpoles}
+\end{equation}
+a single conjugate pair at $v=1$. That is the limit in which the complex
+singularity sits at infinite height, as it must for an entire datum, and it is
+the one point at which their parametrisation degenerates: the constraint reads
+$1 = (2i/0)\cdot 0$ there. The degeneracy is removable, and clearing it gives
+the following, which is a specialisation of \cite{slsa2025} rather than a new
+solution.
+
+\begin{proposition}[Blowup time at $a=1/2$]
+\label{prop:pi}
+For $a=1/2$ and $\omega_0 = \sin x$, the solution of \eqref{eq:osw} blows up at
+\begin{equation}
+  T \;=\; \pi
+  \label{eq:Tpi}
+\end{equation}
+exactly, with the complex singularity reaching the real axis at $x=\pm\pi$.
+\end{proposition}
+
+\begin{proof}
+The constraint forces $\omega_{-2,i}(0) = (v^2(0)-1)/(2v(0))$, and substituting
+this into the coefficient of the pole equation of \cite{slsa2025} cancels the
+vanishing denominator against the vanishing amplitude, leaving
+$K = 1/[2(v^2(0)+1)^2]$, which is finite and equal to $1/8$ at $v(0)=1$. The
+pole position therefore satisfies the regular equation
+\begin{equation}
+  \frac{dv}{dt} = \frac{(v^2+1)^3}{32\,v^2},\qquad v(0)=1 .
+  \label{eq:poleode}
+\end{equation}
+Set $G(v) = v(v^2-1)/(v^2+1)^2 + \arctan v$, so that
+$G'(v) = 8v^2/(v^2+1)^3$ and \eqref{eq:poleode} integrates to
+$G(v(t)) = G(1) + t/4$. The right hand side of \eqref{eq:poleode} is positive,
+so $v$ increases and blowup occurs as $v\to\infty$, which is the pole reaching
+the real axis at $x=\pm\pi$. Since $G(1)=\pi/4$ and $G(\infty)=\pi/2$,
+$T = 4\big[G(\infty)-G(1)\big] = \pi$.
+\end{proof}
+
+Taking $v\to\infty$ in the closed form near $x=\pi$, with $z = x-\pi$ and
+$\zeta = vz/2$, and using $dv/dt \sim v^4/32$ so that $v^3 = 32/(3(T-t))$,
+yields a self similar profile in the sense of Proposition \ref{prop:general}
+with
+\begin{equation}
+  c_l = \tfrac13,\qquad c_\omega = -1,\qquad
+  \Ob(\zeta) = -\frac{16}{3}\,\frac{\zeta}{(1+\zeta^2)^2},
+  \label{eq:halfprofile}
+\end{equation}
+whence $\Hil\Ob = -\tfrac83(\zeta^2-1)/(\zeta^2+1)^2$ and
+$\Ub = \tfrac83\,\zeta/(\zeta^2+1)$. The value $c_l = 1/3$ is not deduced here
+for the first time: it is the exponent $\alpha = 1/3$ recorded at $a=1/2$ in
+\cite{lss2020}, where it also arises as the exact value of their approximation
+$\alpha_0 = 2/(\gamma(\gamma+1))$ at $\gamma=2$, and it is restated in
+\cite{slsa2025} for both of their blowup types. The computation above merely
+confirms that our datum sits on the same branch. The total advection velocity
+is
+\begin{equation}
+  c_l\zeta + a\Ub \;=\; \frac{\zeta}{3}\,\frac{\zeta^2+5}{\zeta^2+1},
+  \label{eq:halfadv}
+\end{equation}
+whose only zero is $\zeta=0$, the blowup point itself, and $\Ob$ has a simple
+zero there. Proposition \ref{prop:general} then predicts
+$h = (1+c_l)/(1-a) = (4/3)/(1/2) = 8/3$, against $1/(1-a) = 2$ for a frozen
+profile. The two differ by a third, so the test discriminates.
+
+Measuring $h = (T-t)\,\Hil\omega(\pi,t)$ directly on the exact solution, with
+$T-t = 4[G(\infty)-G(v)]$ and the same spectral Hilbert transform used
+everywhere else in this paper, gives Table \ref{tab:halfh}. The residual of the
+profile equation \eqref{eq:profgeneral} for \eqref{eq:halfprofile} is
+$1.3\times10^{-15}$, and $v^3(T-t)\to32/3$ confirms $c_l = 1/3$.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lccccc}
+\toprule
+$v$ & $10$ & $30$ & $100$ & $300$ & $1000$\\
+\midrule
+$h$ measured & $2.671992$ & $2.667259$ & $2.666720$ & $2.666673$ & $2.6666671$\\
+$\abs{h - 8/3}$ & $5.3\times10^{-3}$ & $5.9\times10^{-4}$ & $5.3\times10^{-5}$
+  & $5.9\times10^{-6}$ & $4.5\times10^{-7}$\\
+$\abs{h - 2}$ & $6.7\times10^{-1}$ & $6.7\times10^{-1}$ & $6.7\times10^{-1}$
+  & $6.7\times10^{-1}$ & $6.7\times10^{-1}$\\
+\bottomrule
+\end{tabular}
+\caption{The general form of Proposition \ref{prop:general} against the exact
+$a=1/2$ solution, at resolutions $N = 2^{14}$ to $2^{20}$. The measurement
+converges on $(1+c_l)/(1-a) = 8/3$ and stands off the frozen value
+$1/(1-a) = 2$ by two thirds at every resolution.}
+\label{tab:halfh}
+\end{table}
+
+The same exercise calibrates Table \ref{tab:cl}. That table measures
+$c_l = 0.325$ at $a=0.5$ against the exact $1/3$, a shortfall of $2.5$ percent,
+while at $a=0$, where $c_l=1$ exactly, it returns $1.048$ to $1.058$. The error
+is therefore a few percent and is not of one sign, which is what the fuller
+comparison against the published branch in the introduction already showed, and
+what makes the withdrawn estimate of $a_c$ untenable.
+
+Finally, $\Ob$ in \eqref{eq:halfprofile} is analytic on $\Real$, its nearest
+singularities being at $\zeta = \pm i$. The $C^{1,1}$ regularity and the
+algebraic spectral decay \eqref{eq:beta} found in Section \ref{sec:stagnation}
+are thus features of the frozen regime specifically, not of blowup in this
+family generally. That is consistent with Proposition \ref{prop:general}: with
+$c_l>0$ the total advection velocity has a nonzero slope $c_l + a h$ at the
+stagnation point even when $\Ub$ alone would vanish to higher order, so the
+regular singular point is milder.
+
 \section{Determination of the global constant}
 \label{sec:control}
 
@@ -858,6 +1139,8 @@ $1.5\times10^{-5}$ of that from $N=4096$. We obtain
 \toprule
 $a$ & $c_2$ & scatter & $\mu_2$ & $\beta$\\
 \midrule
+$0.70$ & $-0.10252834$ & $4.1\times10^{-16}$ & $15.36200$  & $16.36200$\\
+$0.71$ & $-0.20450843$ & $6.0\times10^{-16}$ & $8.29546$   & $9.29546$\\
 $0.72$ & $-0.31519119$ & $1.4\times10^{-14}$ & $5.7953854$ & $6.7953854$\\
 $0.74$ & $-0.56651088$ & $4.2\times10^{-10}$ & $3.7367448$ & $4.7367448$\\
 $0.76$ & $-0.86560395$ & $1.8\times10^{-8}$  & $2.8358720$ & $3.8358720$\\
@@ -868,7 +1151,9 @@ $0.82$ & $-2.20024724$ & $5.3\times10^{-5}$  & $1.7737736$ & $2.7737736$\\
 \end{tabular}
 \caption{The global constant and the resulting exponents. The scatter is the
 spread of the corrected values across resolutions and measures self
-consistency, not residual systematic error.}
+consistency, not residual systematic error. The rows at $a=0.70$ and $a=0.71$
+were computed over $N = 1024$ to $3072$ rather than the full ladder, and are
+quoted to the digits that run resolves.}
 \label{tab:c2}
 \end{table}
 
@@ -895,6 +1180,28 @@ points. Since the correction removes eight hundred times the raw error, the
 conclusion survives allowing a residual systematic an order of magnitude above
 the observed scatter. Table \ref{tab:c2} shows $\beta$ varying continuously
 with $a$; the value $3$ is merely where that curve crosses.
+\end{remark}
+
+\begin{remark}[Against the published exponent]
+\label{rem:pb}
+\cite{lss2020} measure this same exponent for the frozen profile, calling it
+$p_b$, by a two domain least squares fit to the spectrum, and report
+$p_b = 9.32592$ at $a=0.71$. Equation \eqref{eq:beta} with $c_2$ from Table
+\ref{tab:c2} gives $\beta = 9.29546$ there, lower by $0.03046$, or $0.33$
+percent. The two determinations share nothing: theirs is a fit to the tail of
+the spectrum over a window, ours is a single value of $\Hil f$ read off the
+profile at a point. Given the window sensitivity documented in the next remark
+we read the difference as a correction to the fitted value rather than a
+disagreement, and we claim no more than the three digits it rests on.
+
+Their exponent diverges as $a\to a_c^+$, and $\beta$ here does the same, which
+gives an independent handle on $a_c$. Extrapolating $1/\beta$ linearly to zero
+from the pairs $(0.70,0.71)$ and $(0.71,0.72)$ gives $0.6868$ and $0.6828$,
+with the pair nearer the transition returning the larger value, pointing at
+their $a_c = 0.6890665337007457\ldots$ and not at anything larger. This is an
+extrapolation through convex data, so we quote it for its direction only, but
+that direction is what withdraws the estimate of $a_c$ discussed in the
+introduction.
 \end{remark}
 
 \begin{remark}[On measuring $\beta$ from the spectrum directly]
@@ -1184,19 +1491,47 @@ the figure of $1.4\times10^{-14}$ at $a=0.72$ should not be read as fourteen
 digit accuracy.
 
 On priority. The bibliographic details of every reference above have been
-verified. Seven closely related works, \cite{osw2008}, \cite{htw2022},
-\cite{hqww2023}, \cite{hqw2024}, \cite{zheng2023}, \cite{gj2025} and
-\cite{htw2026}, have been read for overlap and none contains Propositions
-\ref{prop:exponent} or \ref{prop:c1}, the stability computation, or the
-regularity statement. We note that this list grew twice while being compiled,
-so it should be read as the nearest work we could find rather than as a
-complete survey. This is a narrower check than a full literature survey:
-it covers the papers nearest to this one rather than the field, and for the two
-preprints it rests on a reading of the full text rather than a line by line
-verification of every lemma. Both numerical coincidences with \cite{htw2026}
-have been examined and neither is an overlap, but the first of them, the
-exchange of stability near $a\approx 0.75$, is stated there as a hypothesis and
-would be worth settling on its own merits.
+verified. Ten closely related works, \cite{osw2008}, \cite{htw2022},
+\cite{hqww2023}, \cite{hqw2024}, \cite{zheng2023}, \cite{gj2025},
+\cite{htw2026}, \cite{lss2020}, \cite{slsa2025} and \cite{xu2026}, have been
+read for overlap, and the honest summary is that this paper is a local theory
+laid on top of a setting which \cite{lss2020} established.
+
+We claim none of the following, all of which are in \cite{lss2020}: the two
+regime picture on the circle, the critical advection $a_c$, the frozen blowup
+$\omega = f(x)/(T-t)$ and its numerical profile, the derivative jump at the
+antipodal point, the algebraic spectral decay it causes, and the nonlinear
+stability of the profile as observed from converging simulations. Equation
+\eqref{eq:hgeneral} and hence Proposition \ref{prop:general} are in
+\cite{xu2026}, which appeared while this work was in preparation and which we
+did not know of when the relation was derived here; Proposition \ref{prop:c1}
+is its $c_l=0$ case, and shares its algebra with Theorem 1 of \cite{lss2020}.
+The exact $a=1/2$ solution used in Section \ref{sec:exacthalf} is from
+\cite{slsa2025} and Proposition \ref{prop:pi} is a specialisation of it, claimed
+only as such.
+
+What we do claim, and did not find in any of them, is Proposition
+\ref{prop:exponent} at the stagnation point where the zero of $f$ is not
+simple, which converts the fitted exponent of \cite{lss2020} into a predicted
+one; the parity argument fixing the two stagnation points exactly $\pi$ apart;
+the control variate determination of $c_2$ and the resulting exclusion of
+$\beta=3$, together with the correction in Remark \ref{rem:pb}; the spectrum of
+the linearisation about the frozen profile on the circle; and the first
+integral and global constraint of Section \ref{sec:integral}.
+
+This list grew three times while being compiled, most consequentially at the
+end, and that history is itself a caveat. \cite{lss2020}, \cite{slsa2025} and
+\cite{xu2026} belong to a line of work using complex singularity and pole
+dynamics methods which searches organised around the other references do not
+surface, and it is the line which works on the circle, the setting this paper
+relies on. We have read \cite{lss2020} in full and \cite{xu2026} in part, and
+we expect that literature to bear further on Sections \ref{sec:control} and
+\ref{sec:exacthalf}. For the preprints this rests on a reading of the text
+rather than a line by line verification of every lemma. Both numerical
+coincidences with \cite{htw2026} have been examined; neither is an overlap, and
+the first, the exchange of stability near $a\approx0.75$, is now to be compared
+against $a_c = 0.68907$ rather than against the withdrawn estimate, and remains
+unsettled.
 
 The critical limit is left open. Section \ref{sec:critical} reports no exponent
 for $T(\varepsilon)$ because the measured one does not converge over the range
@@ -1282,6 +1617,18 @@ are the objects such a proof would need to enclose.
   \emph{Self similar finite time blowups with singular profiles of the
   generalized Constantin, Lax and Majda model: theoretical and numerical
   investigations}, preprint, arXiv:2603.25104 (2026).
+
+\bibitem{lss2020} P. M. Lushnikov, D. A. Silantyev and M. Siegel,
+  \emph{Collapse versus blow up and global existence in the generalized
+  Constantin, Lax and Majda equation}, preprint, arXiv:2010.01201 (2021).
+
+\bibitem{slsa2025} D. A. Silantyev, P. M. Lushnikov, M. Siegel and
+  D. M. Ambrose, \emph{Exact periodic solutions of the generalized
+  Constantin, Lax and Majda equation with dissipation},
+  Stud. Appl. Math. (2025); preprint, arXiv:2411.01891.
+
+\bibitem{xu2026} J. Xu, \emph{The spectral picture of self similar collapse in
+  the Constantin, Lax and Majda equation}, preprint, arXiv:2607.19762 (2026).
 
 \end{thebibliography}
 
