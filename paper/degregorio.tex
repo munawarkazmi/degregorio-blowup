@@ -212,10 +212,9 @@ than at a zero of the velocity.
 Guo and Jiu \cite{gj2025} study stability on the torus at $a=1$ near the
 excited state $-\sin 2\theta$, proving linear and nonlinear instability for a
 broad class of data. That is the steady state analogue, at the critical
-parameter, of the observation in Section \ref{sec:basin} that the higher
-members of Proposition \ref{prop:dilation} are not generic attractors. It
-concerns equilibria rather than blowup profiles and takes no renormalised time
-limit.
+parameter, of the observation that the higher members of Proposition
+\ref{prop:dilation} are not generic attractors. It concerns equilibria rather
+than blowup profiles and takes no renormalised time limit.
 
 Zheng \cite{zheng2023} constructs exactly self similar $C^\alpha$ blowup for
 the generalised De Gregorio equation at small $\abs{a\alpha}$, again on the
@@ -348,10 +347,9 @@ Our contributions are as follows.
 The remaining sections are supporting numerics rather than claims: Section
 \ref{sec:regimes} recovers the regime picture of \cite{lss2020} with an
 independent diagnostic and records where our resolution falls short of theirs,
-Section \ref{sec:profile} treats the profile equation as a fixed point of the
-evolution nonlinearity and checks the amplitude it fixes against simulation to
-$10^{-5}$, Section \ref{sec:basin} reports what happens outside the basin, and
-Section \ref{sec:critical} reports a limit we could not resolve.
+and Section \ref{sec:profile} treats the profile equation as a fixed point of
+the evolution nonlinearity and checks the amplitude it fixes against simulation
+to $10^{-5}$.
 
 Throughout, the initial datum is $\omega_0 = \sin x$. This is not a generic
 choice, and Section \ref{sec:caveats} records what that costs.
@@ -697,81 +695,6 @@ then $0.19$, $5.0\times10^{-2}$, $2.6\times10^{-3}$, $1.3\times10^{-5}$ and
 $5.5\times10^{-5}$ at $a = 0.65, 0.70, 0.75, 0.80, 0.85$. The frozen regime is
 therefore roughly $0.75 \le a \le 0.85$ at the amplitudes reached, degrading
 smoothly rather than switching off.
-
-\section{The basin, and a third outcome}
-\label{sec:basin}
-
-Since $\mathcal{R}$ is quadratic, replacing $\omega_0$ by $\lambda\omega_0$
-rescales time and changes nothing else, so the basin is scale invariant and
-only shape matters. Combined with Proposition \ref{prop:dilation}, the question
-is which member a datum reaches.
-
-\paragraph{Member one is the generic attractor.} Sixteen random data, modes 1
-to 8 with amplitudes falling like $1/k$ and random phases, carrying between 4
-and 10 sign changes, all reach member one with
-$\norm{f}_\infty = 4.148482$ in every case. The number of sign changes does not
-select the member. Higher members are reached only from data with the matching
-exact symmetry: $\sin(kx)$ gives member $k$ for $k\le 4$, and since $\sin(kx)$
-is $2\pi/k$ periodic it remains in that symmetric subspace, while any generic
-perturbation returns the solution to member one.
-
-\paragraph{A topological boundary.} For $\omega_0 = \sin x + m$, which changes
-sign for $m<1$ and is one signed at $m=1$, blowup occurs for every $m<1$ with
-$\norm{f}_\infty = 4.148482$ throughout and $T$ growing as $6.07$, $10.07$,
-$15.52$, $20.28$, $25.88$, $43.81$ at $m=0,0.5,0.8,0.9,0.95,0.99$, and ceases
-at $m=1$ exactly, where the sign change degenerates into a touching zero. We
-fitted the divergence of $T$ and report no law: neither $-\log(1-m)$ nor
-$(1-m)^{-p}$ has stable constants over this range.
-
-\paragraph{A third outcome.} Sign change is not sufficient. For
-$\omega_0 = \sin x + c\sin 2x$ the two members compete, and between them lies a
-window in which the solution does neither:
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{lccccccc}
-\toprule
-$c$ & $0.46$ & $0.475$ & $0.48$ & $0.50$ & $0.52$ & $0.56$ & $0.58$\\
-\midrule
-outcome & member 1 & member 1 & member 1 & decay & decay & member 2
-        & member 2\\
-$T$ & $61.4$ & $90.4$ & $108.2$ & - & - & $54.9$ & $44.0$\\
-\bottomrule
-\end{tabular}
-\caption{$T$ diverges on approach from both sides. Inside the window the
-amplitude falls monotonically: at $c=0.5$ it reaches $7.4\times10^{-3}$ by
-$t=400$ with $\norm{\omega}_\infty t$ settling on $3.09, 3.03, 2.99, 2.97$, so
-the solution decays like $1/t$.}
-\label{tab:decay}
-\end{table}
-
-The window is open rather than a separatrix, since both $c=0.50$ and $c=0.52$
-fail to blow up while $0.48$ and $0.56$ do, so the model admits global decaying
-solutions from an open set of sign changing data. The window is narrow, roughly
-$0.49<c<0.55$.
-
-Decay like $1/t$ invites the guess that the interior is self similar. If
-$\omega \sim g/t$ then $R(g) = -g$, and since $\mathcal{R}$ is quadratic
-$\mathcal{R}(-g) = \mathcal{R}(g)$, so $h=-g$ would solve \eqref{eq:profile}:
-the attractor would be a profile entered with the opposite sign, of amplitude
-$2.95$, matching neither member. Writing $s=\log t$ and $W = t\omega$ gives
-$W_s = \mathcal{R}(W)+W$, whose linearisation is $-J$, so such a profile would
-have to be strongly unstable as a blowup profile.
-
-It is not so. Two tests refute it. Newton started from $-t\omega$ at $t=400$
-returns member 1, with $\norm{f}_\infty = 4.1484819$ and its constants and
-spectrum; the guess carried an eight percent residual and was never near a
-solution. And integrating to $t=2000$ separates the amplitude from the shape:
-the decay exponent converges to $1$ and $\norm{\omega}_\infty t$ to $2.950$,
-while the normalised spectrum drifts by $4.7\times10^{-3}$, $1.9\times10^{-2}$,
-$4.6\times10^{-2}$ at $t = 400, 1400, 2000$ and the residual of $-t\omega$ grows
-from $6\times10^{-2}$ to $4.9$ with its sup norm unchanged. Fine structure is
-accumulating at high wavenumber rather than a profile settling.
-
-The decay is therefore asymptotically $1/t$ in amplitude and not self similar
-in shape. What organises the interior of the window is not a fixed profile and
-we do not identify it. The same mechanism accounts for $c=0.52$ exhausting
-resolution at $t=42$ while still decaying.
 
 \section{Linear stability in renormalised time}
 \label{sec:spectrum}
@@ -1335,192 +1258,17 @@ and the mixed products $\psi\bar\psi''$ and $\bar\psi\psi''$ straddle both
 halves of the spectrum. That failure to separate is exactly what makes $a=0$
 integrable and $a\ne 0$ not.
 
-\section{The critical limit \texorpdfstring{$a\to 1$}{a to 1}}
-\label{sec:critical}
-
-The case $a=1$ is degenerate in a way no other member of the family is.
-
-\begin{proposition}[Line of equilibria]
-\label{prop:line}
-At $a=1$, every $A\sin x$ with $A\in\Real$ is a steady state of
-\eqref{eq:osw}, as is every translate.
-\end{proposition}
-
-\begin{proof}
-With $\omega = A\sin x$ we have $\Hil\omega = -A\cos x$, $u = -A\sin x$ and
-$\omega_x = A\cos x$, so
-$\omega\,\Hil\omega = -A^2\sin x\cos x = u\,\omega_x$ and
-$\mathcal{R}_1(\omega) = \omega\,\Hil\omega - u\,\omega_x = 0$.
-\end{proof}
-
-So the critical case carries a two parameter manifold of equilibria, amplitude
-and translation, which exists at $a=1$ and nowhere else. Writing
-$\varepsilon = 1-a$, the family is destroyed at order $\varepsilon$ and the
-blowup time diverges. We measure $T$ without fitting: for a frozen profile
-$\norm{\omega}_\infty = \norm{f}_\infty/(T-t)$ exactly, so
-$T = t + \norm{f}_\infty/\norm{\omega}_\infty$ at any late time, and running to
-$\norm{\omega}_\infty = 10^6$ makes the correction term of order $10^{-6}$.
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{lcccccccc}
-\toprule
-$a$ & $0.80$ & $0.90$ & $0.93$ & $0.95$ & $0.96$ & $0.97$ & $0.98$ & $0.99$\\
-\midrule
-$T$ & $6.0719$ & $10.7569$ & $14.0844$ & $17.7129$ & $20.4591$ & $24.5830$
-    & $32.1786$ & $56.9742$\\
-$T\varepsilon$ & $1.214$ & $1.076$ & $0.986$ & $0.886$ & $0.818$ & $0.737$
-    & $0.644$ & $0.570$\\
-local $p$ & - & $0.828$ & $0.755$ & $0.681$ & $0.646$ & $0.638$ & $0.664$
-    & $0.824$\\
-\bottomrule
-\end{tabular}
-\caption{Blowup time as $a\to1$, and the local exponent in
-$T\sim\varepsilon^{-p}$ between consecutive entries. $T\varepsilon$ decreases
-throughout, so $T$ grows strictly slower than $1/\varepsilon$, but $p$ does not
-converge.}
-\label{tab:critical}
-\end{table}
-
-The exponent does not settle: it falls from $0.83$ to $0.64$ and returns to
-$0.82$ at the smallest $\varepsilon$. No functional form fits the last points,
-$C\varepsilon^{-p}$, $C/\varepsilon+D$, $C\log(1/\varepsilon)+D$ and
-$A/\varepsilon + B\log(1/\varepsilon)+C$ leaving rms residuals of $0.99$,
-$0.71$, $4.22$ and $0.38$ against $T$ values from $6$ to $57$. We therefore
-quote no exponent. What follows instead is an account of why the natural
-reductions do not settle it either.
-
-\subsection{The two mode reduction is exact, and gives the wrong answer}
-
-Expanding about the manifold, put $\omega = A\sin x + B\sin 2x$. Using
-$\Hil\sin kx = -\cos kx$ and $u = -k^{-1}\sin kx$,
-\begin{align*}
-  \omega\,\Hil\omega &= -\tfrac{A^2}{2}\sin 2x - AB\sin 3x
-                        - \tfrac{B^2}{2}\sin 4x,\\
-  u\,\omega_x        &= -\tfrac{A^2}{2}\sin 2x - \tfrac{5AB}{4}\sin 3x
-                        + \tfrac{3AB}{4}\sin x - \tfrac{B^2}{2}\sin 4x,
-\end{align*}
-so that $\mathcal{R}_a = \omega\,\Hil\omega - a\,u\,\omega_x$ has coefficients
-$-\tfrac{3a}{4}AB$ on $\sin x$, $-\tfrac{\varepsilon}{2}A^2$ on $\sin 2x$,
-$(\tfrac{5a}{4}-1)AB$ on $\sin 3x$ and $-\tfrac{\varepsilon}{2}B^2$ on
-$\sin 4x$, each verified against the solver to $10^{-17}$.
-
-The $\sin x$ terms cancel in the first line but not the second, so the feedback
-of mode two into mode one survives at \emph{linear} order. Any argument
-predicting $p=2/3$ from a parity cancellation is therefore excluded, not by
-numerics but by the calculation.
-
-Retaining the two modes gives $A' = -\tfrac{3a}{4}AB$,
-$B' = -\tfrac{\varepsilon}{2}A^2$, which integrates in closed form. Setting
-$L=\log A$ at $a=1$ gives $L' = -\tfrac34 B$ and
-$L'' = \tfrac{3\varepsilon}{8}e^{2L}$, a Liouville equation; multiplying by
-$L'$ and using $L(0)=L'(0)=0$ gives
-$L'^2 = \tfrac{3\varepsilon}{8}(e^{2L}-1)$, and since
-$\int_0^\infty (e^{2L}-1)^{-1/2}\,\mathrm{d}L = \arccos(e^{-L})\big|_0^\infty
-= \pi/2$,
-\begin{equation}
-  T_{2} = \frac{\pi}{2}\sqrt{\frac{8}{3\varepsilon}}
-        = 2.56510\,\varepsilon^{-1/2}.
-  \label{eq:liouville}
-\end{equation}
-Against a two mode Galerkin truncation the ratio $T/T_2$ reads $1.118$,
-$1.054$, $1.026$, $1.010$, $1.005$ at
-$\varepsilon = 0.2, 0.1, 0.05, 0.02, 0.01$. The reduction is exact and gives
-$p = 1/2$, which is not the behaviour of the full equation.
-
-\subsection{The exponent is carried by the cascade}
-
-Retaining $m$ modes and measuring the exponent over
-$0.02\le\varepsilon\le0.1$ gives the following.
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{lcccccc}
-\toprule
-$m$ & $2$ & $4$ & $6$ & $8$ & $12$ & $24$\\
-\midrule
-$p$ & $0.474$ & $0.506$ & $0.518$ & $0.525$ & $0.536$ & $0.554$\\
-\bottomrule
-\end{tabular}
-\caption{Exponent from an $m$ mode Galerkin truncation. The value climbs
-monotonically and is still climbing at $m=24$; at $\varepsilon=0.1$ the gap to
-the full answer closes like $m^{-1/2}$.}
-\label{tab:trunc}
-\end{table}
-
-No finite truncation reproduces the exponent. The case $m=3$ is degenerate and
-sits outside the trend, giving $T=405$ at $\varepsilon=0.1$ and no blowup at
-all at $0.05$ or $0.02$.
-
-\subsection{There is no spectral gap, hence no reduction}
-
-Both failures have one cause. Since $\mathcal{R}$ is quadratic,
-$D\mathcal{R}_1(A\sin x) = A\,M$ with $M = D\mathcal{R}_1(\sin x)$ independent
-of $A$, and writing $\omega = A\sin x + v$,
-\begin{equation}
-  v_t = A\,Mv - \tfrac{\varepsilon}{2}A^2\sin 2x,
-  \qquad A' = -\tfrac{3}{4}A\,b_2,
-  \label{eq:escape}
-\end{equation}
-with $b_2$ the $\sin 2x$ component of $v$. Were $M$ strictly stable, $v$ would
-saturate at $\tfrac{\varepsilon}{2}AM^{-1}\sin 2x$ and \eqref{eq:escape} would
-reduce to $A' = \kappa\varepsilon A^2$, a Riccati equation giving $p=1$. That
-step is unavailable.
-
-\begin{observation}[No gap]
-\label{obs:gap}
-The spectrum of $M$ is purely imaginary. Computed densely at $N=128,256,512$,
-every eigenvalue has real part at the $10^{-5}$ roundoff level against
-imaginary parts reaching $72$, and at $N=256$ none has positive real part.
-Its kernel contains the tangent directions to the manifold exactly:
-$\norm{M\sin x}_\infty = 8\times10^{-14}$ and
-$\norm{M\cos x}_\infty = 6\times10^{-14}$.
-\end{observation}
-
-Moreover $M$ is not diagonalisable. Integrating $v_t = Mv$ from a random
-perturbation, $\norm{v}$ grows linearly, by factors $187, 736, 1392, 2873,
-5738$ at $t = 10, 50, 100, 200, 400$, doubling as $t$ doubles; with imaginary
-spectrum this means a Jordan block at zero. Splitting the state identifies its
-origin. The components along $\sin x$ and $\cos x$ grow linearly, reaching
-$2663$ and $-845$ at $t=400$, while the remainder stays bounded and oscillates
-between $135$ and $467$. The secular growth is therefore \emph{drift along the
-manifold of equilibria} rather than instability: a perturbation alters the
-amplitude and phase at a constant rate, carrying the state to a different
-steady state rather than away from all of them. The Jordan block is generated
-by the symmetries themselves, consistent with the stability theorem of Jia,
-Stewart and Sverak \cite{jss2019}, which is stability modulo exactly these
-symmetries.
-
-We note also that $M$ is strongly non-normal: the remainder above is amplified
-from $7.8$ to $467$ before returning, a transient factor near $60$ with no
-eigenvalue to account for it.
-
-The consequence is structural. Modulo the kernel every mode oscillates without
-decay and the kernel modes drift linearly, so there is no gap anywhere. Hence
-quasi steady elimination is invalid, because the transient it discards never
-dies; mode truncation is not a reduction, because the discarded modes never
-relax, which is why the truncated exponent converges only algebraically; and
-there is no centre manifold to reduce onto, because the centre subspace is the
-whole space. The cascade cannot be eliminated because nothing within it is fast
-relative to anything else, and \eqref{eq:liouville}, exact yet giving the wrong
-exponent, is the sharpest available demonstration that a finite reduction
-misses the mechanism rather than approximating it.
-
 \section{Limitations}
 \label{sec:caveats}
 
 The datum $\sin x$ is not generic: it is precisely the ground state of the
-$a=1$ model. Table \ref{tab:generic} and Section \ref{sec:basin} between them
-answer the worst form of this objection, reaching the same profile from
-sixteen random data, from a continuous family of offsets and from three
-designed data, always with the same constants to seven digits.
-
-What remains open is the shape of the basin boundary rather than its
-existence. Two one parameter families were probed in a space of functions, and
-the decay window of Section \ref{sec:basin} already shows the boundary is not
-simply whether the datum changes sign. Nothing here maps it in more than one
-dimension, and the interior of the decay window is not resolved: $c=0.52$ goes
-under resolved at $t=42$ while still decaying.
+$a=1$ model. Table \ref{tab:generic} answers the worst form of this objection,
+reaching the same profile from sixteen random data and from a continuous family
+of offsets, always with the same constants to seven digits. It does not map the
+basin, and an earlier version of this paper contained a section which probed
+its boundary along two one parameter families and found a window of data
+decaying like $1/t$ rather than blowing up. That material is not needed for the
+determination of $\beta$ and has been removed; it remains in the repository.
 
 All statements about $a=0.9$ and above are unresolved. The residual of the
 profile equation there does not fall monotonically with the amplitude cap,
@@ -1583,13 +1331,14 @@ neither is an overlap, and the first, the exchange of stability near
 $a\approx0.75$, is to be compared against $a_c = 0.68907$ rather than against
 the estimate withdrawn above, and remains unsettled.
 
-The critical limit is left open. Section \ref{sec:critical} reports no exponent
-for $T(\varepsilon)$ because the measured one does not converge over the range
-we can reach, and reaching $\varepsilon = 10^{-3}$ would need some thirty times
-the $866{,}000$ steps that $\varepsilon = 10^{-2}$ already took. Observation
-\ref{obs:gap} explains why the shortfall cannot be made up by analysis in place
-of computation, but it is an explanation of a difficulty rather than a
-resolution of it.
+The critical limit $a\to1$ is left open and is not treated here. An earlier
+version of this paper reported no exponent for $T(\varepsilon)$ because the
+measured one does not converge over the range we can reach, and argued that the
+shortfall cannot be made up by analysis in place of computation, the
+linearisation at $a=1$ having purely imaginary spectrum with the equilibrium
+manifold in its kernel and therefore no spectral gap to reduce onto. That
+material is independent of everything above and has been removed; it remains in
+the repository.
 
 Finally, nothing here is a proof. A computer assisted proof in this setting, in
 the style of Chen and Hou \cite{chenhou2022}, requires interval arithmetic
