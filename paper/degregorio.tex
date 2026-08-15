@@ -1172,6 +1172,22 @@ that direction is what withdraws the estimate of $a_c$ discussed in the
 introduction.
 \end{remark}
 
+\begin{remark}[The correction rests on one anchor]
+\label{rem:oneanchor}
+The correction uses a single exactly known quantity, and we were unable to
+validate it against a second. The only other constant available in closed form
+on this profile is the constraint of Section \ref{sec:integral}, and that one
+holds by symmetry rather than by accuracy, so it carries no discretisation
+error and cannot anchor anything. The evidence that the correction is doing
+what it claims is therefore internal: the corrected values from six resolutions
+collapse onto one number, the raw spread falling by a factor of $800$, and
+$N=512$ lands within $1.5\times10^{-5}$ of $N=4096$ once corrected. That is
+consistency across resolutions, not agreement with an independent
+determination, and it does not exclude a systematic common to every
+resolution. A second anchor, in this problem or another, would be the natural
+next test.
+\end{remark}
+
 \begin{remark}[On measuring $\beta$ from the spectrum directly]
 We caution against it. Fitting $\abs{\hat f_k}\sim k^{-\beta}$ over a band is
 sensitive to the band at the $2\times10^{-2}$ level: shifting the window from
@@ -1224,6 +1240,24 @@ poles with $\cot$, which carries the same residue and whose own principal value
 on the circle vanishes. The resulting ratios are $2.2\times10^{-12}$,
 $6.7\times10^{-13}$, $9.8\times10^{-13}$ and $1.4\times10^{-12}$ at
 $a=0.75,0.78,0.80,0.82$, stable across three independent grid shifts.
+
+\paragraph{That verification is weaker than it looks.} For the profile studied
+here \eqref{eq:pv} holds by symmetry, independently of the profile equation.
+Section \ref{sec:stagnation} records that $f$ is odd about $y_1$; hence
+$\Hil f$ is even about $y_1$, hence $U$ is odd about it, measured as
+$\max\abs{U(y_1+s)+U(y_1-s)}/\norm{U}_\infty = 3.7\times10^{-14}$ at $a=0.8$,
+$N=2048$. An odd integrand has vanishing principal value on the circle by
+antisymmetry alone. Consistently, the computed value of
+$\mathrm{PV}\oint\mathrm{d}y/U$ does not improve with resolution: across
+$N=512$ to $3072$ at $a=0.8$ it wanders between $8.4\times10^{-14}$ and
+$8.9\times10^{-13}$ with no trend and changing sign, while over the same ladder
+the error in $c_1$ falls monotonically from $1.3\times10^{-2}$ to
+$2.2\times10^{-3}$. So the quantity carries no discretisation error and its
+agreement with zero measures the symmetry of the datum rather than the accuracy
+of the solve. Proposition \ref{prop:pv} is not thereby weakened as a statement,
+since it assumes no symmetry and would have content for a profile that is not
+odd, but it is untested by this computation, and it cannot serve as an
+independent anchor for the control variate of Section \ref{sec:control}.
 
 \paragraph{Relation to the orbit invariants at $a=1$.} A principal value
 integral of this shape is not new to the model. At $a=1$, where \eqref{eq:osw}
