@@ -1113,6 +1113,70 @@ it is fast relative to anything else. Any successful treatment of the
 `a -> 1` limit will have to handle the full spectrum at once, which is what the
 two mode Liouville result, exact and wrong, was always going to miss.
 
+## 17. The exact solution tests the general self similar remark, and it holds
+
+Finding 3 gives an exact solution at `a = 1/2`, so the obvious move is to test
+`c = 1/(1-a) = 2` there. It fails, and the failure is the informative kind: `2`
+was never the prediction at `a = 1/2`.
+
+Taking `v -> infinity` in the closed form near the blowup point `x = pi`, with
+`z = x - pi` and `zeta = v z / 2`, and using `dv/dt -> v^4/32` so that
+`v^3 = 32/(3(T - t))`:
+
+```
+lambda = 1/3   exactly,      w = (T - t)^-1 F(zeta)
+
+F(zeta)  = -(16/3) zeta / (1 + zeta^2)^2
+HF(zeta) = -(8/3) (zeta^2 - 1) / (zeta^2 + 1)^2
+U(zeta)  =  (8/3) zeta / (zeta^2 + 1)
+```
+
+so `a = 1/2` narrows with exponent `1/3` and is nowhere near frozen, which
+finding 2 already said qualitatively with its 0.49 profile residual. The
+transport velocity in the moving frame is `V = lambda zeta + a U`, not `a U`,
+and `V = (zeta/3)(zeta^2 + 5)/(zeta^2 + 1)` has its only zero at `zeta = 0`,
+the blowup point itself, where `F` has a simple zero. The leading order match
+there gives `1 + lambda + a c = c`, hence
+
+```
+c = (1 + lambda) / (1 - a) = (4/3) / (1/2) = 8/3
+```
+
+`pi_stagnation.py` measures `c = (T - t) Hw(pi, t)` off the exact solution with
+the solver's own Hilbert transform:
+
+| `v` | `N` | `c` measured | vs `8/3` | vs `2` |
+| --- | --- | --- | --- | --- |
+| 10 | 2^14 | 2.6719924062 | 5.3e-3 | 6.7e-1 |
+| 100 | 2^16 | 2.6667199992 | 5.3e-5 | 6.7e-1 |
+| 1000 | 2^20 | 2.6666671136 | 4.5e-7 | 6.7e-1 |
+
+Converging on `8/3` and standing off `2` by two thirds at every resolution. The
+self similar equation `F + lambda zeta F' + a U F' = F HF` holds to 1.3e-15,
+and `v^3 (T - t) -> 32/3` confirms `lambda = 1/3`.
+
+**This is not a correction to the paper.** Remark `rem:general` already carries
+the full ansatz `w = (T-t)^{c_w} Om(x/(T-t)^{c_l})`, its profile equation
+`(c_l X + a U) Om_X = (c_w + U_X) Om`, the exponent
+`nu = (c_w + h)/(c_l + a h)`, and the statement that a simple zero forces
+`h = (1 + c_l)/(1 - a)` with Proposition `prop:c1` as the `c_l = 0` case. The
+dictionary is `c_l = lambda = 1/3`, `c_w = -1`, `h = c = 8/3`, and
+`nu = (5/3)/(5/3) = 1` as a simple zero requires.
+
+What is new is that the remark now has evidence. Every measurement behind
+findings 7, 8, 10 and 12 was taken on frozen profiles, where `c_l = 0` and the
+general formula is indistinguishable from `prop:c1`, so the `c_l` dependence
+was the one part of the local analysis carrying no support whatsoever. At
+`a = 1/2` no frozen profile exists, `c_l = 1/3`, the two formulas differ by
+33 percent, and the exact solution picks the general one. That is a stronger
+check than anything in the frozen regime, because it is against a closed form
+rather than against a simulation.
+
+Worth noting separately: `F` is analytic on the real line, with its nearest
+singularities at `zeta = +-i`. So the narrowing profile is smooth where the
+frozen profiles of finding 6 are only `C^{1,1}` with `k^-3.05` spectra. The
+roughness is a feature of the frozen regime, not of blowup in this family.
+
 ## Caveats
 
 `sin x` is not generic. It is exactly the `a = 1` ground state, so all of this
@@ -1148,12 +1212,10 @@ before any effort is spent deriving it.
    what settled it: `a = 1/2` is exactly solvable and the closed form gives
    `T = pi` in three lines. `pi_exact.py` verifies it against the solver at
    machine precision.
-7. Test the stagnation point relations of findings 8 and 11 against the exact
-   `a = 1/2` solution. That solution is now known in closed form for our datum,
-   so `c = Hf(y*)`, `mu = (c - 1)/(a c)` and `c = 1/(1 - a)` are checkable
-   against an exact answer rather than against a simulation. `c = 1/(1 - a) = 2`
-   at `a = 1/2` is a sharp prediction, and this is the strongest available test
-   of the paper's central claim.
+7. Done, see finding 17. `c = 2` is refuted and Remark `rem:general` is
+   confirmed instead, with `c_l = 1/3` and `c = 8/3` to 4.5e-7. The paper
+   should say so: the remark is currently stated and then never used, and it
+   is now the best supported part of the local analysis.
 8. Redo the overlap search against the pole dynamics school. arXiv:2411.01891
    was missed entirely, and its reference list is the obvious place to start,
    along with Schochet, and Ambrose and co-authors on the periodic problem.
