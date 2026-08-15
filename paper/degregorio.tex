@@ -1225,6 +1225,26 @@ on the circle vanishes. The resulting ratios are $2.2\times10^{-12}$,
 $6.7\times10^{-13}$, $9.8\times10^{-13}$ and $1.4\times10^{-12}$ at
 $a=0.75,0.78,0.80,0.82$, stable across three independent grid shifts.
 
+\paragraph{Relation to the orbit invariants at $a=1$.} A principal value
+integral of this shape is not new to the model. At $a=1$, where \eqref{eq:osw}
+becomes the Lie bracket form $\omega_t + [u,\omega]=0$ and the dynamics is
+motion on an adjoint orbit of $\mathrm{Diff}_+(S^1)$, Jia, Stewart and
+\v{S}ver\'{a}k \cite{jss2019} identify
+$b = \mathrm{p.v.}\int_{S^1}\mathrm{d}\theta/\omega_0(\theta)$ as an orbit
+invariant in their equation (2.14), and observe that its conservation, together
+with the conservation of $\omega_\theta$ at the zeros of $\omega$, is an
+analogue of the Kelvin, Helmholtz law. Equation \eqref{eq:pv} is a different
+statement: the integrand carries the velocity rather than the vorticity, the
+setting is the frozen profile at $a\approx0.8$ rather than the $a=1$ dynamics,
+and the content is that the integral vanishes rather than that it is conserved.
+The orbit structure they use is special to $a=1$, the only member of the family
+that is a pure Lie bracket, and does not survive $a\ne1$. The two are
+nonetheless close enough in shape that we claim nothing for the form of
+\eqref{eq:pv}, only for its value and for its derivation from
+\eqref{eq:logderiv}. We record separately that the conserved quantity of Lei,
+Liu and Ren \cite{llr2020}, the $H^1$ norm of $\sqrt{\omega}$ for one signed
+data, is unrelated to either.
+
 \begin{remark}
 A naive evaluation of \eqref{eq:pv} on the grid returns ratios between
 $10^{-2}$ and $1$ and appears to refute it. This is catastrophic cancellation:
@@ -1312,10 +1332,15 @@ yields: $\beta$ to five digits, the exclusion of $\beta=3$ at $a=0.8$, and the
 correction to the fitted exponent of \cite{lss2020} recorded in Remark
 \ref{rem:pb}; the linear spectrum of Section \ref{sec:spectrum} at $a=0.8$,
 which is numerical where \cite{chenS1} is a theorem near $a=1$; and the first
-integral and global constraint of Section \ref{sec:integral}, which we did not
-find in \cite{chenS1}, \cite{htw2026} or the pole dynamics papers, though both
-are elementary consequences of separating \eqref{eq:logderiv} and we would not
-be surprised to be shown otherwise.
+integral and global constraint of Section \ref{sec:integral}, with the
+qualification recorded there. We did not find either in \cite{chenS1},
+\cite{htw2026} or the pole dynamics papers, but a principal value integral of a
+reciprocal with simple zeros, serving as a global invariant, is already in
+\cite{jss2019} at $a=1$; \eqref{eq:pv} concerns a different field in a
+different setting and says the integral vanishes rather than that it is
+conserved, but we claim nothing for its shape. Both are elementary consequences
+of separating \eqref{eq:logderiv} and we would not be surprised to be shown
+they are known.
 
 This reference list grew four times while being compiled, and that history is
 the strongest caveat we can offer. \cite{lss2020}, \cite{slsa2025},
