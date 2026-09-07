@@ -1,10 +1,13 @@
 # De Gregorio blowup
 
+[![validate](https://github.com/munawarkazmi/degregorio-blowup/actions/workflows/validate.yml/badge.svg)](https://github.com/munawarkazmi/degregorio-blowup/actions/workflows/validate.yml)
+
 > Everything here blows up in finite time, including the author. Fittingly,
 > most of the damage came from fitting: twice this repo handed me
 > `R^2 = 0.99` on a model of the wrong shape, and twice I fell for it. I also
 > refuted one of my own exact identities before noticing the refutation was a
-> cancellation error. Finding 10 retracts finding 9.
+> cancellation error. Finding 10 retracts finding 9, finding 19 retracts
+> finding 11, and a literature search took most of the rest.
 
 A pseudospectral solver and profile analysis for the Okamoto, Sakajo and Wunsch
 family of 1D models for the 3D Euler vorticity equation, on the circle:
@@ -30,6 +33,15 @@ checkable:
 | 0 | Constantin, Lax and Majda (1985) | `w = 4 w_0 / [(2 - t H w_0)^2 + t^2 w_0^2]`, so from `sin x` the blowup time is `T = 2` and the rate exponent is 1 |
 | 1 | De Gregorio (1990) | `sin x` is a steady state, since `u w_x = w u_x` pointwise, so `T` is infinite |
 
+**Most of what follows is known, and the sections below say whose it is.** The
+frozen blowup profile studied here was found numerically by Lushnikov,
+Silantyev and Siegel (2020), and its existence, nonlinear stability and local
+exponent near `a = 1` were proved by Chen (2021). What this repo adds is a way
+of reading one constant off a discrete profile accurately, which turns a fitted
+spectral exponent into a computed one. The full accounting, with twelve
+references and an explicit statement of what is not mine, is in the
+introduction of [paper/degregorio.pdf](paper/degregorio.pdf).
+
 ## Quick start
 
 ```bash
@@ -41,7 +53,7 @@ python validate.py
 ```
 
 19 checks in about 35 seconds, every one against a closed form or a conserved
-quantity. Then:
+quantity, and the same run is what the badge above reports. Then:
 
 ```bash
 python mechanism.py && python profile_branch.py && python spectrum.py
@@ -61,6 +73,11 @@ Blowup for every `a < 1` with rate exponent 1, and `T(a)` running away as
 
 ### Two structurally different blowups
 
+The split into a narrowing and a frozen regime is Lushnikov, Silantyev and
+Siegel's, who sweep `a` at high precision and locate the changeover at
+`a_c = 0.6890665337007457...`. What follows reproduces it rather than
+establishing it.
+
 ![frozen versus narrowing spectra](fig_frozen.png)
 
 Comparing normalised spectra `|w_k| / max|w_k|` across decades of amplitude
@@ -76,6 +93,14 @@ its height diverges. At `a = 0.4` they spread: the peak is narrowing.
 | resolvability | exhausted by `\|\|w\|\| = 5.8e3` | tail stays at 2.7e-17 to `\|\|w\|\| = 1e6` |
 
 ### The blowup profile solves a fixed point equation
+
+The ansatz is not new. `w = f(x - x_p) / (T - t)`, with no spatial rescaling,
+is the frozen profile of Lushnikov, Silantyev and Siegel, and Chen proved that
+it exists for `a` near 1, with an odd profile. The general self similar profile
+equation, of which this is the case with no width exponent, is standard and
+appears in Xu and in Huang, Tong and Wang. What is below is a check that the
+frozen case reduces to a fixed point of the solver's own nonlinearity, which is
+what makes it cheap to solve to high accuracy.
 
 Substituting `w = f(x - x_p) / (T - t)` gives `f / (T-t)^2` on the left and
 `rhs(f) / (T-t)^2` on the right, so the profile equation is just
@@ -103,6 +128,12 @@ algebraic fixed point, share nothing but the value of `a`:
 
 ### The profile is linearly stable, and that is why it is selected
 
+Chen proved nonlinear stability, and asymptotic self similarity from smooth
+data, for `a` in a neighbourhood of 1. The computation below is at `a = 0.8`,
+outside that neighbourhood, and it is numerical where his is a theorem. Xu asks
+the same question for the `a = 0` profile on the line and answers it with
+proof, finding the same two symmetry modes and a spectral gap.
+
 Renormalising with `s = -ln(T - t)` and `W = (T - t) w` turns the equation into
 `W_s = rhs(W) - W`, so the profile is a fixed point and **the Jacobian
 eigenvalues are growth rates in renormalised time, directly**.
@@ -122,6 +153,13 @@ Zero unstable directions beyond the two forced modes.
 
 ### The profile has finite regularity
 
+Also known. Lushnikov, Silantyev and Siegel observe that `f` has a jump in a
+high order derivative at the point antipodal to the singularity, which at
+`a = 0.8` is a jump in `f''`, and they measure the algebraic spectral decay it
+produces, reporting the exponent as `p_b`. Chen proves the profile is `C^1` but
+not `C^{1,alpha}` there. The section below arrives at the same place from the
+profile equation.
+
 The shape looks harmless: broad, exactly odd, `max |f'| = 7.04`. But its
 spectrum is still at 1e-10 by `k = 900`, which no analytic function that smooth
 would do. Fitting both laws over the same window:
@@ -136,6 +174,11 @@ The algebraic law wins at every resolution, so the profile has finite
 regularity and nothing read off it converges spectrally.
 
 ### And `beta` is not a constant. It is predicted by one local number
+
+The relation `mu = (c - 1) / (a c)` is Chen's. It is stated in his Theorem 1 as
+the Holder exponent of the profile's derivative, and the two forms differ only
+by the normalisation `c_w = -1` and one line of algebra. It was derived
+independently here, and finding 19 records how long that took to discover.
 
 Rearranging the profile equation gives `f'/f = (Hf - 1)/(a U)`, so `f` can only
 be singular where the velocity `U` vanishes. Setting `U(y*) = 0` forces
@@ -219,6 +262,13 @@ biased by beating: the two stagnation points sit exactly `pi` apart, which makes
 
 ### Half of `c` is exact, and needs three lines rather than a computation
 
+This one is a normalisation identity, not a result, and it was already in print
+four times over: Chen's (2.8), where it is the gauge fixing the time rescaling;
+(2.10) of Huang, Tong and Wang; page 17 of Xu; and the same algebra in Theorem
+1 of Lushnikov, Silantyev and Siegel, applied to the leading complex
+singularity. It matters here only because the next section needs a quantity
+whose exact value is known.
+
 There are two stagnation points. Where `f` has a **simple** zero at one, put
 `U ~ c(y-y_1)`, `f ~ A(y-y_1)` with `A` nonzero, and `Hf ~ c`. Then
 `a U f' = f(Hf - 1)` reads `a c A (y-y_1) = A (y-y_1)(c-1)` at leading order,
@@ -249,6 +299,12 @@ the wrong shape.
 
 ### Getting `c2` to five digits anyway
 
+**This is the part that is new.** Everything above is setting, and the setting
+belongs to the references named in it. The constant those references leave open
+is `c2`, and reading it off a discrete profile is the whole difficulty: across
+seven resolutions it wanders by 2e-2 with no monotone trend, so extrapolating
+in `N` returns noise.
+
 `c1 = 1/(1-a)` exactly, so its measured wander across resolutions is a direct
 gauge of the discretisation error in reading anything off the profile. `c2`
 comes off the same profile and carries the same error linearly, so regressing
@@ -268,6 +324,20 @@ beta =  3.00242268
 scatter of the corrected points. The spectral measurement of `beta` is good
 only to 2e-2 and no longer matters to the answer.
 
+It also corrects a published number. At `a = 0.71`, where Lushnikov, Silantyev
+and Siegel fit `p_b = 9.32592` to the spectrum, the same procedure gives
+`beta = 9.29546`, a correction of 0.33 percent. The two determinations share no
+machinery: theirs is a least squares fit over a band of wavenumbers, this is a
+single value of `H f` read off the profile.
+
+**The correction rests on one anchor.** It assumes the discretisation error
+enters `c1` and `c2` linearly with the same coefficient, and the evidence for
+that is `R^2 = 0.99999744` on seven points, which is the same shape of evidence
+that produced two retractions above. A second exactly known quantity would
+settle it. The obvious candidate, the `PV` constraint below, turns out to hold
+by symmetry alone, so it carries no discretisation error and cannot anchor
+anything. `cv_second_anchor.py` is that attempt and its negative result.
+
 ### The equation integrates once, and `c2` has no closed form
 
 From `f'/f = (U' - 1)/(aU)`, on each interval between zeros of `U`,
@@ -278,7 +348,14 @@ f = C |U|^(1/a) exp( -(1/a) integral dy/U )
 
 Requiring `f` to close up around the circle then forces an exact constraint,
 `PV integral of dy/U = 0`, verified to 1e-12 at four values of `a` and three
-independent grid shifts.
+independent grid shifts. Neither the first integral nor the constraint was
+found in Chen, in Huang, Tong and Wang, or in targeted searches, and both are
+elementary once the profile ODE is separated, which nobody there does. Given
+what finding 18 cost, read "not found" as not found rather than as new. A
+principal value integral of this shape is in any case not new to the model:
+Jia, Stewart and Sverak have one as an orbit invariant at `a = 1`, over the
+vorticity rather than the velocity, saying that it is conserved rather than
+that it vanishes. Nothing is claimed here for the form, only for its value.
 
 No closed form for `c2` emerged. With `c2` mapped across eleven values of `a`
 it is now precise enough to **exclude** shapes rather than fail to confirm
@@ -294,16 +371,17 @@ positive frequency part the equation reads
 mixed products straddle both halves of the spectrum. If `c2` were elementary,
 De Gregorio would not be hard.
 
-Full detail, including what is not settled, is in [FINDINGS.md](FINDINGS.md).
-The technical write up is in [paper/](paper/degregorio.pdf).
+Full detail, including what is not settled and every retraction in order, is in
+[FINDINGS.md](FINDINGS.md). The technical write up is
+[paper/degregorio.pdf](paper/degregorio.pdf), source in
+[paper/degregorio.tex](paper/degregorio.tex); its introduction is the place
+where the attribution is done properly.
 
 If none of the above meant anything to you, start here instead:
 **[Sharper, or taller?](docs/explainer/degregorio-blowup-explained.pdf)**, six
 pages, no mathematics assumed. It covers the same results and the same
 retractions, and explains what a blowup is before claiming to have measured
 one.
-A paper draft written up from those findings is in
-[paper/degregorio.tex](paper/degregorio.tex).
 
 ```bash
 cd paper && pdflatex degregorio.tex && pdflatex degregorio.tex
@@ -325,28 +403,98 @@ flowchart TD
 
 ## Files
 
+This is a lab notebook, not a library. Five files carry the machinery and the
+rest are one experiment each, named after the question they were written to
+answer. Every one has a docstring saying what it was for and, where it applies,
+how it went wrong.
+
+**Machinery**
+
 | file | what it does |
 | --- | --- |
 | `dg.py` | solver, spectral operators, diagnostics, exact solutions |
 | `validate.py` | 19 checks against closed forms and conserved quantities |
 | `profile_eq.py` | the profile equation `rhs(f) = f` and its Newton solver |
+| `diagnose.py` | grid refinement study, for when a result looks too good |
+| `figures.py` | regenerates the figures above |
+
+**The sweep, and the two regimes** (findings 1 and 2)
+
+| file | what it does |
+| --- | --- |
 | `sweep.py` | the `T(a)` experiment, writes `sweep.csv` |
 | `mechanism.py` | growth law: power law versus exponential |
 | `profile.py` | normalised spectra, the frozen versus narrowing test |
 | `profile_branch.py` | which `a` the dynamics selects a profile for |
 | `profile_unique.py` | one solution per grid, or several |
-| `spectrum.py` | Jacobian eigenvalues, linear stability |
+| `check_strip.py` | control test for `strip_width` against the one exact case |
+| `critical.py` | how `T` diverges as `a` approaches 1 |
+
+**The exponent `beta`** (findings 6, 7, 9 and 10)
+
+| file | what it does |
+| --- | --- |
 | `regularity.py` | is the profile analytic, and how smooth is it |
 | `beta.py` | local spectral slope by octave, binned over the beating |
 | `beta_theory.py` | derives `beta` from the stagnation points |
 | `beta_jump.py` | the jump in `f''`, and whether `mu = 2` is structural |
 | `beta_predict.py` | predicted against measured `beta` across `a` |
+| `beta_log.py` | the resonant case: is `beta` exactly 3, with a logarithm |
+| `beta_lss.py` | our `beta` against the one published value we can pin, at `a = 0.71` |
+| `shortfall.py` | where the 1 percent shortfall in measured `beta` comes from |
+| `shortfall2.py` | the check that proves the shortfall is a fit window artefact |
+| `residual.py`, `residual2.py`, `residual3.py` | chasing the 1.3e-3 residual, and finding it was the measurement |
+
+**The constants, and the control variate** (findings 8, 12 and 13)
+
+| file | what it does |
+| --- | --- |
+| `c_of_a.py`, `c_of_a2.py` | what sets `c = H f(y*)`, across `a` |
+| `c2_solve.py` | `c2` by refinement and extrapolation, which returns noise |
+| `c2_control.py` | `c2` using `c1` as a control variate, the main result |
+| `c2_now.py` | the correction applied to an existing table, no solves |
+| `c2_form.py` | hunting a closed form for `c2`, and excluding shapes |
+| `cv_second_anchor.py` | does the control variate survive a second anchor: no, `PV` carries no error |
+| `pv_test.py` | the `PV` identity again, off grid |
+
+**Stability, symmetry and the critical limit** (findings 5, 11, 15 and 16)
+
+| file | what it does |
+| --- | --- |
+| `spectrum.py` | Jacobian eigenvalues, linear stability |
+| `parity.py` | the parity calculation, and what it actually predicts |
+| `parity_check.py` | is the profile odd about a shifted point: yes, so finding 11 is empty |
+| `neutral.py`, `neutral2.py` | the linearisation about the ground state, and whether its growth is drift |
+| `manifold.py` | why mode truncation converges slowly, and what sets the escape time |
+| `dilation.py` | the profile family `f(nx)`, and two loose ends from `generic.py` |
+| `exchange.py`, `exchange2.py` | the exchange of stability hypothesis, and where the branches merge |
+| `merger_fit.py` | locating that merger from the measured `c_l` table |
+
+**The basin** (finding 14)
+
+| file | what it does |
+| --- | --- |
+| `generic.py` | does any of this depend on starting from `sin x` |
+| `basin.py` | maps the basin of the frozen profile at `a = 0.8` |
+| `basin_anomaly.py` | why one datum did not blow up |
+| `basin_decay.py`, `basin_decay2.py` | is the decaying case a separatrix or a third outcome |
+| `decay_profile.py`, `decay_shape.py` | what the decaying solution decays to, and whether it is self-similar |
+
+**The exact `a = 1/2` case** (findings 3 and 17)
+
+| file | what it does |
+| --- | --- |
 | `pi_check.py` | whether `T(1/2) = pi` survives refinement |
-| `diagnose.py` | grid refinement study, for when a result looks too good |
-| `figures.py` | regenerates the figures above |
-| `explainer_figure.py`, `explainer_figure2.py` | the two figures used only by the plain-language guide |
-| `docs/explainer/` | the plain-language guide, source and PDF |
+| `pi_exact.py` | the proof that it is exact, and the check |
+| `pi_stagnation.py` | the stagnation point relation against the exact solution |
+
+**Documents**
+
+| file | what it does |
+| --- | --- |
 | `paper/` | the technical write up, source and PDF |
+| `docs/explainer/` | the plain-language guide, source and PDF |
+| `explainer_figure.py`, `explainer_figure2.py` | the two figures used only by that guide |
 
 `profile_solve.py`, `profile_refine.py` and `shape_check.py` are earlier passes,
 kept because their working parts stand and their failures are instructive: the
@@ -413,16 +561,22 @@ gives `T = 1.999997, p = 0.9981`.
 
 ## Caveats
 
-`sin x` is not a generic datum. It is exactly the `a = 1` ground state, so this
-describes how that ground state destabilises when advection is weakened, which
-is narrower than "when does this family blow up". `sweep.py --ic tilted` and
-`--ic onesigned` exist to test what survives a different datum, and neither has
-been run past a smoke test.
+`sin x` is not a generic datum. It is exactly the `a = 1` ground state, so the
+`T(a)` sweep describes how that ground state destabilises when advection is
+weakened, which is narrower than "when does this family blow up". The profile
+is less exposed to this: finding 14 reaches it from sixteen random data, from a
+continuous family of offsets and from three designed data, always with the same
+constants to seven digits. The shape of the basin boundary is still unmapped.
 
-Nothing here has been checked against the literature. Okamoto, Sakajo and
-Wunsch studied this family numerically in 2008, and Chen, Hou and Huang proved
-finite time blowup for De Gregorio on the line with low regularity data in
-2021. Several of these findings may well be known.
+Most of this is known, and the check that established that was expensive.
+Findings 18 and 19 are the record of it: twelve papers read, the frozen
+profile, its stability, its local exponent and its regularity all found already
+in print, one finding retracted as a corollary of the initial datum's symmetry,
+and the surviving core reduced to the control variate, the two constants it
+corrects, the linear spectrum at `a = 0.8`, the first integral with its `PV`
+constraint, and `T(1/2) = pi`. The sections above say whose each piece is; the
+introduction of the paper does it properly, with references. Anything here that
+is still described as new should be read as not found rather than as absent.
 
 Nothing here is a proof. A computer assisted proof in this area, in the style
 of Chen and Hou, needs interval arithmetic producing certified enclosures, not
@@ -430,3 +584,8 @@ floating point plus convergence studies. This is the instrument you use to find
 the scenario worth trying to prove, and the objects it has produced, a profile
 equation with a stable solution, are the objects such a proof would need to
 enclose.
+
+## License
+
+MIT, see [LICENSE](LICENSE). If you use the solver or the control variate,
+a citation of the paper is welcome but not required.

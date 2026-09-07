@@ -1314,17 +1314,23 @@ twelve references.
 
 ## Caveats
 
-`sin x` is not generic. It is exactly the `a = 1` ground state, so all of this
-describes how that ground state destabilises when advection is weakened, which
-is narrower than "when does this family blow up". `sweep.py --ic tilted` and
-`--ic onesigned` exist to test how much survives a different datum, and neither
-has been run past a smoke test.
+`sin x` is not generic, and finding 14 is how far that was chased. It is
+exactly the `a = 1` ground state, so the sweep of finding 1 describes how that
+ground state destabilises when advection is weakened, which is narrower than
+"when does this family blow up". The profile itself is not so limited: sixteen
+random data, a continuous family of offsets and three designed data all reach
+member 1 with the same constants to seven digits. What remains unmapped is the
+shape of the basin boundary, which was probed along two one dimensional
+families in a space of functions.
 
-Nothing here has been checked against the literature. Okamoto, Sakajo and
-Wunsch studied this family numerically in 2008 and Chen, Hou and Huang proved
-finite time blowup for De Gregorio on the line with low regularity data in
-2021. Findings 1 and 2 may well be known; finding 3 should be searched for
-before any effort is spent deriving it.
+The literature check is findings 18 and 19, and it took most of the effort in
+this file. Twelve papers, and the frozen profile, its existence, its nonlinear
+stability, its local exponent and its regularity are all in print already,
+principally in Lushnikov, Silantyev and Siegel and in Chen. Finding 11 was
+retracted outright. Findings 1 and 2 reproduce known results. What survives is
+listed at the end of finding 19. The first integral and the `PV` constraint of
+finding 13 were not found in the papers read, which after finding 18 should be
+taken to mean not found rather than absent.
 
 ## Next
 
