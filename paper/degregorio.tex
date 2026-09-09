@@ -116,6 +116,44 @@ family are known exactly, which makes every numerical statement checkable, and
 the solution structure is simple enough that the blowup profile can be computed
 directly rather than inferred from a diverging simulation.
 
+Our contributions are as follows.
+
+\begin{enumerate}
+\item \emph{The control variate, and $\beta$ to five digits.} The two
+  stagnation point constants are read from the same discrete profile and carry
+  the same error, and one of them is known exactly. Regressing one against the
+  other across resolutions and evaluating at the exact value collapses the
+  spread by a factor of $800$, giving $\beta = 3.0024227\pm9.1\times10^{-6}$ at
+  $a=0.8$ and excluding $\beta=3$ (Section \ref{sec:control}).
+\item \emph{A correction to the published exponent.} At $a=0.71$ the same
+  determination gives $\beta = 9.29546$ against the fitted $9.32592$ of
+  Lushnikov, Silantyev and Siegel \cite{lss2020}, a difference of $0.33$ percent between two methods sharing no
+  machinery (Remark \ref{rem:pb}).
+\item \emph{The linear spectrum at $a=0.8$.} Exactly two eigenvalues lie
+  outside the open left half plane, both forced by symmetry, so the profile is
+  linearly stable modulo those symmetries. This is numerical, and it sits well
+  away from the neighbourhood of $a=1$ in which Chen \cite{chenS1} proves nonlinear
+  stability (Section \ref{sec:spectrum}).
+\item \emph{A first integral and a global constraint.} The profile equation
+  integrates in closed form on any interval free of zeros of $U$, and
+  integrating once around the circle forces
+  $\mathrm{PV}\oint\mathrm{d}y/U = 0$, verified to $10^{-12}$ (Section
+  \ref{sec:integral}).
+\item \emph{The blowup time at $a=1/2$.} Specialising the exact solution of
+  \cite{slsa2025} to $\omega_0=\sin x$ gives $T=\pi$ exactly (Section
+  \ref{sec:exacthalf}).
+\end{enumerate}
+
+The remaining sections are supporting numerics rather than claims: Section
+\ref{sec:regimes} recovers the regime picture of \cite{lss2020} with an
+independent diagnostic and records where our resolution falls short of theirs,
+and Section \ref{sec:profile} treats the profile equation as a fixed point of
+the evolution nonlinearity and checks the amplitude it fixes against simulation
+to $10^{-5}$.
+
+Throughout, the initial datum is $\omega_0 = \sin x$. This is not a generic
+choice, and Section \ref{sec:caveats} records what that costs.
+
 \paragraph{Relation to existing work.} Self similar blowup for this family is
 under active study and the present results must be read against it.
 
@@ -278,44 +316,6 @@ while ours is a value of $\Hil f$. That comparison was aimed at the wrong part
 of the paper: equation (2.10) of the same reference is the relation itself. We
 record the error because it is the kind that a reader checking one theorem
 rather than the whole paper will repeat.
-
-Our contributions are as follows.
-
-\begin{enumerate}
-\item \emph{The control variate, and $\beta$ to five digits.} The two
-  stagnation point constants are read from the same discrete profile and carry
-  the same error, and one of them is known exactly. Regressing one against the
-  other across resolutions and evaluating at the exact value collapses the
-  spread by a factor of $800$, giving $\beta = 3.0024227\pm9.1\times10^{-6}$ at
-  $a=0.8$ and excluding $\beta=3$ (Section \ref{sec:control}).
-\item \emph{A correction to the published exponent.} At $a=0.71$ the same
-  determination gives $\beta = 9.29546$ against the fitted $9.32592$ of
-  \cite{lss2020}, a difference of $0.33$ percent between two methods sharing no
-  machinery (Remark \ref{rem:pb}).
-\item \emph{The linear spectrum at $a=0.8$.} Exactly two eigenvalues lie
-  outside the open left half plane, both forced by symmetry, so the profile is
-  linearly stable modulo those symmetries. This is numerical, and it sits well
-  away from the neighbourhood of $a=1$ in which \cite{chenS1} proves nonlinear
-  stability (Section \ref{sec:spectrum}).
-\item \emph{A first integral and a global constraint.} The profile equation
-  integrates in closed form on any interval free of zeros of $U$, and
-  integrating once around the circle forces
-  $\mathrm{PV}\oint\mathrm{d}y/U = 0$, verified to $10^{-12}$ (Section
-  \ref{sec:integral}).
-\item \emph{The blowup time at $a=1/2$.} Specialising the exact solution of
-  \cite{slsa2025} to $\omega_0=\sin x$ gives $T=\pi$ exactly (Section
-  \ref{sec:exacthalf}).
-\end{enumerate}
-
-The remaining sections are supporting numerics rather than claims: Section
-\ref{sec:regimes} recovers the regime picture of \cite{lss2020} with an
-independent diagnostic and records where our resolution falls short of theirs,
-and Section \ref{sec:profile} treats the profile equation as a fixed point of
-the evolution nonlinearity and checks the amplitude it fixes against simulation
-to $10^{-5}$.
-
-Throughout, the initial datum is $\omega_0 = \sin x$. This is not a generic
-choice, and Section \ref{sec:caveats} records what that costs.
 
 \section{The model and its exactly known endpoints}
 
