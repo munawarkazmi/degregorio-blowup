@@ -21,3 +21,6 @@ docs/explainer/*.toc
 docs/explainer/*.synctex.gz
 docs/explainer/*.fls
 docs/explainer/*.fdb_latexmk
+
+# Assembled by arxiv_package.py, rebuildable from source.
+paper/arxiv/

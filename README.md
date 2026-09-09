@@ -507,6 +507,7 @@ how it went wrong.
 | --- | --- |
 | `paper/` | the technical write up, source and PDF |
 | `docs/explainer/` | the plain-language guide, source and PDF |
+| `arxiv_package.py` | assembles a flat arXiv tarball and refuses to write it unless it builds clean |
 | `explainer_figure.py`, `explainer_figure2.py` | the two figures used only by that guide |
 
 `profile_solve.py`, `profile_refine.py` and `shape_check.py` are earlier passes,
