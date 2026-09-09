@@ -11,9 +11,12 @@ open access is chosen after acceptance.
 
 Submission notes, not part of the letter:
 
-- Upload `paper/arxiv/degregorio-anon.tar.gz`, built by
-  `python arxiv_package.py --anon`. Nonlinearity defaults to double anonymous
-  review, and the anonymised build is the one that belongs in the portal.
+- Upload `paper/arxiv/degregorio-anon.pdf`, built by
+  `python arxiv_package.py --anon`. IOP wants a single PDF at initial
+  submission and asks for source only on acceptance, which is when
+  `degregorio-anon.tar.gz` becomes the relevant file. Nonlinearity defaults to
+  double anonymous review, and the anonymised build is the one that belongs in
+  the portal.
 - The letter goes to the editor rather than the referees, so it carries the
   author's name even under double anonymous review.
 - The abstract is 296 words against their limit of 300.

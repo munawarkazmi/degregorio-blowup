@@ -251,9 +251,17 @@ def main():
     contents = tarfile.open(archive).getnames()
     size = archive.stat().st_size
 
+    # Journals want a single PDF at initial submission and the source only on
+    # acceptance, so the built PDF is an artefact in its own right, not just a
+    # by-product of checking that the archive compiles.
+    pdf_out = OUT / ("degregorio-anon.pdf" if anon else "degregorio-flat.pdf")
+    shutil.copy2(STAGE / "degregorio.pdf", pdf_out)
+
     print()
     print(f"  wrote      {archive.relative_to(ROOT)}  ({size/1024:.0f} KB)")
     print(f"  contains   {', '.join(contents)}")
+    print(f"  wrote      {pdf_out.relative_to(ROOT)}  "
+          f"({pdf_out.stat().st_size/1024:.0f} KB), for journal submission")
     print()
     print("  Upload that archive. arXiv runs its own pdflatex, so the check")
     print("  above is the same one it will make.")
