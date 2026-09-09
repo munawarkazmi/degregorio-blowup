@@ -26,12 +26,18 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 TEX = ROOT / "paper" / "degregorio.tex"
 OUT = ROOT / "paper" / "arxiv"
-STAGE = OUT / "build"
+
+# The staging directory goes to system temp rather than under the repository.
+# Build artefacts do not belong in a synced folder, and on OneDrive the sync
+# client keeps a handle on the directory, so removing it between runs fails
+# with a permission error and the second invocation dies before it starts.
+STAGE = Path(tempfile.mkdtemp(prefix="degregorio-arxiv-"))
 
 
 def referenced_figures(source):
@@ -50,10 +56,7 @@ def locate(name):
 
 
 def stage(source, figures):
-    if STAGE.exists():
-        shutil.rmtree(STAGE)
-    STAGE.mkdir(parents=True)
-
+    # STAGE is a fresh temporary directory, so there is nothing to clear.
     # graphicspath is what breaks on arXiv, so the staged copy does not keep it.
     flat = re.sub(r"\\graphicspath\{[^\n]*\}\n", "", source)
     (STAGE / "degregorio.tex").write_text(flat, encoding="utf-8")
@@ -123,7 +126,7 @@ def main():
     print(f"  figures    {len(figures)} referenced: {', '.join(figures)}")
 
     stage(source, figures)
-    print(f"  staged     {STAGE.relative_to(ROOT)}, graphicspath stripped")
+    print(f"  staged     {STAGE}, graphicspath stripped")
 
     log = build()
     problems, pages = check(log, len(figures))
@@ -145,6 +148,7 @@ def main():
         print("  Package is clean. Rerun without --check to write the archive.")
         return 0
 
+    OUT.mkdir(parents=True, exist_ok=True)
     archive = OUT / "degregorio.tar.gz"
     with tarfile.open(archive, "w:gz") as tar:
         for f in sorted(STAGE.iterdir()):
