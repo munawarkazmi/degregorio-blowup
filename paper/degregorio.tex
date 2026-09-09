@@ -35,47 +35,35 @@ a control variate for its spectral exponent}
 
 \begin{abstract}
 On the circle, the one parameter family of Okamoto, Sakajo and Wunsch admits,
-above a critical advection $a_c = 0.6890665\ldots$, a blowup whose spatial
-scale neither shrinks nor expands, $\omega = f(x)/(T-t)$. This frozen profile
-was found numerically by Lushnikov, Silantyev and Siegel, and its existence and
-nonlinear stability near $a=1$ were proved by Chen. Its Fourier spectrum decays
-algebraically, $\abs{\hat f_k}\sim k^{-\beta}$, because a high order derivative
-of $f$ jumps at the stagnation point antipodal to the singularity, and
-$\beta$ has been obtained by least squares fits to the spectrum.
+above a critical advection, a blowup whose spatial scale neither shrinks nor
+expands, $\omega = f(x)/(T-t)$. This frozen profile was found numerically by
+Lushnikov, Silantyev and Siegel, and Chen proved its existence and nonlinear
+stability near $a=1$. Its Fourier spectrum decays algebraically,
+$\abs{\hat f_k}\sim k^{-\beta}$, with $\beta$ obtained hitherto by least
+squares fitting.
 
-This note is about determining $\beta$ accurately. The local exponent at a
-stagnation point is $\mu = (c-1)/(ac)$, with $c$ the Hilbert transform of $f$
-there, and $\beta = \mu+1$; this relation is due to Chen, and at the stagnation
-point where $f$ has a simple zero it closes as $c = 1/(1-a)$, a normalisation
-identity used throughout this literature. Reading $c$ off a discrete profile is
-the difficulty: across seven resolutions the value at the singular stagnation
-point wanders by $2\times10^{-2}$ with no monotone trend, so extrapolation in
-$N$ returns noise. Our observation is that the two constants are read from the
-same profile and carry the same discretisation error, and that one of them is
-known exactly. Regressing the unknown constant against the known one across
-resolutions and evaluating at the exact value cancels the error without
-requiring its size or its rate, collapsing the spread by a factor of $800$.
-That the two errors are proportional is tested rather than assumed: across
-resolutions the discretisation error is a single shape to one part in $10^4$,
-so every linear functional of it is proportional to every other, and inducing
-the error by a different route moves the corrected value by $1.5\times10^{-6}$.
+We determine it accurately. The local exponent at a stagnation point is
+$\mu = (c-1)/(ac)$, with $c$ the Hilbert transform of $f$ there and
+$\beta = \mu+1$, due to Chen and closing as $c = 1/(1-a)$ where $f$ has a
+simple zero. Reading $c$ at the other stagnation point is the difficulty:
+it wanders by $2\times10^{-2}$ across seven resolutions. Both carry the same
+discretisation error and one is known exactly, so regressing one on the other
+and evaluating at the exact value cancels it, collapsing the spread by $800$.
+That the errors are proportional is tested, not assumed: the error is a single
+shape to one part in $10^4$, and inducing it differently moves the corrected
+value by $1.5\times10^{-6}$.
 
-This yields $\beta$ to five digits. At $a=0.8$ we obtain
-$\beta = 3.0024227 \pm 9.1\times10^{-6}$, which excludes the value $3$ by more
-than two hundred times the scatter, and $\beta$ varies continuously with $a$
-rather than locking to an integer. At $a=0.71$ we obtain $\beta = 9.29546$
-against the
-published fitted value $9.32592$, a correction of $0.33$ percent, the two
-determinations sharing no machinery.
+At $a=0.8$ this gives $\beta = 3.0024227\pm9.1\times10^{-6}$, excluding
+$\beta=3$, and $\beta$ varies continuously with $a$ rather than locking to an
+integer. At $a=0.71$ it gives $9.29546$ against the published fitted
+$9.32592$, a correction of $0.33$ percent, the two sharing no
+machinery.
 
-We add three smaller numerical results. The linearisation about the profile in
-renormalised time has exactly two eigenvalues outside the open left half plane,
-both forced by symmetry, giving linear stability modulo those symmetries at
-$a=0.8$, well away from the neighbourhood of $a=1$ where nonlinear stability is
-proved. The profile equation admits a first integral, and integrating it around
-the circle gives the global constraint $\mathrm{PV}\oint \mathrm{d}y/U = 0$,
-which we verify to $10^{-12}$. Finally, at $a=1/2$, where the model is exactly
-solvable, the datum $\omega_0 = \sin x$ blows up at $T = \pi$ exactly.
+Three smaller results: the linearisation in renormalised time has
+exactly two eigenvalues outside the open left half plane, both forced by
+symmetry; the profile equation has a first integral whose closure forces
+$\mathrm{PV}\oint \mathrm{d}y/U = 0$, verified to $10^{-12}$; and at $a=1/2$,
+$\omega_0 = \sin x$ blows up at $T = \pi$ exactly.
 \end{abstract}
 
 \section{Introduction}

@@ -17,8 +17,18 @@ environment written by hand, so there is nothing for arXiv's BibTeX pass to do
 and nothing to go wrong, but the check below confirms the reference list is
 intact rather than assuming it.
 
+`--anon` produces the variant a double anonymous journal review needs, with the
+title block replaced. Nonlinearity defaults to double anonymous and lets the
+author opt out by leaving names in, which is the wrong way round for anyone
+without an institution to trade on. The two mentions of an accompanying
+repository do not name it and so survive anonymisation, but the PDF metadata
+does not look after itself: hyperref copies the title block into the document
+properties, so the check below reads the metadata back out of the built PDF and
+fails if a name is still in there.
+
     python arxiv_package.py            writes paper/arxiv/degregorio.tar.gz
     python arxiv_package.py --check    builds and verifies, writes no archive
+    python arxiv_package.py --anon     writes paper/arxiv/degregorio-anon.tar.gz
 """
 
 import re
@@ -55,10 +65,34 @@ def locate(name):
     return None
 
 
-def stage(source, figures):
+ANON_BLOCK = "\\author{}\n"
+
+
+def anonymise(source):
+    """
+    Replace the title block, and stop hyperref from leaking it into the PDF.
+
+    The author macro spans several lines and ends at the first line that closes
+    it, so match to the closing brace rather than to a blank line.
+    """
+    # The replacement is passed as a function: re processes backslash escapes
+    # in a replacement template, which would turn the \a of \author into BEL.
+    out, n = re.subn(r"\\author\{.*?\}\}\n", lambda m: ANON_BLOCK, source,
+                     flags=re.S)
+    if n != 1:
+        raise SystemExit("  could not identify the author block to redact")
+    # hyperref infers pdfauthor from \author unless told otherwise.
+    out = out.replace("\\begin{document}",
+                      "\\hypersetup{pdfauthor={}}\n\\begin{document}", 1)
+    return out
+
+
+def stage(source, figures, anon=False):
     # STAGE is a fresh temporary directory, so there is nothing to clear.
     # graphicspath is what breaks on arXiv, so the staged copy does not keep it.
     flat = re.sub(r"\\graphicspath\{[^\n]*\}\n", "", source)
+    if anon:
+        flat = anonymise(flat)
     (STAGE / "degregorio.tex").write_text(flat, encoding="utf-8")
 
     for name, path in figures.items():
@@ -109,8 +143,56 @@ def check(log, n_figures):
     return problems, pages
 
 
+IDENTIFIERS = ("Munawar", "Kazmi", "munawarkazmi", "munawarsaeedkazmi")
+
+
+def pdf_text(pdf):
+    """
+    Extract the text of a PDF, or return None if we cannot.
+
+    A raw byte scan does not work: content streams are Flate compressed, so a
+    search over the file finds nothing whether the name is present or not. An
+    earlier version of this function did exactly that and reported every
+    document clean, which is worse than not checking. Returning None where
+    extraction is impossible is the point: the caller must be able to tell
+    "verified clean" from "could not verify".
+    """
+    try:
+        out = subprocess.run(["pdftotext", str(pdf), "-"], capture_output=True,
+                             check=True)
+        return out.stdout.decode("utf-8", errors="replace")
+    except (OSError, subprocess.CalledProcessError):
+        pass
+    try:
+        import pypdf
+        return "\n".join(p.extract_text() or "" for p in
+                         pypdf.PdfReader(str(pdf)).pages)
+    except Exception:
+        return None
+
+
+def leaks(pdf):
+    """
+    Look for the author's identity in the built PDF, page text and metadata.
+
+    Returns (found, checked). `checked` is False when neither extractor was
+    available, in which case `found` says nothing.
+    """
+    haystack = pdf_text(pdf)
+    if haystack is None:
+        return [], False
+
+    # The information dictionary is usually not compressed, and hyperref puts
+    # the title block there, so scan the raw bytes for it as well as the text.
+    raw = pdf.read_bytes().decode("latin-1", errors="replace")
+
+    found = [i for i in IDENTIFIERS if i in haystack or i in raw]
+    return found, True
+
+
 def main():
     check_only = "--check" in sys.argv
+    anon = "--anon" in sys.argv
     source = TEX.read_text(encoding="utf-8")
 
     names = referenced_figures(source)
@@ -125,11 +207,23 @@ def main():
     print(f"  source     {TEX.relative_to(ROOT)}")
     print(f"  figures    {len(figures)} referenced: {', '.join(figures)}")
 
-    stage(source, figures)
-    print(f"  staged     {STAGE}, graphicspath stripped")
+    stage(source, figures, anon=anon)
+    print(f"  staged     {STAGE}, graphicspath stripped"
+          f"{', title block redacted' if anon else ''}")
 
     log = build()
     problems, pages = check(log, len(figures))
+
+    if anon and not problems:
+        found, checked = leaks(STAGE / "degregorio.pdf")
+        if not checked:
+            problems.append("could not extract text from the PDF, so anonymity "
+                            "is unverified; install poppler or pypdf")
+        elif found:
+            problems.append(f"identifying strings still in the PDF: {found}")
+        else:
+            print("  anonymity  verified: no identifying string in text or "
+                  "metadata")
 
     if problems:
         print()
@@ -149,7 +243,7 @@ def main():
         return 0
 
     OUT.mkdir(parents=True, exist_ok=True)
-    archive = OUT / "degregorio.tar.gz"
+    archive = OUT / ("degregorio-anon.tar.gz" if anon else "degregorio.tar.gz")
     with tarfile.open(archive, "w:gz") as tar:
         for f in sorted(STAGE.iterdir()):
             if f.suffix in (".tex", ".png", ".bbl"):
