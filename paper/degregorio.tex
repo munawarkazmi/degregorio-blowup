@@ -55,12 +55,16 @@ same profile and carry the same discretisation error, and that one of them is
 known exactly. Regressing the unknown constant against the known one across
 resolutions and evaluating at the exact value cancels the error without
 requiring its size or its rate, collapsing the spread by a factor of $800$.
+That the two errors are proportional is tested rather than assumed: across
+resolutions the discretisation error is a single shape to one part in $10^4$,
+so every linear functional of it is proportional to every other, and inducing
+the error by a different route moves the corrected value by $1.5\times10^{-6}$.
 
 This yields $\beta$ to five digits. At $a=0.8$ we obtain
 $\beta = 3.0024227 \pm 9.1\times10^{-6}$, which excludes the value $3$ by more
 than two hundred times the scatter, and $\beta$ varies continuously with $a$
-rather than
-locking to an integer. At $a=0.71$ we obtain $\beta = 9.29546$ against the
+rather than locking to an integer. At $a=0.71$ we obtain $\beta = 9.29546$
+against the
 published fitted value $9.32592$, a correction of $0.33$ percent, the two
 determinations sharing no machinery.
 
