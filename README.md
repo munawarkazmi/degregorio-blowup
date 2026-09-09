@@ -506,6 +506,7 @@ how it went wrong.
 | file | what it does |
 | --- | --- |
 | `paper/` | the technical write up, source and PDF |
+| `paper/cover-letter.md` | submission letter for Nonlinearity, and why that journal |
 | `docs/explainer/` | the plain-language guide, source and PDF |
 | `arxiv_package.py` | assembles a flat arXiv tarball and refuses to write it unless it builds clean |
 | `explainer_figure.py`, `explainer_figure2.py` | the two figures used only by that guide |
