@@ -1312,6 +1312,119 @@ every proposition demoted to attributed background with the mapping to Chen's
 the `htw2026` comparison corrected, and the priority paragraph rewritten around
 twelve references.
 
+## 20. The control variate is sound, and the reason is that the error has rank one
+
+Finding 12 assumes the discretisation error enters `c1` and `c2` linearly with
+one common coefficient, so the line through the measured pairs passes through
+the truth rather than near it. The evidence offered was `R^2 = 0.99999744` on
+seven points, which is the shape of evidence that produced findings 9 and 11.
+Finding 13 tried to test it with a second exact anchor and the anchor turned
+out to be empty. `cv_manufactured.py` tests it three other ways.
+
+### The error is a single shape
+
+Solve the profile at `N` = 512 to 3072, interpolate each to a common grid,
+shift each so its smooth stagnation point sits at the same place, and difference
+against the finest. The alignment matters: a relative translation is a large
+mode that neither `c1` nor `c2` can see, and leaving it in would manufacture the
+answer. Singular values of the resulting stack:
+
+| `i` | 0 | 1 | 2 | 3 | 4 |
+| --- | --- | --- | --- | --- | --- |
+| `sigma_i` | 9.970e-1 | 4.699e-4 | 3.788e-5 | 8.850e-6 | 2.339e-6 |
+
+`sigma_0 / sigma_1 = 2122`, and mode 0 carries 0.99999978 of the variance. **The
+discretisation error is one fixed shape whose amplitude alone depends on `N`.**
+
+That is not evidence that the correction works. It is the reason it works. If
+the error is rank one then every linear functional of it is proportional to
+every other across the ladder, so any two constants read off the profile must
+fall on a line, and there is nothing special about `c1` and `c2` as a pair. The
+`R^2` was measuring something structural after all.
+
+### A second knob agrees
+
+Rank one predicts that the correction should not care how the error was
+induced. Hold `N` at 2048 and vary the dealiasing fraction instead, changing the
+retained band without touching the grid:
+
+| knob | slope | `R^2` | corrected `c2` |
+| --- | --- | --- | --- |
+| resolution, `N` = 512 to 3072 | -0.980354 | 0.99999711 | -1.66130020 |
+| dealiasing, `frac` = 0.20 to 1/3 at `N` = 2048 | -0.982306 | 0.99999998 | -1.66129872 |
+
+The slopes differ by 2.0e-3, so these really are different perturbations. The
+corrected values differ by **1.5e-6**. The linear relation belongs to the
+profile, not to the ladder it was measured on.
+
+### An unplanned reproduction
+
+This ladder seeds every grid from one interpolated simulation, where
+`c2_control.py` simulates separately at each `N`, and it omits `N = 4096`.
+Different ladder, different seeding, sharing only the extraction routine:
+
+```
+c2   = -1.66130020    against -1.66130027,  a difference of 7.3e-8
+beta =  3.00242271    against  3.00242268
+```
+
+### The one caveat: the quoted bar is too tight
+
+Split the ladder and correct on each half separately. The halves share no
+resolutions, so agreement is a real check.
+
+| half | `N` | slope | corrected `c2` |
+| --- | --- | --- | --- |
+| coarse | 512, 768, 1024 | -0.980534 | -1.66130963 |
+| fine | 1536, 2048, 3072 | -0.980856 | -1.66129332 |
+
+They differ by **1.6e-5**, against the `+/- 1.0e-5` finding 12 quotes. Read
+that carefully before acting on it. The quoted bar is the standard deviation of
+the per-point corrected values, which this ladder reproduces at 1.1e-5, but the
+corrected *spread* is 2.4e-5, and the fine half's three `c1` values all sit
+below 5 in a window 2.2e-3 wide, so evaluating at the exact anchor is a mild
+extrapolation there where the full ladder interpolates. The gap is consistent
+with that.
+
+So `+/- 1.0e-5` is optimistic as an uncertainty on the extrapolated value and
+`+/- 2e-5` is defensible. Nothing downstream moves: `mu2 = 2` needs
+`c2 = -1.66666667`, a gap of 5.37e-3, which is 537 sigma at the old bar and
+still 224 at the widest reading. **`beta = 3` stays excluded.**
+
+### The approach that looks right and is not
+
+The obvious test is a manufactured solution. Build `f*` with the structure of
+the real profile, odd about `y1` so both stagnation points are forced by
+antisymmetry, a simple zero there, and `f*'(y2) = 0` with a jump in `f''` at
+`y2 = y1 + pi`, giving `mu = 2` and a `k^-3` spectrum. `b_1` is then fixed by
+the double zero rather than chosen. Compute the source `s = rhs(f*) - f*` that
+makes `f*` an exact solution of a modified equation, solve that on the same
+grids, and score the correction against constants known in closed form.
+
+It cannot work, and the run is what showed it:
+
+| `N` | 256 | 512 | 1024 | 2048 |
+| --- | --- | --- | --- | --- |
+| anchor error `c1` | 1.8e-8 | 2.8e-9 | 3.6e-9 | 3.5e-9 |
+| target error `c2` | 1.5e-4 | 3.6e-5 | 1.1e-5 | 2.7e-6 |
+
+The anchor is 8518 times quieter than its target, where the real `c1` moves by
+1.3e-2 across the same ladder. Pinning the solution with a source removes the
+error at the smooth point while leaving it at the rough one, so the anchor does
+not move and there is nothing to regress against. **A manufactured problem can
+be given the right profile but not the right error.** This is the same
+requirement that emptied the PV anchor in finding 13, reached from the opposite
+side, and it is kept as Part 4 of the script rather than deleted.
+
+### What this changes
+
+`rem:oneanchor` in the paper said the evidence was internal consistency and a
+second anchor would be the natural next test. The rank one result is stronger
+than internal consistency, and the second knob supplies the independence a
+second anchor would have. The remark is rewritten and the error bar widened.
+What is still absent is agreement with a determination that does not go through
+this discrete operator at all, and no such determination exists.
+
 ## Caveats
 
 `sin x` is not generic, and finding 14 is how far that was chased. It is

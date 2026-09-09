@@ -330,13 +330,25 @@ and Siegel fit `p_b = 9.32592` to the spectrum, the same procedure gives
 machinery: theirs is a least squares fit over a band of wavenumbers, this is a
 single value of `H f` read off the profile.
 
-**The correction rests on one anchor.** It assumes the discretisation error
-enters `c1` and `c2` linearly with the same coefficient, and the evidence for
-that is `R^2 = 0.99999744` on seven points, which is the same shape of evidence
-that produced two retractions above. A second exactly known quantity would
-settle it. The obvious candidate, the `PV` constraint below, turns out to hold
-by symmetry alone, so it carries no discretisation error and cannot anchor
-anything. `cv_second_anchor.py` is that attempt and its negative result.
+**The assumption underneath it is that the discretisation error enters `c1` and
+`c2` linearly with the same coefficient.** That has been tested. Align the
+profiles on their stagnation point, difference them across resolutions, and the
+singular values of the stack are 9.97e-1, 4.70e-4, 3.79e-5 and smaller: the
+error is a single fixed shape carrying 0.99999978 of the variance, whose
+amplitude alone depends on `N`. Every linear functional of a rank one error is
+proportional to every other, so `c1` and `c2` have to fall on a line and there
+is nothing special about that pair. Inducing the error a different way, by
+varying the dealiasing fraction at fixed `N`, moves the slope by 2.0e-3 and the
+corrected `c2` by 1.5e-6.
+
+Two attempts to check it against something exact both failed, for the same
+reason and instructively. The `PV` constraint below holds by symmetry, so it
+carries no discretisation error and cannot anchor anything. A manufactured
+solution, built with the right structure and an exact source term, pins the
+smooth point so hard that the anchor is 8500 times quieter than the target and
+there is nothing to regress. A control variate needs its anchor to carry the
+target's error, and neither of those does. `cv_second_anchor.py` and
+`cv_manufactured.py` are the two negative results and the three that worked.
 
 ### The equation integrates once, and `c2` has no closed form
 
@@ -455,6 +467,7 @@ how it went wrong.
 | `c2_now.py` | the correction applied to an existing table, no solves |
 | `c2_form.py` | hunting a closed form for `c2`, and excluding shapes |
 | `cv_second_anchor.py` | does the control variate survive a second anchor: no, `PV` carries no error |
+| `cv_manufactured.py` | the rank of the error, a held out split, a second knob, and a manufactured solution that cannot score it |
 | `pv_test.py` | the `PV` identity again, off grid |
 
 **Stability, symmetry and the critical limit** (findings 5, 11, 15 and 16)
