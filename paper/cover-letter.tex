@@ -1,0 +1,69 @@
+% Cover letter for Nonlinearity. Compile with pdflatex; upload the PDF at the
+% Policies and Information step, which requires a file rather than pasted text.
+%
+% This letter goes to the editor and not to the referees, so it carries the
+% author's name and the repository URL even though the manuscript itself is
+% anonymised for double anonymous review.
+\documentclass[11pt]{article}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{parskip}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent To the Editors of \emph{Nonlinearity}
+
+\bigskip
+
+\noindent Re: ``The frozen blowup profile of the Okamoto, Sakajo and Wunsch
+family: a control variate for its spectral exponent''
+
+\bigskip
+
+\noindent Dear Editors,
+
+I am submitting the above manuscript for consideration as a research paper.
+
+The Okamoto, Sakajo and Wunsch family was introduced in this journal
+(\emph{Nonlinearity} \textbf{21} (2008) 2447), and the paper concerns the
+frozen blowup profile it admits on the circle above a critical advection. That
+profile's Fourier spectrum decays algebraically with an exponent $\beta$ which
+has previously been obtained by least squares fits to the spectrum. I show that
+fitting is accurate only to about a percent and is biased, and give a different
+determination: the exponent follows from a single local quantity, and the
+difficulty of reading that quantity off a discrete profile is removed by using
+a second constant, known exactly, as a control variate. This yields five
+digits, excludes the value $\beta = 3$ at $a = 0.8$, and corrects the published
+exponent at $a = 0.71$ by $0.33$ percent.
+
+I should draw your attention to two things. First, the setting is not mine: the
+frozen profile was found numerically by Lushnikov, Silantyev and Siegel, and its
+existence, stability and local exponent near $a = 1$ were proved by Chen. The
+introduction and a Limitations section state in detail what is theirs and what
+is mine, and the contribution is deliberately narrow. Second, the paper corrects
+a value published by Lushnikov, Silantyev and Siegel. I have written to them
+describing the discrepancy and offering the manuscript, before submitting here.
+
+Every number in the paper is reproducible. The solver, the profile solver, the
+scripts behind each table and a suite of nineteen checks against closed forms
+and conserved quantities are openly available under an MIT licence at
+\texttt{github.com/munawarkazmi/degregorio-blowup}, and the checks run on every
+commit. I mention the address here rather than in the manuscript because the
+repository identifies me and the manuscript is anonymised.
+
+I request double-anonymous review. The manuscript is not under consideration
+elsewhere, has not been published previously, and there are no competing
+interests. I am an independent researcher with no institutional affiliation and
+no funding to declare.
+
+\bigskip
+
+\noindent Yours faithfully,
+
+\bigskip
+
+\noindent Munawar Kazmi\\
+\texttt{munawarkazmi.com}\\
+ORCID 0009-0004-6565-6067
+
+\end{document}
