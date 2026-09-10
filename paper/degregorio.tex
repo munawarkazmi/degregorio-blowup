@@ -174,13 +174,24 @@ the profile is $C^1$ but not $C^{1,\alpha}$ there. Existence, stability,
 exponent and regularity for the object of this paper are therefore all his,
 in the regime $a\to1^-$.
 
-What this paper adds is neither the setting nor the local relations but the
-determination of the constant they leave open. The exponent $\beta$ has been
-obtained by least squares fits to the spectrum, which we show in Section
-\ref{sec:control} is accurate to about a percent and biased; the control
-variate developed there returns five digits, and it works at $a\approx0.8$,
-away from the $a\to1^-$ neighbourhood in which \cite{chenS1} controls the
-profile.
+What this paper adds is the determination of the constant those results leave
+open, and a reason to distrust the way it has been obtained so far. The
+exponent $\beta$ has been read off least squares fits to the spectrum, which
+Section \ref{sec:control} shows to be accurate only to about a percent and
+biased low; the control variate developed there returns five digits from a
+single local quantity, fitting nothing, and it works at $a\approx0.8$, away
+from the $a\to1^-$ neighbourhood in which \cite{chenS1} controls the profile.
+
+The consequences reach past the decimal places. Spectral fitting is the
+standard route to this exponent throughout the literature above, so its bias
+attaches to published values and not only to ours: Remark \ref{rem:pb} corrects
+one. The corrected exponents vary continuously with $a$ and exclude the integer
+that fitting had been unable to resolve, which is a statement about the
+structure of these profiles rather than about precision. And the error analysis
+of Remark \ref{rem:oneanchor} gives a testable condition, that the
+discretisation error be of rank one, under which cancelling one constant
+against another is legitimate at all. That condition is checkable wherever the
+technique is tried.
 
 Silantyev, Lushnikov, Siegel and Ambrose \cite{slsa2025} construct exact pole
 dynamics solutions on the circle for $a=0$ and $a=1/2$; Section
@@ -1274,9 +1285,9 @@ On priority. The bibliographic details of every reference above have been
 verified, and twelve closely related works have been read for overlap:
 \cite{osw2008}, \cite{htw2022}, \cite{hqww2023}, \cite{hqw2024},
 \cite{zheng2023}, \cite{gj2025}, \cite{htw2026}, \cite{lss2020},
-\cite{slsa2025}, \cite{xu2026}, \cite{chenS1} and \cite{alss2024}. The honest
-summary is that this is a numerical note about a constant, in a setting other
-people built, and we claim none of the following. The two regime picture on the circle, the
+\cite{slsa2025}, \cite{xu2026}, \cite{chenS1} and \cite{alss2024}. The setting
+is one other people built, and we claim none of the following. The two regime
+picture on the circle, the
 critical advection $a_c$, the frozen blowup $\omega = f(x)/(T-t)$ and its
 numerical profile, the derivative jump at the antipodal point, the algebraic
 spectral decay it causes, and stability as inferred from converging
@@ -1335,6 +1346,20 @@ producing certified enclosures rather than floating point with convergence
 studies. The objects this paper produces, a profile equation with a linearly
 stable solution and an exact relation fixing one of its two local constants,
 are the objects such a proof would need to enclose.
+
+\section*{Data availability}
+\label{sec:data}
+
+Every number reported here is reproducible from source. The solver, the profile
+solver, the script behind each table and figure, and a suite of nineteen checks
+against closed forms and conserved quantities are openly available under an MIT
+licence at
+\begin{center}
+\url{https://github.com/munawarkazmi/degregorio-blowup}
+\end{center}
+where the checks run on every commit. The two computations referred to above as
+left in the repository, the basin probe and the critical limit, are there under
+\texttt{basin.py} and \texttt{critical.py}.
 
 \begin{thebibliography}{99}
 

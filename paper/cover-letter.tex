@@ -1,9 +1,14 @@
-% Cover letter for Nonlinearity. Compile with pdflatex; upload the PDF at the
-% Policies and Information step, which requires a file rather than pasted text.
+% Cover letter for Physica D: Nonlinear Phenomena. Compile with pdflatex.
 %
 % This letter goes to the editor and not to the referees, so it carries the
-% author's name and the repository URL even though the manuscript itself is
-% anonymised for double anonymous review.
+% author's name and the repository URL.
+%
+% Written after a desk rejection from Nonlinearity on the grounds that the
+% manuscript did not make a sufficient contribution. The previous version of
+% this letter described the contribution as "deliberately narrow", which handed
+% the editor that conclusion in the second paragraph. Every attribution is
+% retained below, because those are matters of fact and of credit. What is gone
+% is the author's own verdict on significance, which is the editor's to reach.
 \documentclass[11pt]{article}
 \usepackage[margin=1.2in]{geometry}
 \usepackage{parskip}
@@ -11,7 +16,7 @@
 
 \begin{document}
 
-\noindent To the Editors of \emph{Nonlinearity}
+\noindent To the Editors of \emph{Physica D: Nonlinear Phenomena}
 
 \bigskip
 
@@ -24,31 +29,35 @@ family: a control variate for its spectral exponent''
 
 I am submitting the above manuscript for consideration as a research paper.
 
-The Okamoto, Sakajo and Wunsch family was introduced in this journal
-(\emph{Nonlinearity} \textbf{21} (2008) 2447), and the paper concerns the
-frozen blowup profile it admits on the circle above a critical advection. That
-profile's Fourier spectrum decays algebraically with an exponent $\beta$ which
-has previously been obtained by least squares fits to the spectrum. I show that
-fitting is accurate only to about a percent and is biased, and give a different
-determination: the exponent follows from a single local quantity, and the
-difficulty of reading that quantity off a discrete profile is removed by using
-a second constant, known exactly, as a control variate. This yields five
-digits, excludes the value $\beta = 3$ at $a = 0.8$, and corrects the published
-exponent at $a = 0.71$ by $0.33$ percent.
+The paper concerns the Okamoto, Sakajo and Wunsch family of one dimensional
+models for the Euler vorticity equation, and the frozen blowup profile it
+admits on the circle above a critical advection. The Fourier spectrum of that
+profile decays algebraically with an exponent $\beta$, which has until now been
+obtained by least squares fits to the spectrum. I show that such fits are
+accurate only to about a percent and are biased low, and give a determination
+that fits nothing: $\beta$ follows from a single local quantity, read off the
+computed profile by using a second constant, known exactly, as a control
+variate to cancel the discretisation error the two share. This returns five
+digits.
 
-The interest is not confined to the digits. Spectral fitting is the standard
-route to this exponent in this literature and it is biased at the percent
-level, so values obtained that way are worth revisiting, and the regularity of
-the profile turns out to vary continuously with $a$ rather than locking to an
-integer, which a fitted exponent is too coarse to establish.
+Three things follow. Spectral fitting is the standard route to this exponent
+throughout the literature, so the bias attaches to published values: the paper
+corrects one, giving $\beta = 9.29546$ at $a = 0.71$ against a published
+$9.32592$. The corrected exponents vary continuously with $a$ and exclude the
+integer value $3$, which is a statement about the structure of these profiles
+rather than about precision, and which a fitted exponent is too coarse to
+establish. And the error analysis gives a checkable condition, that the
+discretisation error be of rank one, under which cancelling one constant
+against another is legitimate at all; the test transfers wherever the technique
+is tried.
 
-I should draw your attention to two things. First, the setting is not mine: the
-frozen profile was found numerically by Lushnikov, Silantyev and Siegel, and its
-existence, stability and local exponent near $a = 1$ were proved by Chen. The
-introduction and a Limitations section state in detail what is theirs and what
-is mine, and the contribution is deliberately narrow. Second, the paper corrects
-a value published by Lushnikov, Silantyev and Siegel. I have written to them
-describing the discrepancy and offering the manuscript, before submitting here.
+Two disclosures. The setting is not mine: the frozen profile was found
+numerically by Lushnikov, Silantyev and Siegel, and its existence, stability
+and local exponent near $a = 1$ were proved by Chen, and the introduction and a
+Limitations section state what is theirs and what is mine. Second, the paper
+corrects a value published by Lushnikov, Silantyev and Siegel, and I wrote to
+them describing the discrepancy and offering the manuscript before submitting
+it anywhere.
 
 Every number in the paper is reproducible. The solver, the profile solver, the
 scripts behind each table and a suite of nineteen checks against closed forms
@@ -56,10 +65,9 @@ and conserved quantities are openly available under an MIT licence at
 \texttt{github.com/munawarkazmi/degregorio-blowup}, and the checks run on every
 commit.
 
-I request double-anonymous review. The manuscript is not under consideration
-elsewhere, has not been published previously, and there are no competing
-interests. The work was carried out independently, with no institutional
-funding.
+The manuscript is not under consideration elsewhere, has not been published
+previously, and there are no competing interests. The work was carried out
+independently, with no institutional funding.
 
 \bigskip
 

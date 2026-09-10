@@ -68,12 +68,28 @@ def locate(name):
 ANON_BLOCK = "\\author{}\n"
 
 
+ANON_DATA = (
+    "\\section*{Data availability}\n"
+    "\\label{sec:data}\n\n"
+    "Every number reported here is reproducible from source. The solver, the\n"
+    "profile solver, the script behind each table and figure, and a suite of\n"
+    "nineteen checks against closed forms and conserved quantities are openly\n"
+    "available under an MIT licence in a public repository, whose address is\n"
+    "withheld here because it identifies the author, and will be supplied on\n"
+    "acceptance.\n")
+
+
 def anonymise(source):
     """
     Replace the title block, and stop hyperref from leaking it into the PDF.
 
     The author macro spans several lines and ends at the first line that closes
     it, so match to the closing brace rather than to a blank line.
+
+    The data availability section carries the repository URL, which contains the
+    author's name, so it is swapped for a wording that asserts availability
+    without the address. Journals running double anonymous review expect exactly
+    that, and the leak check below would fail on the URL otherwise.
     """
     # The replacement is passed as a function: re processes backslash escapes
     # in a replacement template, which would turn the \a of \author into BEL.
@@ -84,6 +100,12 @@ def anonymise(source):
     # hyperref infers pdfauthor from \author unless told otherwise.
     out = out.replace("\\begin{document}",
                       "\\hypersetup{pdfauthor={}}\n\\begin{document}", 1)
+
+    start = out.find("\\section*{Data availability}")
+    if start == -1:
+        raise SystemExit("  no data availability section found to redact")
+    end = out.find("\\begin{thebibliography}", start)
+    out = out[:start] + ANON_DATA + "\n" + out[end:]
     return out
 
 
